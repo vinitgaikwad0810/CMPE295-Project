@@ -8,6 +8,8 @@
   "dependencies": {
     "ejs": "*",
     "express": "3.2.6",
-    "express-session": "^1.15.1"
+    "express-session": "^1.15.1",
+    "mongodb": "^2.2.24",
+    "uuid": "^3.0.1"
   }
 }
