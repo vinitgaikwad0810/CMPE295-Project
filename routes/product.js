@@ -9,7 +9,7 @@ exports.register = function(req, res) {
 	var description = req.body.description;
 	var category = req.body.category;
 	var qrCode = req.body.qrCode;
-	
+
 	var product = {			
 			productId: uuid,
 			productName: productName,			
@@ -18,16 +18,16 @@ exports.register = function(req, res) {
 			category: category,
 			qrCode: qrCode
 	};
-	
+
 	blockchain.registerProduct(product, req.session.chain_user, req.session.peer, function(result){
 		if(result.status === "success"){
-			mongo.addProduct(product, function(result){
-				if (result && result.r &&result.r.insertedCount
-						&& result.r.insertedCount === 1) {
+			mongo.addProduct(product, function(mongo_result){
+				if (mongo_result && mongo_result.r &&mongo_result.r.insertedCount
+						&& mongo_result.r.insertedCount === 1) {
 					res.send({status:'success'});
 				} else {
-					console.log(result.err);
-					res.send(result.err);
+					console.log(mongo_result.err);
+					res.send(mongo_result.err);
 				}
 			});
 		} else {
@@ -35,6 +35,34 @@ exports.register = function(req, res) {
 			res.send({status:'error'});
 		}		
 	});
+};
+
+exports.query = function(req, res){
+	var qrCode = req.body.qrCode;
+//	var qrCode = "42352352523323"; //Test Value
+
+	mongo.queryProduct(qrCode, function(result){
+		if (result && result.status && result.status === "success") {
+			blockchain.queryProduct(result.productId, req.session.chain_user, req.session.peer, function(blockchain_result){
+				if(blockchain_result.status === "success"){
+					res.send({
+						status: "success",
+						product: blockchain_result.product
+					});
+				} else {
+					res.send({
+						status: "error",
+						err: blockchain_result.err
+					});
+				}
+
+			});
+		} else {
+			console.log(result.err);
+			res.send(result.err);
+		}
+	});
+
 };
 
 

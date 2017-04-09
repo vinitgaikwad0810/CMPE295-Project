@@ -81,7 +81,14 @@ exports.checkCredentials = function(username, pass, callback) {
 						err : 'Internal server error: '+err
 					});
 				} else {
-					if (docs.length === 1) {
+					if( docs.length === 0){
+						db.close();
+						callback({
+							status : 'error',
+							err: 'Invalid username/password'
+						});
+					}
+					else if (docs.length === 1) {
 						var chain_user = docs[0].chain_user;
 						var peer = docs[0].peer;
 						db.close();
@@ -136,3 +143,53 @@ exports.addProduct = function(product, callback){
 		}
 	});
 };
+
+exports.queryProduct = function(qrCode, callback){
+	console.log(qrCode);
+	MongoClient.connect(url, function(err, db) {
+		if (err) {
+			console.log(err);
+			callback({
+				status : 'error',
+				err : 'Internal server error: '+err
+			});
+		} else {
+			db.collection('products').find({
+				qrCode : qrCode
+			}).toArray(function(err, docs) {
+				if (err) {
+					console.log(err);
+					db.close();
+					callback({
+						status : 'error',
+						err : 'Internal server error: '+err
+					});
+				} else {
+					console.log(docs);
+					if(docs.length === 0){
+						db.close();
+						callback({
+							status : 'error',
+							err: 'No products found with QR code: ' + qrCode
+						});
+					}
+					else if (docs.length === 1) {
+						var productId = docs[0].productId;
+						db.close();
+						callback({
+							status : 'success',
+							productId: productId
+						});
+					} else {
+						db.close();
+						callback({
+							status : 'error',
+							err: 'Multiple products exist in the database with the same qrCode'
+						});
+					}
+				}
+			});
+		}
+	});
+};
+
