@@ -1,4 +1,4 @@
-var app = angular.module('blockchainApp', [ 'ngRoute' ]);
+var app = angular.module('blockchainApp', [ 'ngRoute']);
 
 app.config(function($routeProvider) {
 	$routeProvider
@@ -10,8 +10,12 @@ app.config(function($routeProvider) {
 		templateUrl : 'views/test2.html',
 		controller : 'TestController'
 	})
+	.when('/register-product', {
+		templateUrl : 'views/product-register.html',
+		controller : 'registerProductController'
+	})
 	.otherwise({
-		redirectTo : '/Page1'
+		redirectTo : '/register-product'
 	});
 });
 

@@ -1,0 +1,99 @@
+
+<!--BEGIN INPUT TEXT FIELDS-->
+<div class="row">
+	<div class="col-lg-4 col-lg-offset-4">
+		<div class="box dark">
+			<header>
+				<div class="icons">
+					<i class="fa fa-edit"></i>
+				</div>
+				<h5>Product Details</h5>
+				<!-- .toolbar -->
+				<div class="toolbar">
+					<nav style="padding: 8px;">
+						<a href="javascript:;" class="btn btn-default btn-xs collapse-box">
+							<i class="fa fa-minus"></i>
+						</a> <a href="javascript:;" class="btn btn-default btn-xs full-box">
+							<i class="fa fa-expand"></i>
+						</a> <a href="javascript:;" class="btn btn-danger btn-xs close-box">
+							<i class="fa fa-times"></i>
+						</a>
+					</nav>
+				</div>
+				<!-- /.toolbar -->
+			</header>
+			<div id="div-1" class="body">
+				<form class="form-horizontal">
+
+					<div class="form-group">
+						<label for="txtProductId"
+							class="control-label col-lg-3 col-lg-offset-2">Id</label>
+
+						<div class="col-lg-5">
+							<input type="text" id="txtProductId" placeholder="Product Id"
+								class="form-control" ng-model="product.id">
+						</div>
+					</div>
+					<!-- /.form-group -->
+
+					<div class="form-group">
+						<label for="txtProductName"
+							class="control-label col-lg-3 col-lg-offset-2">Product Name</label>
+
+						<div class="col-lg-5">
+							<input type="text" id="txtProductId" placeholder="Product Name"
+								class="form-control" ng-model="product.name">
+						</div>
+					</div>
+					<!-- /.form-group -->
+
+					<div class="form-group">
+						<label for="txtProductDescription"
+							class="control-label col-lg-3 col-lg-offset-2">Description</label>
+
+						<div class="col-lg-5">
+							<input type="text" id="txtProductDescription"
+								placeholder="Description" class="form-control" ng-model="product.description">
+						</div>
+					</div>
+					<!-- /.form-group -->
+
+
+
+					<div class="form-group">
+						<label class="control-label col-lg-3 col-lg-offset-2">Category</label>
+
+						<div class="col-lg-5">
+							<select data-placeholder="Choose a category"
+								class="form-control chzn-select" tabindex="2" ng-model="product.category">
+								<option value=""></option>
+								<option value="Antipyretics">Antipyretics</option>
+								<option value="Antimalarial drugs">Antimalarial drugs</option>
+								<option value="Antibiotics">Antibiotics</option>
+								<option value="Analgesics">Analgesics</option>
+								<option value="Antiseptics">Antiseptics</option>
+								<option value="Mood stabilizers">Mood stabilizers</option>
+								<option value="Hormone replacements">Hormone
+									replacements</option>
+								<option value="Oral contraceptives">Oral contraceptives</option>
+								<option value="Stimulants">Stimulants</option>
+								<option value="Tranquilizers">Tranquilizers</option>
+								<option value="Statins">Statins</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-lg-6 col-lg-offset-4">
+							<button class="btn btn-md btn-success btn-block" ng-click="register()">Register</button>
+						</div>
+					</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!--END TEXT INPUT FIELD-->
+</div>
+<!-- /.row -->

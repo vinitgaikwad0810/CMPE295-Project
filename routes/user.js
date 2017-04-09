@@ -28,24 +28,36 @@ exports.register = function(req, res) {
 
 	mongo.createUser(req.body.user, req.body.pass, peerDetails.peer,
 			peerDetails.user, function(result) {
-				if (result && result.insertedCount
-						&& result.insertedCount === 1) {
-					res.send('Success');
+				if (result && result.r &&result.r.insertedCount
+						&& result.r.insertedCount === 1) {
+					if (req.session) {
+						req.session.user = req.body.user;
+						req.session.chain_user = peerDetails.user;
+						req.session.peer = peerDetails.peer;
+						console.log(req.session);
+						res.send({status:'success'});				
+					}	
 				} else {
+					console.log(result.err);
 					res.send(result.err);
 				}
 			});
 };
 
 exports.login = function(req, res) {
-	mongo.checkCredentials('dsdsdsd', '123', function(result) {
+	mongo.checkCredentials(req.body.user, req.body.pass, function(result) {
 		if (result.status === 'success') {
 			if (req.session) {
-				req.session.user = 'dsdsdsd';
-			}
-			res.send('Success');
+				req.session.user = req.body.user;
+				req.session.chain_user = result.chain_user;
+				req.session.peer = result.peer;
+				console.log(req.session);
+				res.send({status:'success'});				
+			}			
 		} else {
-			res.send('Error');
+			console.log(result.err);
+			res.send(result.err);
 		}
+		res.end();
 	});
 };
