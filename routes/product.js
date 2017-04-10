@@ -4,15 +4,17 @@ var mongo = require('./mongo');
 
 exports.register = function(req, res) {
 	var productName = req.body.productName;
-	var uuid = uuidV1(); 
+	var uuid = uuidV1();
 	var state = [];
 	var description = req.body.description;
 	var category = req.body.category;
 	var qrCode = req.body.qrCode;
 
-	var product = {			
+
+	var product = {
+
 			productId: uuid,
-			productName: productName,			
+			productName: productName,
 			state: state,
 			description: description,
 			category: category,
@@ -33,7 +35,7 @@ exports.register = function(req, res) {
 		} else {
 			console.log(result.status);
 			res.send({status:'error'});
-		}		
+		}
 	});
 };
 
@@ -66,3 +68,11 @@ exports.query = function(req, res){
 };
 
 
+exports.track = function(req, res){
+
+	console.log(req.params);
+
+
+
+
+}

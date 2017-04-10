@@ -30,12 +30,16 @@ if ('development' == app.get('env')) {
 
 app.post('/register', user.register);
 app.post('/login', user.login);
-
 app.post('/register-product', product.register);
 app.post('/query-product', product.query);
 
 app.post('/registercontract', contract.registercontract);
 app.post('/getcontract', contract.getcontract);
+<<<<<<< Updated upstream
+=======
+app.get('/register-product', product.register);
+app.get('/track/:productId', product.track);
+>>>>>>> Stashed changes
 
 
 http.createServer(app).listen(app.get('port'), function() {

@@ -14,11 +14,15 @@ app.config(function($routeProvider) {
 		templateUrl : 'views/product-register.html',
 		controller : 'registerProductController'
 	})
+	.when('/asset-tracking', {
+		templateUrl : 'views/asset-tracking.html',
+		controller : 'assetTrackingController'
+	})
 	.otherwise({
 		redirectTo : '/register-product'
 	});
 });
 
-app.controller('TestController', function($scope){	
-    $scope.message = "Details";	
+app.controller('TestController', function($scope){
+    $scope.message = "Details";
 });
