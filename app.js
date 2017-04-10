@@ -39,6 +39,9 @@ app.post('/getcontract', contract.getcontract);
 =======
 app.get('/register-product', product.register);
 app.get('/track/:productId', product.track);
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
 
