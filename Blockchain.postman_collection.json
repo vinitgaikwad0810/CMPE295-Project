@@ -1,0 +1,87 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Blockchain",
+		"_postman_id": "05aa878f-cc6a-0660-2c36-d0a95883cb43",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Blockchain Register User",
+			"request": {
+				"url": "https://37ee9a5168d1497088ea117e68f329f0-vp0.us.blockchain.ibm.com:5001/registrar",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"enrollId\": \"user_type1_0\",\n  \"enrollSecret\": \"1ed4bc5e89\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Blochchain Registrar",
+			"request": {
+				"url": "https://37ee9a5168d1497088ea117e68f329f0-vp0.us.blockchain.ibm.com:5001/chaincode",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"deploy\",\n  \"params\": {\n    \"type\": 1,\n    \"chaincodeID\": {\n      \"path\": \"https://github.com/jagrutipatil/Blockchain_SmartContractEditor\"\n    },\n    \"ctorMsg\": {\n      \"function\": \"init\",\n      \"args\": [\n        \"hi there\"\n      ]\n    },\n    \"secureContext\": \"user_type1_0\"\n  },\n  \"id\": 1\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Invoke_PutContract",
+			"request": {
+				"url": "https://37ee9a5168d1497088ea117e68f329f0-vp0.us.blockchain.ibm.com:5001/chaincode",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"invoke\",\n  \"params\": {\n    \"type\": 1,\n    \"chaincodeID\": {\n      \"name\": \"eaa96c4f152f6d12a3e643e7ea4d338e1c3b9b0a72d8e00e53abdee9a1afd820b4a5834c63660dd7d165f209653ec115fb066c125712d4445865e304479dae0e\"\n    },\n    \"ctorMsg\": {\n      \"function\": \"putcontract\",\n      \"args\": [\n        \"2\", \"{\\n\\\"sessionid\\\": 1,\\n \\\"temp\\\": 120}\" \n      ]\n    },\n    \"secureContext\": \"user_type1_0\"\n  },\n  \"id\": 3\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Invoke_GetContract",
+			"request": {
+				"url": "https://37ee9a5168d1497088ea117e68f329f0-vp0.us.blockchain.ibm.com:5001/chaincode",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"query\",\n  \"params\": {\n    \"type\": 1,\n    \"chaincodeID\": {\n      \"name\": \"eaa96c4f152f6d12a3e643e7ea4d338e1c3b9b0a72d8e00e53abdee9a1afd820b4a5834c63660dd7d165f209653ec115fb066c125712d4445865e304479dae0e\"\n    },\n    \"ctorMsg\": {\n      \"function\": \"getcontract\",\n      \"args\": [\n        \"1\"\n      ]\n    },\n    \"secureContext\": \"user_type1_0\"\n  },\n  \"id\": 3\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "blockchain_validate",
+			"request": {
+				"url": "https://37ee9a5168d1497088ea117e68f329f0-vp0.us.blockchain.ibm.com:5001/chaincode",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"invoke\",\n  \"params\": {\n    \"type\": 1,\n    \"chaincodeID\": {\n      \"name\": \"0f425020654b68ae9a741aeedb5f060fe78f304ac77ed96f6d04217bc8bf5cf2c13b35d486879cb09f45087e20edd83f249334edc13147554fff1ebf4c04ecbb\"\n    },\n    \"ctorMsg\": {\n      \"function\": \"validate\",\n      \"args\": [\n        \"{\\\"sensor_value\\\" : \\\"25\\\"}\", \"3\"\n      ]\n    },\n    \"secureContext\": \"user_type1_0\"\n  },\n  \"id\": 3\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
