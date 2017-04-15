@@ -1,34 +1,38 @@
-<div class = "container-fluid">
+<div class="container-fluid">
 
-  <div class = "row">
-    <div class="col-xs-10">
-      <input class="form-control" type="text">
-
-    </div>
-
-    <div class = "col-xs-2">
-      <button type="button" class="btn btn-primary">Search</button>
-    </div>
-  </div>
-  <div class = "col-lg-12">
     <div class="row">
+        <div class="col-xs-10">
+            <input class="form-control" type="text">
 
-      <div class ="col-sm-9">
-      </div>
+        </div>
 
-      <div class="demo col-sm-3">
-        <h3>Vertical layout</h3>
+        <div class="col-xs-2">
+            <button type="button" class="btn btn-primary">Search</button>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="row">
 
-        <ul class="progress-tracker progress-tracker--vertical">
+            <div class="col-sm-7">
+                <h3>My Google Maps Demo</h3>
+                <div id="map"></div>
+                <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdF4y0AjJujQ248MSKd8KC41wm9fIvpgc&callback=initMap">
+                </script>
+            </div>
 
-          <li ng-repeat="state in states" class="progress-step is-complete" >
-            <span class="progress-marker"></span>
-            <span class="progress-text">
-              <h4 class="progress-title">Step 1</h4>
-              {{state.text}}
+            <div class="demo col-sm-5">
+                <h3>Asset Tracking Log</h3>
+
+                <ul class="progress-tracker progress-tracker--vertical">
+
+                    <li ng-repeat="state in states track by $index" class="progress-step is-complete">
+                        <span class="progress-marker"></span>
+                        <span class="progress-text">
+              <h4 class="progress-title">Step {{$index}}</h4>
+              {{state}}
             </span>
-          </li>
-          <!-- <li class="progress-step is-complete" >
+                    </li>
+                    <!-- <li class="progress-step is-complete" >
           <span class="progress-marker"></span>
           <span class="progress-text">
           <h4 class="progress-title">Step 1</h4>
@@ -63,9 +67,9 @@ Summary text explaining this step to the user
 Summary text explaining this step to the user
 </span>
 </li> -->
-</ul>
+                </ul>
 
-</div>
-</div>
-</div>
+            </div>
+        </div>
+    </div>
 </div>

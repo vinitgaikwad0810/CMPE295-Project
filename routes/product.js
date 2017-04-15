@@ -5,7 +5,7 @@ var mongo = require('./mongo');
 exports.register = function(req, res) {
 	var productName = req.body.productName;
 	var uuid = uuidV1();
-	var state = [];
+	var states = [];
 	var description = req.body.description;
 	var category = req.body.category;
 	var qrCode = req.body.qrCode;
@@ -16,7 +16,7 @@ exports.register = function(req, res) {
 
 		productId: uuid,
 		productName: productName,
-		state: state,
+		states: state,
 		description: description,
 		category: category,
 		qrCode: qrCode
