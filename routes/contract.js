@@ -1,39 +1,27 @@
 var https = require("https");
+var gitpath = "https://github.com/jagrutipatil/Blockchain_SmartContractEditor";
+var chaincodeName = null;
 
-function constructputJSON(functionName, var1, var2 , userId){
+var options = {
+		hostname: '37ee9a5168d1497088ea117e68f329f0-vp0.us.blockchain.ibm.com',
+		port: 5001,
+		path: '/chaincode',
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		}
+};
+
+
+function generateInitJSON(functionName, var1, userId){
 	
-	var queryApiSchema = {
+	var registrarApiSchema = {
 		     jsonrpc: "2.0",
-		     method: "invoke",
+		     method: "deploy",
 		     params: {
 		         type: 1,
 		         chaincodeID: {
-		             name: "0f425020654b68ae9a741aeedb5f060fe78f304ac77ed96f6d04217bc8bf5cf2c13b35d486879cb09f45087e20edd83f249334edc13147554fff1ebf4c04ecbb"
-		         },
-		         ctorMsg: {
-		             function: functionName,
-		             args: [
-		                 var1, var2
-		             ]
-		         },
-		         secureContext: userId
-		     },
-		     id: 3
-		 };
-	
-	return JSON.stringify(queryApiSchema);
-	
-}
-
-function constructgetJSON(functionName, var1 , userId){
-	
-	var queryApiSchema = {
-		     jsonrpc: "2.0",
-		     method: "query",
-		     params: {
-		         type: 1,
-		         chaincodeID: {
-		             name: "0f425020654b68ae9a741aeedb5f060fe78f304ac77ed96f6d04217bc8bf5cf2c13b35d486879cb09f45087e20edd83f249334edc13147554fff1ebf4c04ecbb"
+		        	 path: gitpath	             
 		         },
 		         ctorMsg: {
 		             function: functionName,
@@ -43,88 +31,127 @@ function constructgetJSON(functionName, var1 , userId){
 		         },
 		         secureContext: userId
 		     },
-		     id: 3
+		     id: 4
+		 };
+	
+	return JSON.stringify(registrarApiSchema);	
+}
+
+exports.init = function() {
+	if (chaincodeName === null || chaincodeName === undefined) {
+		var data = generateInitJSON('init', "Hello" , "user_type1_0");
+
+		var req = https.request(options, function(res) {
+			res.setEncoding('utf8');
+			res.on('data', function (body) {
+				if(body){
+					console.log(body);
+					body = JSON.parse(body);
+					chaincodeName = body.result.message;				
+				} 
+			});
+		});
+
+		req.on('error', function(e) {		
+		});
+
+		req.write(data);
+		req.end();
+	}
+}
+
+
+function constructJSON(methodname, nameparam, functionName, var1, var2 , userId){
+	
+	var queryApiSchema = {
+		     jsonrpc: "2.0",
+		     method: methodname,
+		     params: {
+		         type: 1,
+		         chaincodeID: {
+		             name: nameparam
+		         },
+		         ctorMsg: {
+		             function: functionName,
+		             args: [
+		                 var1, var2
+		             ]
+		         },
+		         secureContext: userId
+		     },
+		     id: 4
 		 };
 	
 	return JSON.stringify(queryApiSchema);
 	
 }
 
-exports.registercontract = function(request, response) {
-	var contractid = request.body.contractid;
-	var contractjson = request.body.params;
-	var data = constructputJSON('putcontract', contractid , contractjson, "user_type1_0");
-	
-	var options = {
-			hostname: '37ee9a5168d1497088ea117e68f329f0-vp0.us.blockchain.ibm.com',
-			port: 5001,
-			path: '/chaincode',
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			}
-	};
+function registercontract (request, response) {
+	if (chaincodeName && chaincodeName != undefined) {
+			var contractid = request.body.contractid;
+			var contractjson = request.body.params;
+			
+			var data = constructJSON('invoke', chaincodeName, 'putcontract', contractid , contractjson, "user_type1_0");
+			var req = https.request(options, function(res) {
+				res.setEncoding('utf8');
+				res.on('data', function (body) {
+					if(body){
+						console.log(body);
+						body = JSON.parse(body);
+						if(body.result && body.result.status === "OK"){
+							response.send("Success");
+						}
+					} else {
+						response.send("Error on calling blockchain API");
+					}
+				});
+			});
 
-	var req = https.request(options, function(res) {
-		res.setEncoding('utf8');
-		res.on('data', function (body) {
-			if(body){
-				console.log(body);
-				body = JSON.parse(body);
-				if(body.result && body.result.status === "OK"){
-					response.send("Success");
-				}
-			} else {
-				response.send("Error on calling blockchain API");
-			}
-		});
-	});
+			req.on('error', function(e) {
+				response.send('problem with request: ' + e.message);
+			});
 
-	req.on('error', function(e) {
-		response.send('problem with request: ' + e.message);
-	});
-
-	req.write(data);
-	req.end();
+			req.write(data);
+			req.end();			
+	} else {
+		
+		console.log("chaincode not defined yet");
+	}
 };
 
 exports.getcontract = function(request, response) {
 	
 	var contractid = request.body.contractid;
 	console.log(contractid);
-	var data = constructgetJSON('getcontract', "" + contractid, "user_type1_0");
+	console.log(chaincodeName);
 	
-	var options = {
-			hostname: '37ee9a5168d1497088ea117e68f329f0-vp0.us.blockchain.ibm.com',
-			port: 5001,
-			path: '/chaincode',
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			}
-	};
-
-	var req = https.request(options, function(res) {
-		res.setEncoding('utf8');
-		res.on('data', function (body) {
-			if(body){
-				console.log(body);
-				body = JSON.parse(body);
-				if(body.result && body.result.status === "OK"){					
-					response.send("Success");
+	if (chaincodeName && chaincodeName != undefined) { 
+		var data = constructJSON("query", chaincodeName, 'getcontract', "" + contractid, "", "user_type1_0");
+		
+		var req = https.request(options, function(res) {
+			res.setEncoding('utf8');
+			res.on('data', function (body) {
+				if(body){
+					console.log(body);
+					body = JSON.parse(body);
+					if(body.result && body.result.status === "OK"){					
+						response.send("Success");
+					}
+				} else {
+					response.send("Error on calling blockchain API");
 				}
-			} else {
-				response.send("Error on calling blockchain API");
-			}
+			});
 		});
-	});
 
-	req.on('error', function(e) {
-		response.send('problem with request: ' + e.message);
-	});
+		req.on('error', function(e) {
+			response.send('problem with request: ' + e.message);
+		});
 
-	req.write(data);
-	req.end();
+		req.write(data);
+		req.end();
+	} else {
+		console.log("No Chaincode ID");
+	}
 };
 
 exports.modifycontract = function(req, res) {
@@ -135,3 +162,4 @@ exports.modifycontract = function(req, res) {
 
 
 
+exports.registercontract = registercontract;
