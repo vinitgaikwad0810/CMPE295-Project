@@ -44,6 +44,8 @@ app.post('/register-product', product.register);
 app.post('/registercontract', contract.registercontract);
 app.post('/getcontract', contract.getcontract);
 app.get('/register-product', product.register);
+app.get('/track/:productId', product.track);
+
 
 http.createServer(app).listen(app.get('port'), function() {
 	console.log('Express server listening on port ' + app.get('port'));
