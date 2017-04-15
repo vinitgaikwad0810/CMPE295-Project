@@ -3,14 +3,19 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "postinstall": "bower install"
   },
   "dependencies": {
+    "bower": "^1.8.0",
     "client-sessions": "^0.7.0",
     "ejs": "*",
     "express": "3.2.6",
-    "express-session": "^1.15.1",
     "mongodb": "^2.2.24",
+    "progress-tracker": "^1.0.0",
     "uuid": "^3.0.1"
+  },
+  "devDependencies": {
+    "gulp-serve": "^1.4.0"
   }
 }

@@ -1,0 +1,21 @@
+{
+  "name": "SCM_Blockchain",
+  "description": "Supply chain management using blockchain as a service for tracking of assets",
+  "main": "",
+  "authors": [
+    "awaise267 <awaise267@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/awaise267/CMPE295-Project",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ngmap": "^1.18.4"
+  }
+}
