@@ -102,7 +102,7 @@ StyleSwitcher.prototype.build = function () {
     }
 
     $('body').css({
-        'background-image': 'url(' + imgPath + 'assets/img/pattern/' + $this.storageManager.getBgImage() + '.png)',
+        'background-color': '#3a3a3a',
         'background-repeat': ' repeat'
     });
     var modalHTML = '<div id="getCSSModal" class="modal fade">' +

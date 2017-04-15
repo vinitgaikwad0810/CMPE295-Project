@@ -40,7 +40,6 @@ exports.createUser = function(username, pass, peer, chain_user, callback) {
 								});
 							} else {
 								db.close();
-								console.log(r);
 								callback({
 									status: 'success',
 									r: r
@@ -133,7 +132,6 @@ exports.addProduct = function(product, callback){
 					});
 				} else {
 					db.close();
-					console.log(r);
 					callback({						
 						status: 'success',
 						r: r
@@ -145,7 +143,6 @@ exports.addProduct = function(product, callback){
 };
 
 exports.queryProduct = function(qrCode, callback){
-	console.log(qrCode);
 	MongoClient.connect(url, function(err, db) {
 		if (err) {
 			console.log(err);
@@ -165,7 +162,6 @@ exports.queryProduct = function(qrCode, callback){
 						err : 'Internal server error: '+err
 					});
 				} else {
-					console.log(docs);
 					if(docs.length === 0){
 						db.close();
 						callback({
