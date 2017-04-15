@@ -54,8 +54,8 @@ app.controller('assetTrackingController', ['$scope', '$http', 'NgMap', function(
             // });
         }
 
-				console.log("infoWindows");
-				console.log(infoWindows);
+        console.log("infoWindows");
+        console.log(infoWindows);
 
         for (var i = 0; i < markers.length; i++) {
 
@@ -65,10 +65,15 @@ app.controller('assetTrackingController', ['$scope', '$http', 'NgMap', function(
             // 		infoWindows[i].open(map, markers[i]);
             // });
             var marker = markers[i];
+            var test = JSON.stringify(vm.states[i].tests);
             google.maps.event.addListener(marker, 'click', function() {
                 // where I have added .html to the marker object.
-                infoWindows[i].setContent("<strong>STEP " + i + "</strong><br>" + JSON.stringify(vm.states[i].tests));
-                infoWindows[i].open(map, this);
+                //  infoWindows[i].setContent("<strong>STEP " + i + "</strong><br>" + JSON.stringify(vm.states[i].tests));
+                var infoWindows = new google.maps.InfoWindow({
+                    content: "<strong>STEP " + i + "</strong><br>" + test
+                });
+
+                infoWindows.open(map, this);
             });
         }
 
@@ -84,6 +89,14 @@ app.controller('assetTrackingController', ['$scope', '$http', 'NgMap', function(
         });
 
         flightPath.setMap(map);
+
+        var bounds = new google.maps.LatLngBounds();
+        //  Go through each...
+        $.each(markers, function(index, marker) {
+            bounds.extend(marker.position);
+        });
+        //  Fit these bounds to the map
+        map.fitBounds(bounds);
     });
 
     $scope.states = [];
