@@ -1,10 +1,18 @@
 //var app = angular.module('blockchainApp', ['ngRoute']);
 //AIzaSyAdF4y0AjJujQ248MSKd8KC41wm9fIvpgc
-app.controller('assetTrackingController', ['$scope', '$http', function($scope, $http) {
+app.controller('assetTrackingController', ['$scope', '$http', 'NgMap', function($scope, $http, NgMap) {
+    var vm = $scope;
     $scope.product = {};
     console.log('loaded');
 
+    $scope.googleMapsUrl = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAdF4y0AjJujQ248MSKd8KC41wm9fIvpgc";
+
+
+
+
     $scope.states = [];
+
+
 
     $scope.states[$scope.states.length] = {
         text: "sdffsfsf",
@@ -88,4 +96,26 @@ app.controller('assetTrackingController', ['$scope', '$http', function($scope, $
     //       });
     //
     // };
+
+    NgMap.getMap().then(function(map) {
+        console.log(map.getCenter());
+        console.log('markers', map.markers);
+        console.log('shapes', map.shapes);
+
+
+
+        for (var i = 0; i < vm.states.length; i++) {
+
+            var myLatLng = {
+                lat: vm.states[i].lat,
+                lng: vm.states[i].lang
+            };
+
+            var marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                title: 'Hello World!'
+            });
+        }
+    });
 }]);

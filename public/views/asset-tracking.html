@@ -14,10 +14,16 @@
         <div class="row">
 
             <div class="col-sm-7">
+
+
                 <h3>My Google Maps Demo</h3>
-                <div id="map"></div>
-                <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdF4y0AjJujQ248MSKd8KC41wm9fIvpgc&callback=initMap">
-                </script>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div map-lazy-load="https://maps.google.com/maps/api/js" map-lazy-load-params="{{googleMapsUrl}}">
+                            <ng-map center="41,-87" zoom="3"></ng-map>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="demo col-sm-5">
