@@ -19,63 +19,80 @@ app.controller('assetTrackingController', ['$scope', '$http', 'NgMap', function(
 
         for (var i = 0; i < vm.states.length; i++) {
 
-            var myLatlng = new google.maps.LatLng(vm.states[i].lat, vm.states[i].lang);
+            var func = function(index) {
+                var myLatlng = new google.maps.LatLng(vm.states[i].lat, vm.states[i].lang);
 
-            flightPlanCoordinates[flightPlanCoordinates.length] = myLatlng;
-            console.log(vm.states[i].lat);
-            console.log(vm.states[i].lang);
-            // var myLatLng = {
-            //     lat: vm.states[i].lat,
-            //     lng: vm.states[i].lang
-            // };
+                flightPlanCoordinates[flightPlanCoordinates.length] = myLatlng;
+                console.log(vm.states[i].lat);
+                console.log(vm.states[i].lang);
+                // var myLatLng = {
+                //     lat: vm.states[i].lat,
+                //     lng: vm.states[i].lang
+                // };
 
-            markers[markers.length] = new google.maps.Marker({
-                position: myLatlng,
-                map: map,
-                title: 'Hello World!'
-            });
-
-
-
-            infoWindows[infoWindows.length] = new google.maps.InfoWindow({
-                content: "<strong>STEP " + i + "</strong><br>" + JSON.stringify(vm.states[i].tests)
-            });
+                markers[markers.length] = new google.maps.Marker({
+                    position: myLatlng,
+                    map: map,
+                    title: 'Hello World!'
+                });
 
 
-            //
-            // marker.addListener('click', function() {
-            // 		infoWindows[i].open(map, markers[i]);
-            // });
+
+                // infoWindows[infoWindows.length] = new google.maps.InfoWindow({
+                //     content: "<strong>STEP " + i + "</strong><br>" + JSON.stringify(vm.states[i].tests)
+                // });
+
+                var infoWindow = new google.maps.InfoWindow();
+                var marker = markers[markers.length - 1];
+                var test = JSON.stringify(vm.states[i].tests);
+                var content = "<strong>STEP " + i + "</strong><br>" + test;
+                google.maps.event.addListener(marker, 'click', (function(marker, content, infoWindow) {
+                    return function() {
+                        infoWindow.setContent(content);
+                        infoWindow.open(map, marker);
+                    }
+                })(marker, content, infoWindow));
+                //
+                // marker.addListener('click', function() {
+                // 		infoWindows[i].open(map, markers[i]);
+                // });
 
 
-            // markers[markers.length - 1].addListener('click', function() {
-            // 				infoWindows[markers.length-1].open(map, markers[markers.length - 1]);
-            //
-            // });
+                // markers[markers.length - 1].addListener('click', function() {
+                // 				infoWindows[markers.length-1].open(map, markers[markers.length - 1]);
+                //
+                // });
+
+            };
+
+            func(i);
         }
 
         console.log("infoWindows");
         console.log(infoWindows);
 
-        for (var i = 0; i < markers.length; i++) {
-
-            //  infowindow.open(map, marker);
-
-            // markers[i].addListener('click', function() {
-            // 		infoWindows[i].open(map, markers[i]);
-            // });
-            var marker = markers[i];
-            var test = JSON.stringify(vm.states[i].tests);
-            google.maps.event.addListener(marker, 'click', function() {
-                // where I have added .html to the marker object.
-                //  infoWindows[i].setContent("<strong>STEP " + i + "</strong><br>" + JSON.stringify(vm.states[i].tests));
-                var infoWindows = new google.maps.InfoWindow({
-                    content: "<strong>STEP " + i + "</strong><br>" + test
-                });
-
-                infoWindows.open(map, this);
-            });
-        }
+        // for (var i = 0; i < markers.length; i++) {
+        //
+        //     //  infowindow.open(map, marker);
+        //
+        //     // markers[i].addListener('click', function() {
+        //     // 		infoWindows[i].open(map, markers[i]);
+        //     // });
+        //
+        //     var infoWindow = new google.maps.InfoWindow();
+        //     var marker = markers[i];
+        //     var test = JSON.stringify(vm.states[i].tests);
+        //     marker.content = "<strong>STEP " + i + "</strong><br>" + test;
+        //     google.maps.event.addListener(marker, 'click', function() {
+        //         // where I have added .html to the marker object.
+        //         //  infoWindows[i].setContent("<strong>STEP " + i + "</strong><br>" + JSON.stringify(vm.states[i].tests));
+        //         // var infoWindow = new google.maps.InfoWindow({
+        //         //     content: "<strong>STEP " + i + "</strong><br>" + test
+        //         // });
+        //         infoWindow.setContent(this.content);
+        //         infoWindows.open(map, this);
+        //     });
+        // }
 
 
 
@@ -98,6 +115,12 @@ app.controller('assetTrackingController', ['$scope', '$http', 'NgMap', function(
         //  Fit these bounds to the map
         map.fitBounds(bounds);
     });
+
+    $scope.searchButtonClick = function(searchTerm) {
+
+
+
+    }
 
     $scope.states = [];
 

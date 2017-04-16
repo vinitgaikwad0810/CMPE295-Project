@@ -48,7 +48,8 @@ app.post('/initcontract', contract.init);
 app.post('/registercontract', contract.registercontract);
 app.post('/getcontract', contract.getcontract);
 app.get('/register-product', product.register);
-app.get('/track/:productId', product.track);
+app.get('/track/:qrCode', product.track);
+
 
 
 http.createServer(app).listen(app.get('port'), function() {
