@@ -8,6 +8,14 @@ app.controller('assetTrackingController', ['$scope', '$http', 'NgMap', function(
     $scope.googleMapsUrl = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAdF4y0AjJujQ248MSKd8KC41wm9fIvpgc";
 
 
+    $scope.searchButtonClick = function() {
+
+
+      console.log($scope.searchTerm);
+
+    }
+
+
     NgMap.getMap().then(function(map) {
         console.log(map.getCenter());
         console.log('markers', map.markers);
@@ -116,11 +124,7 @@ app.controller('assetTrackingController', ['$scope', '$http', 'NgMap', function(
         map.fitBounds(bounds);
     });
 
-    $scope.searchButtonClick = function(searchTerm) {
 
-
-
-    }
 
     $scope.states = [];
 
