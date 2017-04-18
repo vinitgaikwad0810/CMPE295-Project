@@ -1,6 +1,6 @@
 var https = require("https");
 var gitpath = "https://github.com/jagrutipatil/Blockchain_SmartContractEditor";
-var chaincodeName = "f09e34c80249efb2a219da77e0c5cc8222cadb80e8a992f23f30c3265f701f8b9362e57f2b241e643b4e07ea57076e68f59402f2288adb3fb97909432c041cce";
+var chaincodeName = "7a29333e30aca01146c974710c6b12e7f3a3ef3ef882f846945703e1605bd04b51a6a6d0784224e7fe1fc5c6d55f1bce5a79b8d97e64dba49436d2836ed1586a";
 
 var options = {
 		hostname: '37ee9a5168d1497088ea117e68f329f0-vp0.us.blockchain.ibm.com',
@@ -53,6 +53,7 @@ exports.init = function() {
 		});
 
 		req.on('error', function(e) {		
+			console.log(e);
 		});
 
 		req.write(data);
