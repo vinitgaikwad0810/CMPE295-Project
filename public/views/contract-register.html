@@ -1,0 +1,116 @@
+
+<!--BEGIN INPUT TEXT FIELDS-->
+<div class="row">
+	<div class="col-lg-4 col-lg-offset-4">
+		<div class="box dark">
+			<header>
+				<div class="icons">
+					<i class="fa fa-edit"></i>
+				</div>
+				<h5>Contract Details</h5>
+				<!-- .toolbar -->
+				<div class="toolbar">
+					<nav style="padding: 8px;">
+						<a href="javascript:;" class="btn btn-default btn-xs collapse-box">
+							<i class="fa fa-minus"></i>
+						</a> <a href="javascript:;" class="btn btn-default btn-xs full-box">
+							<i class="fa fa-expand"></i>
+						</a> <a href="javascript:;" class="btn btn-danger btn-xs close-box">
+							<i class="fa fa-times"></i>
+						</a>
+					</nav>
+				</div>
+				<!-- /.toolbar -->
+			</header>
+			<div id="div-1" class="body">
+				<form class="form-horizontal">
+
+					<div class="form-group">
+						<label for="txtProductId"
+							class="control-label col-lg-3 col-lg-offset-2">Id</label>
+
+						<div class="col-lg-5">
+							<input type="text" id="txtProductId" placeholder="Contract Id"
+								class="form-control" ng-model="contract.id">
+						</div>
+					</div>
+					<!-- /.form-group -->
+
+					<div class="form-group">
+						<label for="txtContractName"
+							class="control-label col-lg-3 col-lg-offset-2">Contract Name</label>
+
+						<div class="col-lg-5">
+							<input type="text" id="txtContractName" placeholder="Contract Name"
+								class="form-control" ng-model="contract.name">
+						</div>
+					</div>
+					<!-- /.form-group -->
+
+					<div class="form-group">
+						<div class="col-lg-5">
+							<input type="text" id="key1" placeholder="sensor_value" class="form-control ng-pristine ng-valid ng-empty ng-touched" ng-model="contract.key1">					
+						</div>	
+							
+						<div class="col-lg-5">
+							<input type="text" id="value1"
+								placeholder="20" class="form-control" ng-model="contract.value1">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-lg-5">
+							<input type="text" id="key2" placeholder="sensor_value" class="form-control ng-pristine ng-valid ng-empty ng-touched" ng-model="contract.key2">					
+						</div>	
+							
+						<div class="col-lg-5">
+							<input type="text" id="value2"
+								placeholder="20" class="form-control" ng-model="contract.value2">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-lg-5">
+							<input type="text" id="key3" placeholder="sensor_value" class="form-control ng-pristine ng-valid ng-empty ng-touched" ng-model="contract.key3">					
+						</div>	
+							
+						<div class="col-lg-5">
+							<input type="text" id="value3"
+								placeholder="20" class="form-control" ng-model="contract.value3">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-lg-5">
+							<input type="text" id="key4" placeholder="sensor_value" class="form-control ng-pristine ng-valid ng-empty ng-touched" ng-model="contract.key4">					
+						</div>	
+							
+						<div class="col-lg-5">
+							<input type="text" id="value4"
+								placeholder="20" class="form-control" ng-model="contract.value4">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-lg-5">
+							<input type="text" id="key5" placeholder="sensor_value" class="form-control ng-pristine ng-valid ng-empty ng-touched" ng-model="contract.key5">					
+						</div>	
+							
+						<div class="col-lg-5">
+							<input type="text" id="value5"
+								placeholder="20" class="form-control" ng-model="contract.value5">
+						</div>
+					</div>															
+					<!-- /.form-group -->
+
+					<div class="form-group">
+						<div class="col-lg-6 col-lg-offset-4">
+							<button class="btn btn-md btn-success btn-block" ng-click="registercontract()">Register</button>
+						</div>
+					</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!--END TEXT INPUT FIELD-->
+</div>
+<!-- /.row -->
