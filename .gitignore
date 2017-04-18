@@ -66,3 +66,6 @@ typings/
 .sublime-project
 
 .tern-project
+
+#intellij
+.idea/
