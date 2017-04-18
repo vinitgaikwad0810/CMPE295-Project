@@ -18,6 +18,10 @@ app.config(function($routeProvider) {
             templateUrl: 'views/asset-tracking.html',
             controller: 'assetTrackingController'
         })
+        .when('/register-contract', {
+            templateUrl: 'views/contract-register.html',
+            controller: 'registerContractController'
+        })
         .otherwise({
             redirectTo: '/register-product'
         });
