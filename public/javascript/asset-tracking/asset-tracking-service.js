@@ -1,5 +1,5 @@
 
-angular.module('photoApp').factory('AssetTrackingService',
+angular.module('blockchainApp').factory('AssetTrackingService',
 	[ '$http', '$cookieStore', '$rootScope', '$timeout',
 
 	function ( $http, $cookieStore, $rootScope, $timeout) {
@@ -25,7 +25,12 @@ angular.module('photoApp').factory('AssetTrackingService',
         service.getAssetDetails = function(clientSideId) {
 
           console.log(clientSideId);
-
+          // $http.get('').success(function(response){
+          //
+          //   console.log(response);
+          //
+          //
+          // }
 
         }
 

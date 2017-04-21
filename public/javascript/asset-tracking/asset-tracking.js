@@ -1,6 +1,6 @@
 //var app = angular.module('blockchainApp', ['ngRoute']);
 //AIzaSyAdF4y0AjJujQ248MSKd8KC41wm9fIvpgc
-app.controller('assetTrackingController', ['$scope', '$http', 'NgMap', function($scope, $http, NgMap) {
+app.controller('assetTrackingController', ['$scope', '$http', 'NgMap', function($scope, $http, NgMap, AssetTrackingService) {
     var vm = $scope;
     $scope.product = {};
     console.log('loaded');
@@ -11,7 +11,18 @@ app.controller('assetTrackingController', ['$scope', '$http', 'NgMap', function(
     $scope.searchButtonClick = function() {
 
 
-      console.log($scope.searchTerm);
+        console.log($scope.searchTerm);
+
+        //  AssetTrackingService.getAssetDetails($scope.searchTerm);
+          // Test it with Qr Code 3fdsf-324-234-fdsf
+        $http.get('/track/' + $scope.searchTerm).then(function(response) {
+
+           console.log("Track");
+            console.log(response.data);
+
+
+        });
+
 
     }
 
