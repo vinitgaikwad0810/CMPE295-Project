@@ -2535,3 +2535,13 @@ body.error .logo h1 {
   border-top-right-radius: 0;
 }
 /* END LOGIN PAGE STYLES */
+
+/*For QRCode*/
+#outdiv
+{
+  width:320px;
+  height:240px;
+  border: solid;
+  border-width: 3px 3px 3px 3px;
+  margin:0 auto;
+}

@@ -103,12 +103,39 @@ function htmlEntities(str) {
 
 function read(a)
 {
-    var html="<br>";
-    if(a.indexOf("http://") === 0 || a.indexOf("https://") === 0)
-        html+="<a target='_blank' href='"+a+"'>"+a+"</a><br>";
-    html+="<b>"+htmlEntities(a)+"</b><br><br>";
-    document.getElementById("result").innerHTML=html;
+    // var html="<br>";
+    // if(a.indexOf("http://") === 0 || a.indexOf("https://") === 0)
+    //     html+="<a target='_blank' href='"+a+"'>"+a+"</a><br>";
+    // html+="<b>"+htmlEntities(a)+"</b><br><br>";
+    // document.getElementById("result").innerHTML=html;
+    parseValues(val);
     $("#myModal").modal("hide");
+}
+
+function parseValues(val){
+    var splitPipes = val.split("|");
+    var len = splitPipes.length();
+    for(var i=0; i<len; i++){
+        var splitEquals = splitPipes[i].split("=");
+
+        switch(splitEquals[0].trim()){
+            case "productId":
+                document.getElementById("txtProductId").value = splitEquals[1];
+                break;
+            case "productName":
+                document.getElementById("txtProductName").value = splitEquals[1];
+                break;
+            case "productDescription":
+                document.getElementById("txtProductDescription").value = splitEquals[1];
+                break;
+            case "productCategory":
+                document.getElementById("selectCategory").value = splitEquals[1];
+                break;
+            default:
+                break;
+        }
+
+    }
 }
 
 function isCanvasSupported(){
