@@ -58,6 +58,56 @@ exports.createUser = function(username, pass, peer, chain_user, callback) {
     });
 };
 
+exports.getpeerid = function(username, callback) {
+	MongoClient.connect(url, function(err, db) {
+		if (err) {
+			console.log(err);
+			callback({
+				status : 'error',
+				err : 'Internal server error: ' + err
+			});
+		} else {
+			db.collection('users').find({
+				email : username
+			}).toArray(function(err, docs) {
+				if (err) {
+					console.log(err);
+					db.close();
+					callback({
+						status : 'error',
+						err : 'Internal server error: '+err
+					});
+				} else {
+					if( docs.length === 0){
+						db.close();
+						callback({
+							status : 'error',
+							err: 'Invalid username/password'
+						});
+					}
+					else if (docs.length === 1) {
+						var chain_user = docs[0].chain_user;
+						var peer = docs[0].peer;
+						db.close();
+						callback({
+							status : 'success',
+							chain_user: chain_user,
+							peer: peer
+						});
+					} else {
+						db.close();
+						callback({
+							status : 'error',
+							err: 'Multiple users exist with same credentials'
+						});
+					}
+				}
+			});
+		}
+	});
+};
+
+
 exports.checkCredentials = function(username, pass, callback) {
     MongoClient.connect(url, function(err, db) {
         if (err) {
