@@ -1,5 +1,6 @@
 var https = require("https");
 
+var chainCodeName = '02c911a97e94abeb71d2475c3e4563ed959e25307c81166fa7e1b9e504cc3d6cccf2c3f67f01f434be684a62a5f1ed1980646d4cdc5743c3c37ca263a30216f6';
 
 function getProductQueryApiSchema(productId, userId){
 	
@@ -9,7 +10,7 @@ function getProductQueryApiSchema(productId, userId){
 		     params: {
 		         type: 1,
 		         chaincodeID: {
-		             name: "02c911a97e94abeb71d2475c3e4563ed959e25307c81166fa7e1b9e504cc3d6cccf2c3f67f01f434be684a62a5f1ed1980646d4cdc5743c3c37ca263a30216f6"
+		             name: chainCodeName
 		         },
 		         ctorMsg: {
 		             function: "read",
@@ -35,7 +36,7 @@ function getProductRequestApiSchema(product, user){
 			params: {
 				type: 1,
 				chaincodeID: {
-					name: "02c911a97e94abeb71d2475c3e4563ed959e25307c81166fa7e1b9e504cc3d6cccf2c3f67f01f434be684a62a5f1ed1980646d4cdc5743c3c37ca263a30216f6"
+					name: chainCodeName
 				},
 				ctorMsg: {
 					function: "register",
