@@ -144,7 +144,7 @@ function constructValidateJSON(methodname, nameparam, functionName, productid, u
 	
 }
 
-function constructJSON(methodname, nameparam, functionName, var1, var2 , userId){
+function constructJSON(methodname, nameparam, functionName, var1, product_type, var2 , userId){
 	
 	var queryApiSchema = {
 		     jsonrpc: "2.0",
@@ -157,7 +157,7 @@ function constructJSON(methodname, nameparam, functionName, var1, var2 , userId)
 		         ctorMsg: {
 		             function: functionName,
 		             args: [
-		                 var1, var2
+		                 var1, product_type, var2
 		             ]
 		         },
 		         secureContext: userId
@@ -197,10 +197,11 @@ function constructGetJSON(methodname, nameparam, functionName, var1,  userId){
 function registercontract (request, response) {
 	if (chaincodeName && chaincodeName != undefined) {
 			var contractid = request.body.contractid;
+			var product_type = request.body.product_type;
 			var contractjson = request.body.params;
 			
 			console.log("Registering the contract for Id:" + contractid);
-			var data = constructJSON('invoke', chaincodeName, 'putcontract', contractid , contractjson, "user_type2_0");
+			var data = constructJSON('invoke', chaincodeName, 'putcontract', contractid , product_type, contractjson, "user_type2_0");
 			var req = https.request(options, function(res) {
 				res.setEncoding('utf8');
 				res.on('data', function (body) {
@@ -222,8 +223,7 @@ function registercontract (request, response) {
 
 			req.write(data);
 			req.end();			
-	} else {
-		
+	} else {		
 		console.log("chaincode not defined yet");
 	}
 };

@@ -12,7 +12,8 @@ app.controller('registerContractController',['$scope', '$http', function($scope,
 		
 		var data = {
 				params: paramsJSON,
-				contractid: $scope.contract.id				
+				contractid: $scope.contract.id,
+				product_type: $scope.contract.category 				
             };
 		
         $http.post("/registercontract", data).then(function(data, status) {
