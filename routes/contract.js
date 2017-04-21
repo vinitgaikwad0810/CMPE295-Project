@@ -1,7 +1,7 @@
 var https = require("https");
 var mongodb = require("./mongo");
 var gitpath = "https://github.com/jagrutipatil/Blockchain_SmartContractEditor";
-var chaincodeName = "04428fa8936e5d5a40703dfb6ed361cfaae81fe8c7777e318428e2d4ce476c8ff84e3579f37c1af7ea37a2deb29b30f0d5433ca5064eb5a3bc0be0f2cad59422";
+var chaincodeName = "c6925544be05140e82d0f60b1bce1d8505976b8062736c9c999930223b5a9393afb42250ebcbfe93d8fd43172278de59a939d62d913189c6b3d75006bfc39af7";
 
 var options = {
 		hostname: 'e57848b76d894377a7f176f544757add-vp0.us.blockchain.ibm.com',
@@ -38,23 +38,26 @@ function generateInitJSON(functionName, var1, userId){
 	return JSON.stringify(registrarApiSchema);	
 }
 
-exports.validate = function(req, res) {
+exports.validate = function(request, response) {
 	var qrCode = request.body.qrcode;
+	var username = request.body.username;
 	mongodb.queryProduct(qrCode, function (status, id) {
 		if (status != 'error') {	
 			var productid = id;
-			var params = request.body.params;
-			var lat = request.body.lat;
-			var lng = request.body.lng;
-			var username = request.body.username;
 			//get peer id from mongodb
 			mongodb.getpeerid(username, function(status, chain_user, peerid) {
 				if (status != "error") {
-					//create options 
-					//send status
+
+					var params = {
+							lng : request.body.lng,
+							lat : request.body.lat,
+							username : request.body.username, 
+							params : request.body.params 
+					};
+
 					var eventOptions = {
-							hostname: peerid,
-							port: 5001,
+							hostname: 'demo2367382.mockable.io',         //PASS PEERID LATER and add port number
+							//port: 5001,
 							path: '/chaincode',
 							method: 'POST',
 							headers: {
@@ -62,18 +65,20 @@ exports.validate = function(req, res) {
 							}
 					};
 					
-					var data = constructValidateJSON(methodname, chaincodeName, 'validate', productid, username, lat, lng, params , chain_user);
-					var req = https.request(options, function(res) {
+					var data = constructValidateJSON('invoke', chaincodeName, 'validate', params, productid , chain_user);
+					var req = https.request(eventOptions, function(res) {
 						res.setEncoding('utf8');
 						res.on('data', function (body) {
 							if(body){
 								console.log(body);
 								body = JSON.parse(body);
-								if(body.result && body.result.status === "OK"){
-									response.send("Success");
+								if(body.status && body.status === "success"){
+									response.send("status : success");
+						  		} else {
+						  			response.send("status : error");
 						  		}
 							} else {
-								response.send("Error on calling blockchain API");
+								response.send("status : Error on calling blockchain API");
 							}
 						});
 					});
@@ -85,12 +90,12 @@ exports.validate = function(req, res) {
 					req.write(data);
 					req.end();			
 				} else {
-					res.send("status : error");
+					response.send("status : error");
 				}
 			});
 			
 		} else {
-			res.send("status : error");
+			response.send("status : error");
 		}
 	});	
 };
@@ -119,7 +124,7 @@ exports.init = function() {
 	}
 }
 
-function constructValidateJSON(methodname, nameparam, functionName, productid, username, lat, lng, paramsjson , userId){
+function constructValidateJSON(methodname, nameparam, functionName, paramsjson, productid , userId){
 	
 	var queryApiSchema = {
 		     jsonrpc: "2.0",
@@ -132,7 +137,7 @@ function constructValidateJSON(methodname, nameparam, functionName, productid, u
 		         ctorMsg: {
 		             function: functionName,
 		             args: [
-		                 productid, username, lat, lng, paramsjson
+		                 paramsjson, productid
 		             ]
 		         },
 		         secureContext: userId
@@ -201,6 +206,7 @@ function registercontract (request, response) {
 			var contractjson = request.body.params;
 			
 			console.log("Registering the contract for Id:" + contractid);
+			console.log("Parameters: " + contractjson);
 			var data = constructJSON('invoke', chaincodeName, 'putcontract', contractid , product_type, contractjson, "user_type2_0");
 			var req = https.request(options, function(res) {
 				res.setEncoding('utf8');
