@@ -1,7 +1,7 @@
 var https = require("https");
 var mongodb = require("./mongo");
 var gitpath = "https://github.com/jagrutipatil/Blockchain_SmartContractEditor";
-var chaincodeName = "c6925544be05140e82d0f60b1bce1d8505976b8062736c9c999930223b5a9393afb42250ebcbfe93d8fd43172278de59a939d62d913189c6b3d75006bfc39af7";
+var chaincodeName = "46af334915753bfcadfcc0e3ac36e52e22143dcfca866a1c09605a3cf424272e1b4e11e3b0473b56ccc053cadfa19099a7931db108e8580cab984e5e775dd078";
 
 var options = {
 		hostname: 'e57848b76d894377a7f176f544757add-vp0.us.blockchain.ibm.com',
@@ -205,7 +205,7 @@ function registercontract (request, response) {
 			var product_type = request.body.product_type;
 			var contractjson = request.body.params;
 			
-			console.log("Registering the contract for Id:" + contractid);
+			console.log("Registering the contract for Product Type:" + product_type);
 			console.log("Parameters: " + contractjson);
 			var data = constructJSON('invoke', chaincodeName, 'putcontract', contractid , product_type, contractjson, "user_type2_0");
 			var req = https.request(options, function(res) {
@@ -236,12 +236,12 @@ function registercontract (request, response) {
 
 exports.getcontract = function(request, response) {
 	
-	var contractid = request.body.contractid;
-	console.log(contractid);
+	var product_type = request.body.product_type;
+	console.log("Getting contract for product_type: " + product_type);
 	console.log(chaincodeName);
 	
 	if (chaincodeName && chaincodeName != undefined) { 
-		var data = constructGetJSON("query", chaincodeName, 'getcontract', "" + contractid, "user_type2_0");
+		var data = constructGetJSON("query", chaincodeName, 'getcontract', "" + product_type, "user_type2_0");
 		
 		var req = https.request(options, function(res) {
 			res.setEncoding('utf8');
