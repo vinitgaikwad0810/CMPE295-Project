@@ -1,7 +1,7 @@
 var https = require("https");
 var mongodb = require("./mongo");
 var gitpath = "https://github.com/jagrutipatil/Blockchain_SmartContractEditor";
-var chaincodeName = "04428fa8936e5d5a40703dfb6ed361cfaae81fe8c7777e318428e2d4ce476c8ff84e3579f37c1af7ea37a2deb29b30f0d5433ca5064eb5a3bc0be0f2cad59422";
+var chaincodeName = "c6925544be05140e82d0f60b1bce1d8505976b8062736c9c999930223b5a9393afb42250ebcbfe93d8fd43172278de59a939d62d913189c6b3d75006bfc39af7";
 
 var options = {
 		hostname: 'e57848b76d894377a7f176f544757add-vp0.us.blockchain.ibm.com',
@@ -47,8 +47,7 @@ exports.validate = function(request, response) {
 			//get peer id from mongodb
 			mongodb.getpeerid(username, function(status, chain_user, peerid) {
 				if (status != "error") {
-					//create options 
-					//send status
+
 					var params = {
 							lng : request.body.lng,
 							lat : request.body.lat,
@@ -207,6 +206,7 @@ function registercontract (request, response) {
 			var contractjson = request.body.params;
 			
 			console.log("Registering the contract for Id:" + contractid);
+			console.log("Parameters: " + contractjson);
 			var data = constructJSON('invoke', chaincodeName, 'putcontract', contractid , product_type, contractjson, "user_type2_0");
 			var req = https.request(options, function(res) {
 				res.setEncoding('utf8');

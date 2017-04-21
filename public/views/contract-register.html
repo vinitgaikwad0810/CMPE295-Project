@@ -69,10 +69,31 @@
 							</select>
 						</div>
 					</div>
+					<!-- todo add in table format -->
 
+					<div class="form-group">						
+						<div ng-repeat="elemnt in questionelemnt">
+							<table>
+								<tr>
+									<td>
+										<span ng-model="elemnt.empty">  </span>
+									</td>	
+									
+									<td>                        	
+										<input type="text" id="key1" placeholder="param name" class="form-control ng-pristine ng-valid ng-empty ng-touched" ng-model="elemnt.key">					
+									</td>
 
+									<td>
+										<input type="text" id="value1" placeholder="param value" class="form-control" ng-model="elemnt.value">
+									</td>	
+ 								</tr>
+							</table>
+                    	</div>
+					</div>
 
-					<div class="form-group">
+					<a href ng-click="newItem($event)">Add New Parameters</a>
+
+					<!--div class="form-group">
 						<div class="col-lg-2">
 						</div>	
 
@@ -137,7 +158,7 @@
 							<input type="text" id="value5"
 								placeholder="20" class="form-control" ng-model="contract.value5">
 						</div>
-					</div>															
+					</div-->															
 					<!-- /.form-group -->
 
 					<div class="form-group">
