@@ -34,7 +34,6 @@ exports.register = function(req, res) {
 						req.session.user = req.body.user;
 						req.session.chain_user = peerDetails.user;
 						req.session.peer = peerDetails.peer;
-						console.log(req.session);
 						res.send({status:'success'});				
 					}	
 				} else {

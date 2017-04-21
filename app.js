@@ -2,7 +2,7 @@ var express = require('express'), routes = require('./routes'), user = require('
 
 var sessions = require("client-sessions");
 var contract = require('./routes/contract');
-
+var sessionsModule = require('./routes/session');
 var app = express();
 
 app.set('port', process.env.PORT || 3000);
@@ -12,15 +12,6 @@ app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
-
-//app.use(session({
-//	secret : 'Blockchain',
-//	resave : true,
-//	saveUninitialized : false,
-//	cookie : {
-//		secure : true
-//	}
-//}));
 
 app.use(sessions({
   cookieName: 'session', // cookie name dictates the key name added to the request object
@@ -40,6 +31,13 @@ if ('development' == app.get('env')) {
 app.post('/register', user.register);
 app.post('/login', user.login);
 
+app.get('/login', function(req, res){
+    res.sendfile(__dirname + '/public/login.html');
+});
+
+app.get('/', sessionsModule.isAuthUser, function(req, res){
+    res.sendfile(__dirname + '/public/index.html');
+});
 
 app.post('/register-product', product.register);
 
@@ -48,7 +46,7 @@ app.post('/initcontract', contract.init);
 app.post('/registercontract', contract.registercontract);
 app.post('/getcontract', contract.getcontract);
 app.get('/register-product', product.register);
-app.get('/track/:qrCode', product.track);
+app.get('/track/:qrCode', product.query);
 
 
 

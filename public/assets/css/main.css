@@ -2494,7 +2494,7 @@ body.error .logo h1 {
   background: url("../img/pattern/irongrip.png") repeat #444;
 }
 .login .form-signin {
-  max-width: 330px;
+  max-width: 350px;
   padding: 20px;
   margin: 0 auto;
   background-color: #fff;

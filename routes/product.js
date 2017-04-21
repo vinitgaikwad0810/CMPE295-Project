@@ -12,17 +12,16 @@ exports.register = function(req, res) {
 
 
 	var product = {
-
-
 		productId: uuid,
 		productName: productName,
-		states: state,
+		states: states,
 		description: description,
 		category: category,
 		qrCode: qrCode
 	};
 
-	blockchain.registerProduct(product, req.session.chain_user, req.session.peer, function(result){
+	// blockchain.registerProduct(product, req.session.chain_user, req.session.peer, function(result){
+    blockchain.registerProduct(product, "user_type2_0", "https://e57848b76d894377a7f176f544757add-vp0.us.blockchain.ibm.com:5001", function(result){
 		if(result.status === "success"){
 			mongo.addProduct(product, function(mongo_result){
 				if (mongo_result && mongo_result.r &&mongo_result.r.insertedCount
@@ -42,12 +41,13 @@ exports.register = function(req, res) {
 	};
 
 	exports.query = function(req, res){
-		var qrCode = req.body.qrCode;
-		//	var qrCode = "42352352523323"; //Test Value
+		// var qrCode = req.body.qrCode;
+			var qrCode = "42352352523323"; //Test Value
 
 		mongo.queryProduct(qrCode, function(result){
 			if (result && result.status && result.status === "success") {
-				blockchain.queryProduct(result.productId, req.session.chain_user, req.session.peer, function(blockchain_result){
+				// blockchain.queryProduct(result.productId, req.session.chain_user, req.session.peer, function(blockchain_result){
+				blockchain.queryProduct(result.productId, "user_type2_0", "https://e57848b76d894377a7f176f544757add-vp0.us.blockchain.ibm.com:5001", function(blockchain_result){
 					if(blockchain_result.status === "success"){
 						res.send({
 							status: "success",
