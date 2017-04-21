@@ -45,6 +45,7 @@ app.post('/initcontract', contract.init);
 
 app.post('/registercontract', contract.registercontract);
 app.post('/getcontract', contract.getcontract);
+app.post('/events', contract.validate);
 app.get('/register-product', product.register);
 app.get('/track/:qrCode', product.query);
 

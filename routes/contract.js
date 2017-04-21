@@ -1,9 +1,10 @@
 var https = require("https");
+var mongodb = require("./mongo");
 var gitpath = "https://github.com/jagrutipatil/Blockchain_SmartContractEditor";
-var chaincodeName = "7a29333e30aca01146c974710c6b12e7f3a3ef3ef882f846945703e1605bd04b51a6a6d0784224e7fe1fc5c6d55f1bce5a79b8d97e64dba49436d2836ed1586a";
+var chaincodeName = "04428fa8936e5d5a40703dfb6ed361cfaae81fe8c7777e318428e2d4ce476c8ff84e3579f37c1af7ea37a2deb29b30f0d5433ca5064eb5a3bc0be0f2cad59422";
 
 var options = {
-		hostname: '37ee9a5168d1497088ea117e68f329f0-vp0.us.blockchain.ibm.com',
+		hostname: 'e57848b76d894377a7f176f544757add-vp0.us.blockchain.ibm.com',
 		port: 5001,
 		path: '/chaincode',
 		method: 'POST',
@@ -37,9 +38,66 @@ function generateInitJSON(functionName, var1, userId){
 	return JSON.stringify(registrarApiSchema);	
 }
 
+exports.validate = function(req, res) {
+	var qrCode = request.body.qrcode;
+	mongodb.queryProduct(qrCode, function (status, id) {
+		if (status != 'error') {	
+			var productid = id;
+			var params = request.body.params;
+			var lat = request.body.lat;
+			var lng = request.body.lng;
+			var username = request.body.username;
+			//get peer id from mongodb
+			mongodb.getpeerid(username, function(status, chain_user, peerid) {
+				if (status != "error") {
+					//create options 
+					//send status
+					var eventOptions = {
+							hostname: peerid,
+							port: 5001,
+							path: '/chaincode',
+							method: 'POST',
+							headers: {
+								'Content-Type': 'application/json',
+							}
+					};
+					
+					var data = constructValidateJSON(methodname, chaincodeName, 'validate', productid, username, lat, lng, params , chain_user);
+					var req = https.request(options, function(res) {
+						res.setEncoding('utf8');
+						res.on('data', function (body) {
+							if(body){
+								console.log(body);
+								body = JSON.parse(body);
+								if(body.result && body.result.status === "OK"){
+									response.send("Success");
+						  		}
+							} else {
+								response.send("Error on calling blockchain API");
+							}
+						});
+					});
+
+					req.on('error', function(e) {
+						response.send('problem with request: ' + e.message);
+					});
+
+					req.write(data);
+					req.end();			
+				} else {
+					res.send("status : error");
+				}
+			});
+			
+		} else {
+			res.send("status : error");
+		}
+	});	
+};
+
 exports.init = function() {
 	if (chaincodeName === null || chaincodeName === undefined) {
-		var data = generateInitJSON('init', "Hello" , "user_type1_0");
+		var data = generateInitJSON('init', "Hello" , "user_type2_0");
 
 		var req = https.request(options, function(res) {
 			res.setEncoding('utf8');
@@ -61,6 +119,30 @@ exports.init = function() {
 	}
 }
 
+function constructValidateJSON(methodname, nameparam, functionName, productid, username, lat, lng, paramsjson , userId){
+	
+	var queryApiSchema = {
+		     jsonrpc: "2.0",
+		     method: methodname,
+		     params: {
+		         type: 1,
+		         chaincodeID: {
+		             name: nameparam
+		         },
+		         ctorMsg: {
+		             function: functionName,
+		             args: [
+		                 productid, username, lat, lng, paramsjson
+		             ]
+		         },
+		         secureContext: userId
+		     },
+		     id: 4
+		 };
+	
+	return JSON.stringify(queryApiSchema);
+	
+}
 
 function constructJSON(methodname, nameparam, functionName, var1, var2 , userId){
 	
@@ -118,7 +200,7 @@ function registercontract (request, response) {
 			var contractjson = request.body.params;
 			
 			console.log("Registering the contract for Id:" + contractid);
-			var data = constructJSON('invoke', chaincodeName, 'putcontract', contractid , contractjson, "user_type1_0");
+			var data = constructJSON('invoke', chaincodeName, 'putcontract', contractid , contractjson, "user_type2_0");
 			var req = https.request(options, function(res) {
 				res.setEncoding('utf8');
 				res.on('data', function (body) {
@@ -153,7 +235,7 @@ exports.getcontract = function(request, response) {
 	console.log(chaincodeName);
 	
 	if (chaincodeName && chaincodeName != undefined) { 
-		var data = constructGetJSON("query", chaincodeName, 'getcontract', "" + contractid, "user_type1_0");
+		var data = constructGetJSON("query", chaincodeName, 'getcontract', "" + contractid, "user_type2_0");
 		
 		var req = https.request(options, function(res) {
 			res.setEncoding('utf8');
