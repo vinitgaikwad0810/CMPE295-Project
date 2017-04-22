@@ -1,22 +1,35 @@
 <div class="container-fluid" style="margin:0 auto;">
-    <div class="col-lg-12">
+    <div id="moving-row" class="col-lg-12" style="padding:10px;" ng-style="{'margin-top': !showMap ? '100px':'0', 'box-shadow' : !showMap? '10px 10px 15px #888888' : ''}">
+        <div class="row">
+            <h4
+                    ng-style="{'visibility': !showMap ? 'visible':'hidden', 'display': !showMap ? 'block':'none'}"
+                    class="col-lg-9">Enter product id to search</h4>
+        </div>
         <div class="row">
             <div class="col-lg-9">
-                <input style="margin-bottom:5px;" id="searchTerm" class="form-control" type="text" ng-model="searchTerm" placeholder="Product id to search">
+                <input style="margin-bottom:5px;" id="searchTerm" class="form-control" type="text"
+                       ng-model="searchTerm"
+                       placeholder="Product id to search">
             </div>
 
             <div class="col-lg-3">
-                <button type="button" class="btn btn-md btn-block-custom btn-primary" ng-click="searchButtonClick()">Search</button>
-                <button type="button" class="btn btn-md btn-block-custom btn-primary" data-toggle="modal" data-target="#myModal">
+                <button type="button" class="btn btn-md btn-block-custom btn-primary" ng-click="searchButtonClick()">
+                    Search
+                </button>
+                <button type="button" class="btn btn-md btn-block-custom btn-primary" data-toggle="modal"
+                        data-target="#myModal">
                     Scan QR
                 </button>
             </div>
         </div>
+        <div class="row">
+            <div ng-bind="searchErr" style="text-align:center; color:red; min-height:10px;"></div>
+        </div>
     </div>
-    <div class="col-lg-12">
+    <div ng-style="{'visibility': showMap ? 'visible':'hidden'}" style="margin-top:5px;" class="col-lg-12">
         <div class="row">
 
-            <div class="col-lg-9">
+            <div class="col-lg-12" style="box-shadow: 10px 10px 15px #888888; padding-bottom: 10px;">
 
                 <h3>Product Tracking Visuals</h3>
                 <div class="row">
@@ -28,16 +41,20 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row">
 
-            <div class="demo col-lg-3">
-                <h3>Asset Tracking Log</h3>
+            <div class="demo col-lg-12" style="box-shadow: 10px 10px 15px #888888; margin-top:20px;">
+                <div class="col-lg-offset-5 col-lg-3">
+                    <h3>Asset Tracking Log</h3>
 
-                <ul class="progress-tracker progress-tracker--vertical">
+                    <ul class="progress-tracker progress-tracker--vertical">
 
-                    <li ng-repeat="state in states track by $index" class="progress-step is-complete">
-                        <span class="progress-marker"></span>
-                        <span class="progress-text">
-                             <div style="box-shadow: 10px 10px 5px #888888; max-width:220px;">
+                        <li ng-repeat="state in states track by $index" class="progress-step is-complete"
+                            style="margin-bottom:10px;">
+                            <span class="progress-marker"></span>
+                            <span class="progress-text">
+                             <div style=" max-width:270px; box-shadow: 10px 10px 5px #888888; padding: 10px; margin-left: -10px;">
                             <h4 class="progress-title">Step {{$index + 1}}</h4>
                             <div ng-repeat="test in state.tests">
                                 <ul class="featureList">
@@ -49,44 +66,45 @@
                             </div>
                              </div>
                         </span>
-                    </li>
-                    <!-- <li class="progress-step is-complete" >
+                        </li>
+                        <!-- <li class="progress-step is-complete" >
+              <span class="progress-marker"></span>
+              <span class="progress-text">
+              <h4 class="progress-title">Step 1</h4>
+              Summary text explaining this step to the user
+            </span>
+          </li>
+          <li class="progress-step is-complete">
           <span class="progress-marker"></span>
           <span class="progress-text">
-          <h4 class="progress-title">Step 1</h4>
+          <h4 class="progress-title">Step 2</h4>
           Summary text explaining this step to the user
         </span>
       </li>
-      <li class="progress-step is-complete">
+      <li class="progress-step is-active">
       <span class="progress-marker"></span>
       <span class="progress-text">
-      <h4 class="progress-title">Step 2</h4>
+      <h4 class="progress-title">Step 3</h4>
       Summary text explaining this step to the user
     </span>
-  </li>
-  <li class="progress-step is-active">
-  <span class="progress-marker"></span>
-  <span class="progress-text">
-  <h4 class="progress-title">Step 3</h4>
-  Summary text explaining this step to the user
-</span>
-</li>
-<li class="progress-step">
-<span class="progress-marker"></span>
-<span class="progress-text">
-<h4 class="progress-title">Step 4</h4>
-Summary text explaining this step to the user
-</span>
-</li>
-<li class="progress-step">
-<span class="progress-marker"></span>
-<span class="progress-text">
-<h4 class="progress-title">Step 5</h4>
-Summary text explaining this step to the user
-</span>
-</li> -->
-                </ul>
+    </li>
+    <li class="progress-step">
+    <span class="progress-marker"></span>
+    <span class="progress-text">
+    <h4 class="progress-title">Step 4</h4>
+    Summary text explaining this step to the user
+    </span>
+    </li>
+    <li class="progress-step">
+    <span class="progress-marker"></span>
+    <span class="progress-text">
+    <h4 class="progress-title">Step 5</h4>
+    Summary text explaining this step to the user
+    </span>
+    </li> -->
+                    </ul>
 
+                </div>
             </div>
         </div>
     </div>
@@ -97,7 +115,8 @@ Summary text explaining this step to the user
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">Scan a QR Code</h4>
                 </div>
                 <div class="modal-body">
@@ -113,19 +132,18 @@ Summary text explaining this step to the user
     <!-- End Modal -->
     <canvas id="qr-canvas" width="800" height="600" style="display:none; visibility:hidden"></canvas>
     <script type="text/javascript">
-        function read(a)
-        {
+        function read(a) {
             var val = a;
             var splitPipes = val.split('|');
             console.log(splitPipes);
             var len = splitPipes.length;
 
-            for(var i=0; i<len; i++){
+            for (var i = 0; i < len; i++) {
                 var splitEquals = splitPipes[i].split("=");
                 var lhs = splitEquals[0].trim();
-                var rhs =  splitEquals[1].trim();
+                var rhs = splitEquals[1].trim();
 
-                if(lhs === "productId")
+                if (lhs === "productId")
                     document.getElementById("searchTerm").value = rhs;
             }
 

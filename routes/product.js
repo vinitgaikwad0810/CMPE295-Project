@@ -20,25 +20,62 @@ exports.register = function (req, res) {
         qrCode: qrCode
     };
 
-    blockchain.registerProduct(product, req.session.chain_user, req.session.peer, function (result) {
-        // blockchain.registerProduct(product, "user_type2_0", "https://e57848b76d894377a7f176f544757add-vp0.us.blockchain.ibm.com:5001", function(result){
-        if (result.status === "success") {
-            mongo.addProduct(product, function (mongo_result) {
-                if (mongo_result && mongo_result.r && mongo_result.r.insertedCount
-                    && mongo_result.r.insertedCount === 1) {
+    mongo.addProduct(product, function (mongo_result) {
+        if (mongo_result && mongo_result.r && mongo_result.r.insertedCount
+            && mongo_result.r.insertedCount === 1) {
+            blockchain.registerProduct(product, req.session.chain_user, req.session.peer, function (result) {
+                // blockchain.registerProduct(product, "user_type2_0", "https://e57848b76d894377a7f176f544757add-vp0.us.blockchain.ibm.com:5001", function(result){
+                if (result.status === "success") {
                     res.send({status: 'success'});
                 } else {
-                    console.log(mongo_result.err);
-                    res.send(mongo_result.err);
+                    console.log(result.status);
+                    res.send(result.status);
                 }
             });
         } else {
-            console.log(result.status);
-            res.send({status: 'error'});
+            console.log(mongo_result.err);
+            res.send(mongo_result.err);
         }
-
     });
 };
+
+// exports.register = function (req, res) {
+//     var productName = req.body.productName;
+//     var uuid = uuidV1();
+//     var states = [];
+//     var description = req.body.description;
+//     var category = req.body.category;
+//     var qrCode = req.body.qrCode;
+//
+//
+//     var product = {
+//         productId: uuid,
+//         productName: productName,
+//         states: states,
+//         description: description,
+//         category: category,
+//         qrCode: qrCode
+//     };
+//
+//     blockchain.registerProduct(product, req.session.chain_user, req.session.peer, function (result) {
+//         // blockchain.registerProduct(product, "user_type2_0", "https://e57848b76d894377a7f176f544757add-vp0.us.blockchain.ibm.com:5001", function(result){
+//         if (result.status === "success") {
+//             mongo.addProduct(product, function (mongo_result) {
+//                 if (mongo_result && mongo_result.r && mongo_result.r.insertedCount
+//                     && mongo_result.r.insertedCount === 1) {
+//                     res.send({status: 'success'});
+//                 } else {
+//                     console.log(mongo_result.err);
+//                     res.send(mongo_result.err);
+//                 }
+//             });
+//         } else {
+//             console.log(result.status);
+//             res.send(result.status);
+//         }
+//
+//     });
+// };
 
 exports.query = function (req, res) {
     var qrCode = req.params.qrCode;
