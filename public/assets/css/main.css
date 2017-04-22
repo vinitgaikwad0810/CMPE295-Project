@@ -2539,8 +2539,8 @@ body.error .logo h1 {
 /*For QRCode*/
 #outdiv
 {
-  /*width:326px;*/
-  /*height:246px;*/
+  width:326px;
+  height:246px;
   border: solid;
   border-width: 3px 3px 3px 3px;
   margin:0 auto;
