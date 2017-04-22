@@ -2,280 +2,286 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<!--IE Compatibility modes-->
+    <meta charset="UTF-8">
+    <!--IE Compatibility modes-->
 
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<!--Mobile first-->
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-	<title>SCM Blockchain</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--Mobile first-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>SCM Blockchain</title>
 
-	<meta name="description" content="Free Admin Template Based On Twitter Bootstrap 3.x">
-	<meta name="author" content="">
+    <meta name="description" content="Free Admin Template Based On Twitter Bootstrap 3.x">
+    <meta name="author" content="">
 
-	<meta name="msapplication-TileColor" content="#5bc0de" />
-	<meta name="msapplication-TileImage" content="assets/img/metis-tile.png" />
+    <meta name="msapplication-TileColor" content="#5bc0de"/>
+    <meta name="msapplication-TileImage" content="assets/img/metis-tile.png"/>
 
-	<!-- Bootstrap -->
-	<!-- <link rel="stylesheet" href="assets/lib/bootstrap/css/bootstrap.css"> -->
-	<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
-	<link rel="stylesheet" href="assets/css/bootstrap.css"/>
+    <!-- Bootstrap -->
+    <!-- <link rel="stylesheet" href="assets/lib/bootstrap/css/bootstrap.css"> -->
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
+    <link rel="stylesheet" href="assets/css/bootstrap.css"/>
 
-	<!-- Font Awesome -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
 
-	<!-- Metis core stylesheet -->
-	<link rel="stylesheet" href="assets/css/main.css">
-
-
-	<!-- Progress Tracker Stylesheet-->
-	<link rel="stylesheet" href="stylesheets/progress-tracker.css">
-
-	<!-- metisMenu stylesheet -->
-	<link rel="stylesheet" href="assets/lib/metismenu/metisMenu.css">
-
-	<!-- onoffcanvas stylesheet -->
-	<link rel="stylesheet" href="assets/lib/onoffcanvas/onoffcanvas.css">
-
-	<!-- animate.css stylesheet -->
-	<link rel="stylesheet" href="assets/lib/animate.css/animate.css">
+    <!-- Metis core stylesheet -->
+    <link rel="stylesheet" href="assets/css/main.css">
 
 
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-	<!--[if lt IE 9]>
+    <!-- Progress Tracker Stylesheet-->
+    <link rel="stylesheet" href="stylesheets/progress-tracker.css">
+
+    <!-- metisMenu stylesheet -->
+    <link rel="stylesheet" href="assets/lib/metismenu/metisMenu.css">
+
+    <!-- onoffcanvas stylesheet -->
+    <link rel="stylesheet" href="assets/lib/onoffcanvas/onoffcanvas.css">
+
+    <!-- animate.css stylesheet -->
+    <link rel="stylesheet" href="assets/lib/animate.css/animate.css">
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+    <![endif]-->
 
-	<!--For Development Only. Not required -->
-	<script>
-		less = {
-			env: "development",
-			relativeUrls: false,
-			rootpath: "/assets/"
-		};
-	</script>
-	<link rel="stylesheet/less" type="text/css" href="assets/less/theme.less">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/2.7.1/less.js"></script>
+    <!--For Development Only. Not required -->
+    <script>
+        less = {
+            env: "development",
+            relativeUrls: false,
+            rootpath: "/assets/"
+        };
+    </script>
+    <link rel="stylesheet/less" type="text/css" href="assets/less/theme.less">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/2.7.1/less.js"></script>
 
-	<script src="javascript/register_product/qrreader.js"></script>
-	<script src="javascript/llqrcode.js"></script>
+    <script src="javascript/register_product/qrreader.js"></script>
+    <script src="javascript/llqrcode.js"></script>
 
 </head>
 
 <body ng-app="blockchainApp" class="  ">
-	<div class="bg-dark dk" id="wrap">
-		<div id="top">
-			<!-- .navbar -->
-			<nav class="navbar navbar-inverse navbar-static-top">
-				<div class="container-fluid">
+<div class="bg-dark dk" id="wrap">
+    <div id="top">
+        <!-- .navbar -->
+        <nav class="navbar navbar-inverse navbar-static-top">
+            <div class="container-fluid">
 
 
-					<!-- Brand and toggle get grouped for better mobile display -->
-					<header class="navbar-header">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <header class="navbar-header">
 
-						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-							<span class="sr-only">Toggle navigation</span> <span
-								class="icon-bar"></span> <span class="icon-bar"></span> <span
-								class="icon-bar"></span>
-						</button>
-						<a href="index.html" class="navbar-brand"><img style="height: 80%; margin: 5px 5px 5px 1px;" src="assets/img/logo.png" alt=""></a>
+                    <button type="button" class="navbar-toggle" data-toggle="collapse"
+                            data-target=".navbar-ex1-collapse">
+                        <span class="sr-only">Toggle navigation</span> <span
+                            class="icon-bar"></span> <span class="icon-bar"></span> <span
+                            class="icon-bar"></span>
+                    </button>
+                    <a href="index.html" class="navbar-brand"><img style="height: 80%; margin: 5px 5px 5px 5px;"
+                                                                   src="assets/img/logo.png" alt=""></a>
 
-					</header>
-
-
-
-					<div class="topnav">
-						<div class="btn-group">
-							<a data-placement="bottom" data-original-title="Fullscreen" data-toggle="tooltip" class="btn btn-default btn-sm" id="toggleFullScreen"> <i class="glyphicon glyphicon-fullscreen"></i>
-							</a>
-						</div>
-						<div class="btn-group">
-							<a data-placement="bottom" data-original-title="E-mail" data-toggle="tooltip" class="btn btn-default btn-sm"> <i class="fa fa-envelope"></i> <span class="label label-warning">5</span>
-							</a>
-							<a data-placement="bottom" data-original-title="Messages" href="#" data-toggle="tooltip" class="btn btn-default btn-sm">
-								<i class="fa fa-comments"></i> <span class="label label-danger">4</span>
-							</a>
-							<a data-toggle="modal" data-original-title="Help" data-placement="bottom" class="btn btn-default btn-sm" href="#helpModal"> <i class="fa fa-question"></i>
-							</a>
-						</div>
-						<div class="btn-group">
-							<a href="login.html" data-toggle="tooltip" data-original-title="Logout" data-placement="bottom" class="btn btn-metis-1 btn-sm"> <i class="fa fa-power-off"></i>
-							</a>
-						</div>
-						<div class="btn-group">
-							<a data-placement="bottom" data-original-title="Show / Hide Left" data-toggle="tooltip" class="btn btn-primary btn-sm toggle-left" id="menu-toggle"> <i class="fa fa-bars"></i>
-							</a>
-							<a href="#right" data-toggle="onoffcanvas" class="btn btn-default btn-sm" aria-expanded="false"> <span class="fa fa-fw fa-comment"></span>
-							</a>
-						</div>
-
-					</div>
+                </header>
 
 
+                <div class="topnav">
+                    <div class="btn-group">
+                        <a data-placement="bottom" data-original-title="Fullscreen" data-toggle="tooltip"
+                           class="btn btn-default btn-sm" id="toggleFullScreen"> <i
+                                class="glyphicon glyphicon-fullscreen"></i>
+                        </a>
+                    </div>
+                    <div class="btn-group">
+                        <a data-placement="bottom" data-original-title="E-mail" data-toggle="tooltip"
+                           class="btn btn-default btn-sm"> <i class="fa fa-envelope"></i> <span
+                                class="label label-warning">5</span>
+                        </a>
+                        <a data-placement="bottom" data-original-title="Messages" href="#" data-toggle="tooltip"
+                           class="btn btn-default btn-sm">
+                            <i class="fa fa-comments"></i> <span class="label label-danger">4</span>
+                        </a>
+                        <a data-toggle="modal" data-original-title="Help" data-placement="bottom"
+                           class="btn btn-default btn-sm" href="#helpModal"> <i class="fa fa-question"></i>
+                        </a>
+                    </div>
+                    <div class="btn-group">
+                        <a href="login.html" data-toggle="tooltip" data-original-title="Logout" data-placement="bottom"
+                           class="btn btn-metis-1 btn-sm"> <i class="fa fa-power-off"></i>
+                        </a>
+                    </div>
+                    <div class="btn-group">
+                        <a data-placement="bottom" data-original-title="Show / Hide Left" data-toggle="tooltip"
+                           class="btn btn-primary btn-sm toggle-left" id="menu-toggle"> <i class="fa fa-bars"></i>
+                        </a>
+                        <a href="#right" data-toggle="onoffcanvas" class="btn btn-default btn-sm" aria-expanded="false">
+                            <span class="fa fa-fw fa-comment"></span>
+                        </a>
+                    </div>
+
+                </div>
 
 
-					<div class="collapse navbar-collapse navbar-ex1-collapse">
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
 
-						<!-- .nav -->
-						<ul class="nav navbar-nav">
-							<li><a href="login.html"><i class="fa fa-sign-in"></i> User</a></li>
-							<li><a href="index.html#!/register-product">Register Product</a></li>
-							<li><a href="index.html#!/asset-tracking">Asset Tracking</a>
-							<li><a href="index.html#!/register-contract">Register Contract</a>	
-								<li class='dropdown '><a href="#" class="dropdown-toggle" data-toggle="dropdown"> Form Elements <b class="caret"></b>
-							</a>
-									<ul class="dropdown-menu">
-										<li><a href="form-general.html">General</a></li>
-										<li><a href="form-validation.html">Validation</a></li>
-										<li><a href="form-wysiwyg.html">WYSIWYG</a></li>
-										<li><a href="form-wizard.html">Wizard &amp; File
-											Upload</a></li>
-									</ul>
-								</li>
-						</ul>
-						<!-- /.nav -->
-					</div>
-				</div>
-				<!-- /.container-fluid -->
-			</nav>
-		</div>
-		<!-- /#top -->
-		<div id="content">
-			<div class="outer">
-				<div class="inner bg-light lter">
+                    <!-- .nav -->
+                    <ul class="nav navbar-nav">
+                        <li><a href="login.html"><i class="fa fa-sign-in"></i> User</a></li>
+                        <li><a href="index.html#!/register-product">Register Product</a></li>
+                        <li><a href="index.html#!/asset-tracking">Asset Tracking</a>
+                        <li><a href="index.html#!/register-contract">Register Contract</a>
+                        <li class='dropdown '><a href="#" class="dropdown-toggle" data-toggle="dropdown"> Form Elements
+                            <b class="caret"></b>
+                        </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="form-general.html">General</a></li>
+                                <li><a href="form-validation.html">Validation</a></li>
+                                <li><a href="form-wysiwyg.html">WYSIWYG</a></li>
+                                <li><a href="form-wizard.html">Wizard &amp; File
+                                    Upload</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!-- /.nav -->
+                </div>
+            </div>
+            <!-- /.container-fluid -->
+        </nav>
+    </div>
+    <!-- /#top -->
+    <div id="content">
+        <div class="outer">
+            <div class="inner bg-light lter">
 
-					<div ng-view></div>
+                <div ng-view></div>
 
-				</div>
-				<!-- /.inner -->
-			</div>
-			<!-- /.outer -->
-		</div>
-		<!-- /#content -->
+            </div>
+            <!-- /.inner -->
+        </div>
+        <!-- /.outer -->
+    </div>
+    <!-- /#content -->
 
-		<div id="right" class="onoffcanvas is-right is-fixed bg-light" aria-expanded=false>
-			<a class="onoffcanvas-toggler" href="#right" data-toggle=onoffcanvas aria-expanded=false></a> <br> <br>
-			<div class="alert alert-danger">
-				<button type="button" class="close" data-dismiss="alert">&times;</button>
-				<strong>Warning!</strong> Best check yo self, you're not looking too good.
-			</div>
-			<!-- .well well-small -->
-			<div class="well well-small dark">
-				<ul class="list-unstyled">
-					<li>Visitor <span class="inlinesparkline pull-right">1,4,4,7,5,9,10</span></li>
-					<li>Online Visitor <span class="dynamicsparkline pull-right">Loading..</span></li>
-					<li>Popularity <span class="dynamicbar pull-right">Loading..</span></li>
-					<li>New Users <span class="inlinebar pull-right">1,3,4,5,3,5</span></li>
-				</ul>
-			</div>
-			<!-- /.well well-small -->
-			<!-- .well well-small -->
-			<div class="well well-small dark">
-				<button class="btn btn-block">Default</button>
-				<button class="btn btn-primary btn-block">Primary</button>
-				<button class="btn btn-info btn-block">Info</button>
-				<button class="btn btn-success btn-block">Success</button>
-				<button class="btn btn-danger btn-block">Danger</button>
-				<button class="btn btn-warning btn-block">Warning</button>
-				<button class="btn btn-inverse btn-block">Inverse</button>
-				<button class="btn btn-metis-1 btn-block">btn-metis-1</button>
-				<button class="btn btn-metis-2 btn-block">btn-metis-2</button>
-				<button class="btn btn-metis-3 btn-block">btn-metis-3</button>
-				<button class="btn btn-metis-4 btn-block">btn-metis-4</button>
-				<button class="btn btn-metis-5 btn-block">btn-metis-5</button>
-				<button class="btn btn-metis-6 btn-block">btn-metis-6</button>
-			</div>
-			<!-- /.well well-small -->
-			<!-- .well well-small -->
-			<div class="well well-small dark">
-				<span>Default</span><span class="pull-right"><small>20%</small></span>
+    <div id="right" class="onoffcanvas is-right is-fixed bg-light" aria-expanded=false>
+        <a class="onoffcanvas-toggler" href="#right" data-toggle=onoffcanvas aria-expanded=false></a> <br> <br>
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Warning!</strong> Best check yo self, you're not looking too good.
+        </div>
+        <!-- .well well-small -->
+        <div class="well well-small dark">
+            <ul class="list-unstyled">
+                <li>Visitor <span class="inlinesparkline pull-right">1,4,4,7,5,9,10</span></li>
+                <li>Online Visitor <span class="dynamicsparkline pull-right">Loading..</span></li>
+                <li>Popularity <span class="dynamicbar pull-right">Loading..</span></li>
+                <li>New Users <span class="inlinebar pull-right">1,3,4,5,3,5</span></li>
+            </ul>
+        </div>
+        <!-- /.well well-small -->
+        <!-- .well well-small -->
+        <div class="well well-small dark">
+            <button class="btn btn-block">Default</button>
+            <button class="btn btn-primary btn-block">Primary</button>
+            <button class="btn btn-info btn-block">Info</button>
+            <button class="btn btn-success btn-block">Success</button>
+            <button class="btn btn-danger btn-block">Danger</button>
+            <button class="btn btn-warning btn-block">Warning</button>
+            <button class="btn btn-inverse btn-block">Inverse</button>
+            <button class="btn btn-metis-1 btn-block">btn-metis-1</button>
+            <button class="btn btn-metis-2 btn-block">btn-metis-2</button>
+            <button class="btn btn-metis-3 btn-block">btn-metis-3</button>
+            <button class="btn btn-metis-4 btn-block">btn-metis-4</button>
+            <button class="btn btn-metis-5 btn-block">btn-metis-5</button>
+            <button class="btn btn-metis-6 btn-block">btn-metis-6</button>
+        </div>
+        <!-- /.well well-small -->
+        <!-- .well well-small -->
+        <div class="well well-small dark">
+            <span>Default</span><span class="pull-right"><small>20%</small></span>
 
-				<div class="progress xs">
-					<div class="progress-bar progress-bar-info" style="width: 20%"></div>
-				</div>
-				<span>Success</span><span class="pull-right"><small>40%</small></span>
+            <div class="progress xs">
+                <div class="progress-bar progress-bar-info" style="width: 20%"></div>
+            </div>
+            <span>Success</span><span class="pull-right"><small>40%</small></span>
 
-				<div class="progress xs">
-					<div class="progress-bar progress-bar-success" style="width: 40%"></div>
-				</div>
-				<span>warning</span><span class="pull-right"><small>60%</small></span>
+            <div class="progress xs">
+                <div class="progress-bar progress-bar-success" style="width: 40%"></div>
+            </div>
+            <span>warning</span><span class="pull-right"><small>60%</small></span>
 
-				<div class="progress xs">
-					<div class="progress-bar progress-bar-warning" style="width: 60%"></div>
-				</div>
-				<span>Danger</span><span class="pull-right"><small>80%</small></span>
+            <div class="progress xs">
+                <div class="progress-bar progress-bar-warning" style="width: 60%"></div>
+            </div>
+            <span>Danger</span><span class="pull-right"><small>80%</small></span>
 
-				<div class="progress xs">
-					<div class="progress-bar progress-bar-danger" style="width: 80%"></div>
-				</div>
-			</div>
-		</div>
-		<!-- /#right -->
-	</div>
-	<!-- /#wrap -->
-	<footer class="  bg-dark dker">
-	</footer>
-	<!-- /#footer -->
-	<!--jQuery -->
-	<script src="bower_components/jquery/dist/jquery.min.js"></script>
-	<!--<script src="assets/lib/jquery/jquery.js"></script>-->
+            <div class="progress xs">
+                <div class="progress-bar progress-bar-danger" style="width: 80%"></div>
+            </div>
+        </div>
+    </div>
+    <!-- /#right -->
+</div>
+<!-- /#wrap -->
+<footer class="  bg-dark dker">
+</footer>
+<!-- /#footer -->
+<!--jQuery -->
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<!--<script src="assets/lib/jquery/jquery.js"></script>-->
 
-	<!--AngularJS -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-route.min.js"></script>
+<!--AngularJS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-route.min.js"></script>
 
-	<script src="javascript/app.js"></script>
+<script src="javascript/app.js"></script>
 
-	<!--Bootstrap -->
-	<!-- 	<script src="assets/lib/bootstrap/js/bootstrap.js"></script> -->
-	<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
-	<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!--Bootstrap -->
+<!-- 	<script src="assets/lib/bootstrap/js/bootstrap.js"></script> -->
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
-	<!-- angular gmap -->
+<!-- angular gmap -->
 
-	<!-- <script src="bower_components/lodash/dist/lodash.min.js"></script>
-	<script src="bower_components/angular-google-maps/dist/angular-google-maps.min.js"></script> -->
-	<script src="bower_components/ngmap/build/scripts/ng-map.min.js"></script>
-	<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdF4y0AjJujQ248MSKd8KC41wm9fIvpgc"> </script>-->
+<!-- <script src="bower_components/lodash/dist/lodash.min.js"></script>
+<script src="bower_components/angular-google-maps/dist/angular-google-maps.min.js"></script> -->
+<script src="bower_components/ngmap/build/scripts/ng-map.min.js"></script>
+<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdF4y0AjJujQ248MSKd8KC41wm9fIvpgc"> </script>-->
 
 
 <!--Asset Tracking Service-->
-	<script src="javascript/asset-tracking/asset-tracking-service.js"></script>
-	<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdF4y0AjJujQ248MSKd8KC41wm9fIvpgc"> </script>-->
+<script src="javascript/asset-tracking/asset-tracking-service.js"></script>
+<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdF4y0AjJujQ248MSKd8KC41wm9fIvpgc"> </script>-->
 
 
+<!-- MetisMenu -->
+<script src="assets/lib/metismenu/metisMenu.js"></script>
+<!-- onoffcanvas -->
+<script src="assets/lib/onoffcanvas/onoffcanvas.js"></script>
+<!-- Screenfull -->
+<script src="assets/lib/screenfull/screenfull.js"></script>
 
-	<!-- MetisMenu -->
-	<script src="assets/lib/metismenu/metisMenu.js"></script>
-	<!-- onoffcanvas -->
-	<script src="assets/lib/onoffcanvas/onoffcanvas.js"></script>
-	<!-- Screenfull -->
-	<script src="assets/lib/screenfull/screenfull.js"></script>
-
-	<script src="/assets/lib/inputlimiter/jquery.inputlimiter.js"></script>
-	<script src="/assets/lib/validVal/js/jquery.validVal.min.js"></script>
-	<script src="/assets/lib/bootstrap-daterangepicker/daterangepicker.js"></script>
-
-
-	<!-- Metis core scripts -->
-	<script src="assets/js/core.js"></script>
-	<!-- Metis demo scripts -->
-	<script src="assets/js/app.js"></script>
+<script src="/assets/lib/inputlimiter/jquery.inputlimiter.js"></script>
+<script src="/assets/lib/validVal/js/jquery.validVal.min.js"></script>
+<script src="/assets/lib/bootstrap-daterangepicker/daterangepicker.js"></script>
 
 
+<!-- Metis core scripts -->
+<script src="assets/js/core.js"></script>
+<!-- Metis demo scripts -->
+<script src="assets/js/app.js"></script>
 
 
-	<!-- Angular controllers -->
+<!-- Angular controllers -->
 
-	<script src="javascript/register_product/register.js"></script>
-	<script src="javascript/asset-tracking/asset-tracking.js"></script>
-	<script src="javascript/register_contract/register-contract.js"></script>
+<script src="javascript/register_product/register.js"></script>
+<script src="javascript/asset-tracking/asset-tracking.js"></script>
+<script src="javascript/register_contract/register-contract.js"></script>
 
 
-	<!-- Angular controllers -->
+<!-- Angular controllers -->
 </body>
 
 </html>

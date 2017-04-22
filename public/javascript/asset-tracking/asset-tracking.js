@@ -22,8 +22,6 @@ app.controller('assetTrackingController', ['$scope', '$http', 'NgMap', function(
 
 
         });
-
-
     }
 
 
@@ -63,8 +61,21 @@ app.controller('assetTrackingController', ['$scope', '$http', 'NgMap', function(
 
                 var infoWindow = new google.maps.InfoWindow();
                 var marker = markers[markers.length - 1];
-                var test = JSON.stringify(vm.states[i].tests);
-                var content = "<strong>STEP " + i + "</strong><br>" + test;
+                var test = vm.states[i].tests;
+
+                var testsLen = test.length;
+                var testContent = '<ul class="featureList">';
+
+                for(var x=0; x<testsLen; x++){
+                    testContent+='<li class="'+(test[x].expectedResult===test[x].actualResult?'tick':'cross')+'">';
+                    testContent+='&nbsp;&nbsp;'+test[x].objective;
+                    testContent+='</li>';
+                }
+                testContent+='</ul>';
+
+                console.log(testContent);
+
+                var content = "<strong>STEP " + i + "</strong><br>" + testContent;
                 google.maps.event.addListener(marker, 'click', (function(marker, content, infoWindow) {
                     return function() {
                         infoWindow.setContent(content);
@@ -154,7 +165,7 @@ app.controller('assetTrackingController', ['$scope', '$http', 'NgMap', function(
                 status: "VERIFIED"
             },
             {
-                objective: "Check if the packing is intact",
+                objective: "Check if the product is intact",
 
                 expectedResult: "It is intact",
                 actualResult: "It isn't",
@@ -179,10 +190,10 @@ app.controller('assetTrackingController', ['$scope', '$http', 'NgMap', function(
                 status: "VERIFIED"
             },
             {
-                objective: "Check if the packing is intact",
+                objective: "Check if the product is intact",
 
                 expectedResult: "It is intact",
-                actualResult: "It isn't",
+                actualResult: "It is intact",
                 status: "VERIFIED"
             }
 
@@ -202,7 +213,7 @@ app.controller('assetTrackingController', ['$scope', '$http', 'NgMap', function(
             objective: "Check if the packing is intact",
 
             expectedResult: "It is intact",
-            actualResult: "It isn't",
+            actualResult: "It is intact",
             status: "VERIFIED"
         }]
 

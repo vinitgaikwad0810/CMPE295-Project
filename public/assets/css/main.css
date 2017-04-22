@@ -1,3 +1,5 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto:300);
+
 /**
  * bootstrap-admin-template - Free Admin Template Based On Twitter Bootstrap 3.x
  * @version 2.4.2
@@ -2541,12 +2543,30 @@ body.error .logo h1 {
 {
   width:326px;
   height:246px;
-  border: solid;
-  border-width: 3px 3px 3px 3px;
   margin:0 auto;
 }
 
 #v{
     width: 320px;
     height: 240px;
+}
+
+/* List styling */
+.featureList, .featureList ul {
+  margin-top: 0;
+  padding-left: 2em;
+  list-style-type: none;
+}
+.featureList li:before {
+  position: absolute;
+  margin-left: -1.3em;
+  font-weight: bold;
+}
+.featureList li.tick:before {
+  content: "\2713";
+  color: darkgreen;
+}
+.featureList li.cross:before {
+  content: "\2717";
+  color: crimson;
 }

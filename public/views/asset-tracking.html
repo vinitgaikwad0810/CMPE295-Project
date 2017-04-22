@@ -15,12 +15,12 @@
 
             <div class="col-sm-7">
 
-
-                <h3>Pruduct Tracking Visuals</h3>
+                <h3>Product Tracking Visuals</h3>
                 <div class="row">
                     <div class="col-sm-12">
-                        <div map-lazy-load="https://maps.google.com/maps/api/js" map-lazy-load-params="{{googleMapsUrl}}">
-                            <ng-map center="41,-87" zoom="3"></ng-map>
+                        <div map-lazy-load="https://maps.google.com/maps/api/js"
+                             map-lazy-load-params="{{googleMapsUrl}}">
+                            <ng-map center="41,-87" zoom="3" style="height:500px;"></ng-map>
                         </div>
                     </div>
                 </div>
@@ -34,9 +34,18 @@
                     <li ng-repeat="state in states track by $index" class="progress-step is-complete">
                         <span class="progress-marker"></span>
                         <span class="progress-text">
-              <h4 class="progress-title">Step {{$index}}</h4>
-              {{state}}
-            </span>
+                             <div style="box-shadow: 10px 10px 5px #888888; max-width:250px;">
+                            <h4 class="progress-title">Step {{$index}}</h4>
+                            <div ng-repeat="test in state.tests">
+                                <ul class="featureList">
+                                    <li ng-class="{ tick: test.expectedResult == test.actualResult, cross: test.expectedResult != test.actualResult }">
+                                        &nbsp;&nbsp;&nbsp;{{test.objective}}
+                                    </li>
+                                </ul>
+
+                            </div>
+                             </div>
+                        </span>
                     </li>
                     <!-- <li class="progress-step is-complete" >
           <span class="progress-marker"></span>
