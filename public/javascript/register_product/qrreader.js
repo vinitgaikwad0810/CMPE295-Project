@@ -126,7 +126,7 @@ function error(error) {
     return;
 }
 
-function load()
+function load(callbackFn)
 {
     // if(isCanvasSupported() && window.File && window.FileReader)    {
     //     //initCanvas(800, 600);
@@ -136,7 +136,8 @@ function load()
     if(isCanvasSupported() && window.File && window.FileReader)
     {
         initCanvas(800, 600);
-        qrcode.callback = read;
+        qrcode.callback = callbackFn;
+        // qrcode.callback = read;
         setwebcam();
     }
 }

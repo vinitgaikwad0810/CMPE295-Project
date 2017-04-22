@@ -72,7 +72,7 @@
 					<div class="form-group">
 						<div class="col-lg-6 col-lg-offset-4">
 							<button class="btn btn-md btn-success btn-block" ng-click="register()">Register</button>
-							<button type="button" class="btn btn-md btn-primary btn-block" data-toggle="modal" data-target="#myModal">
+							<button type="button" class="btn btn-md btn-primary btn-block" onclick="showQRScannerRegister()">
 								Launch QRScanner
 							</button>
 						</div>
@@ -108,31 +108,36 @@
 	<!-- End Modal -->
 	<canvas id="qr-canvas" width="800" height="600" style="display:none; visibility:hidden"></canvas>
 	<script type="text/javascript">
-        function read(a)
-        {
-            var val = a;
-            var splitPipes = val.split('|');
-            console.log(splitPipes);
-            var len = splitPipes.length;
 
-            for(var i=0; i<len; i++){
-                var splitEquals = splitPipes[i].split("=");
-                var lhs = splitEquals[0].trim();
-                var rhs =  splitEquals[1].trim();
+        function showQRScannerRegister() {
 
-                if(lhs === "productId")
-                    document.getElementById("txtProductId").value = rhs;
-                else if(lhs === "productName")
-                    document.getElementById("txtProductName").value = rhs;
-                else if(lhs === "productDescription")
-                    document.getElementById("txtProductDescription").value = rhs;
-                else if(lhs === "productCategory")
-                    document.getElementById("selectCategory").value = rhs;
-            }
+            var rdRegister = function(a){
+                var val = a;
+                var splitPipes = val.split('|');
+                console.log(splitPipes);
+                var len = splitPipes.length;
 
-            $('#myModal').modal("hide");
+                for(var i=0; i<len; i++){
+                    var splitEquals = splitPipes[i].split("=");
+                    var lhs = splitEquals[0].trim();
+                    var rhs =  splitEquals[1].trim();
+
+                    if(lhs === "productId")
+                        document.getElementById("txtProductId").value = rhs;
+                    else if(lhs === "productName")
+                        document.getElementById("txtProductName").value = rhs;
+                    else if(lhs === "productDescription")
+                        document.getElementById("txtProductDescription").value = rhs;
+                    else if(lhs === "productCategory")
+                        document.getElementById("selectCategory").value = rhs;
+                }
+
+                $('#myModal').modal("hide");
+            };
+
+            load(rdRegister);
+            $('#myModal').modal("show");
         }
-		load();
 	</script>
 </div>
 <!-- /.row -->
