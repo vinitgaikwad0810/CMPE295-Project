@@ -164,19 +164,10 @@ function error(error) {
 
 function load()
 {
-    if(isCanvasSupported() && window.File && window.FileReader)
-    {
-        initCanvas(800, 600);
+    if(isCanvasSupported() && window.File && window.FileReader)    {
+        //initCanvas(800, 600);
         qrcode.callback = read;
-        document.getElementById("mainbody").style.display="inline";
         setwebcam();
-    }
-    else
-    {
-        document.getElementById("mainbody").style.display="inline";
-        document.getElementById("mainbody").innerHTML='<p id="mp1">QR code scanner for HTML5 capable browsers</p><br>'+
-            '<br><p id="mp2">sorry your browser is not supported</p><br><br>'+
-            '<p id="mp1">try <a href="http://www.mozilla.com/firefox"><img src="firefox.png"/></a> or <a href="http://chrome.google.com"><img src="chrome_logo.gif"/></a> or <a href="http://www.opera.com"><img src="Opera-logo.png"/></a></p>';
     }
 }
 
@@ -214,7 +205,6 @@ function setwebcam()
 function setwebcam2(options)
 {
     console.log(options);
-    document.getElementById("result").innerHTML="- scanning -";
     if(stype==1)
     {
         setTimeout(captureToCanvas, 500);
@@ -243,26 +233,6 @@ function setwebcam2(options)
         n.mozGetUserMedia({video: options, audio: false}, success, error);
     }
 
-    document.getElementById("qrimg").style.opacity=0.2;
-    document.getElementById("webcamimg").style.opacity=1.0;
-
     stype=1;
     setTimeout(captureToCanvas, 500);
-}
-
-function setimg()
-{
-    document.getElementById("result").innerHTML="";
-    if(stype==2)
-        return;
-    document.getElementById("outdiv").innerHTML = imghtml;
-    //document.getElementById("qrimg").src="qrimg.png";
-    //document.getElementById("webcamimg").src="webcam2.png";
-    document.getElementById("qrimg").style.opacity=1.0;
-    document.getElementById("webcamimg").style.opacity=0.2;
-    var qrfile = document.getElementById("qrfile");
-    qrfile.addEventListener("dragenter", dragenter, false);
-    qrfile.addEventListener("dragover", dragover, false);
-    qrfile.addEventListener("drop", drop, false);
-    stype=2;
 }
