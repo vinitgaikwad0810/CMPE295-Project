@@ -114,27 +114,24 @@ function read(a)
 
 function parseValues(val){
     var splitPipes = val.split("|");
+
     var len = splitPipes.length();
+    alert('len = '+len);
     for(var i=0; i<len; i++){
         var splitEquals = splitPipes[i].split("=");
 
-        switch(splitEquals[0].trim()){
-            case "productId":
-                document.getElementById("txtProductId").value = splitEquals[1];
-                break;
-            case "productName":
-                document.getElementById("txtProductName").value = splitEquals[1];
-                break;
-            case "productDescription":
-                document.getElementById("txtProductDescription").value = splitEquals[1];
-                break;
-            case "productCategory":
-                document.getElementById("selectCategory").value = splitEquals[1];
-                break;
-            default:
-                break;
-        }
+        var lhs = splitEquals[0].trim();
+        alert(lhs);
+        var rhs =  splitEquals[1].trim();
 
+        if(lhs === "productId")
+            document.getElementById("txtProductId").value = rhs;
+        else if(lhs === "productName")
+            document.getElementById("txtProductName").value = rhs;
+        else if(lhs === "productDescription")
+            document.getElementById("txtProductDescription").value = rhs;
+        else if(lhs === "productCategory")
+            document.getElementById("selectCategory").value = rhs;
     }
 }
 
