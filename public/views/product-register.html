@@ -8,19 +8,6 @@
 					<i class="fa fa-edit"></i>
 				</div>
 				<h5>Product Details</h5>
-				<!-- .toolbar -->
-				<div class="toolbar">
-					<nav style="padding: 8px;">
-						<a href="javascript:;" class="btn btn-default btn-xs collapse-box">
-							<i class="fa fa-minus"></i>
-						</a> <a href="javascript:;" class="btn btn-default btn-xs full-box">
-							<i class="fa fa-expand"></i>
-						</a> <a href="javascript:;" class="btn btn-danger btn-xs close-box">
-							<i class="fa fa-times"></i>
-						</a>
-					</nav>
-				</div>
-				<!-- /.toolbar -->
 			</header>
 			<div id="div-1" class="body">
 				<form class="form-horizontal">
@@ -119,6 +106,32 @@
 	</div>
 	<!-- End Modal -->
 	<canvas id="qr-canvas" width="800" height="600" style="display:none; visibility:hidden"></canvas>
-	<script type="text/javascript">load();</script>
+	<script type="text/javascript">
+        function read(a)
+        {
+            var val = a;
+            var splitPipes = val.split('|');
+            console.log(splitPipes);
+            var len = splitPipes.length;
+
+            for(var i=0; i<len; i++){
+                var splitEquals = splitPipes[i].split("=");
+                var lhs = splitEquals[0].trim();
+                var rhs =  splitEquals[1].trim();
+
+                if(lhs === "productId")
+                    document.getElementById("txtProductId").value = rhs;
+                else if(lhs === "productName")
+                    document.getElementById("txtProductName").value = rhs;
+                else if(lhs === "productDescription")
+                    document.getElementById("txtProductDescription").value = rhs;
+                else if(lhs === "productCategory")
+                    document.getElementById("selectCategory").value = rhs;
+            }
+
+            $('#myModal').modal("hide");
+        }
+		load();
+	</script>
 </div>
 <!-- /.row -->

@@ -1,32 +1,33 @@
-<div class="container-fluid">
+<div class="container-fluid" style="margin:0 auto;">
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-9">
+                <input style="margin-bottom:5px;" class="form-control" type="text" ng-model="searchTerm" placeholder="Product id to search">
 
-    <div class="row">
-        <div class="col-xs-10">
-            <input class="form-control" type="text" ng-model="searchTerm">
+            </div>
 
-        </div>
-
-        <div class="col-xs-2">
-            <button type="button" class="btn btn-primary" ng-click="searchButtonClick()">Search</button>
+            <div class="col-lg-3">
+                <button type="button" class="btn btn-md btn-primary btn-block" ng-click="searchButtonClick()">Search</button>
+            </div>
         </div>
     </div>
     <div class="col-lg-12">
         <div class="row">
 
-            <div class="col-sm-7">
+            <div class="col-lg-9">
 
                 <h3>Product Tracking Visuals</h3>
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-lg-12">
                         <div map-lazy-load="https://maps.google.com/maps/api/js"
                              map-lazy-load-params="{{googleMapsUrl}}">
-                            <ng-map center="41,-87" zoom="3" style="height:500px;"></ng-map>
+                            <ng-map center="41,-87" zoom="3" style="height:450px;"></ng-map>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="demo col-sm-5">
+            <div class="demo col-lg-3">
                 <h3>Asset Tracking Log</h3>
 
                 <ul class="progress-tracker progress-tracker--vertical">
@@ -34,8 +35,8 @@
                     <li ng-repeat="state in states track by $index" class="progress-step is-complete">
                         <span class="progress-marker"></span>
                         <span class="progress-text">
-                             <div style="box-shadow: 10px 10px 5px #888888; max-width:250px;">
-                            <h4 class="progress-title">Step {{$index}}</h4>
+                             <div style="box-shadow: 10px 10px 5px #888888; max-width:220px;">
+                            <h4 class="progress-title">Step {{$index + 1}}</h4>
                             <div ng-repeat="test in state.tests">
                                 <ul class="featureList">
                                     <li ng-class="{ tick: test.expectedResult == test.actualResult, cross: test.expectedResult != test.actualResult }">

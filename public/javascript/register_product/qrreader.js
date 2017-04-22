@@ -101,31 +101,6 @@ function htmlEntities(str) {
     return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
-function read(a)
-{
-    var val = a;
-    var splitPipes = val.split('|');
-    console.log(splitPipes);
-    var len = splitPipes.length;
-
-    for(var i=0; i<len; i++){
-        var splitEquals = splitPipes[i].split("=");
-        var lhs = splitEquals[0].trim();
-        var rhs =  splitEquals[1].trim();
-
-        if(lhs === "productId")
-            document.getElementById("txtProductId").value = rhs;
-        else if(lhs === "productName")
-            document.getElementById("txtProductName").value = rhs;
-        else if(lhs === "productDescription")
-            document.getElementById("txtProductDescription").value = rhs;
-        else if(lhs === "productCategory")
-            document.getElementById("selectCategory").value = rhs;
-    }
-
-    $('#myModal').modal("hide");
-}
-
 function isCanvasSupported(){
     var elem = document.createElement('canvas');
     return !!(elem.getContext && elem.getContext('2d'));

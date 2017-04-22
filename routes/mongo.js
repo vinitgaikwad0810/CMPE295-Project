@@ -222,7 +222,7 @@ exports.queryProduct = function(qrCode, callback){
             });
         } else {
             db.collection('products').find({
-                qrCode : qrCode
+                "qrCode" : ""+qrCode
             }).toArray(function(err, docs) {
                 if (err) {
                     console.log(err);

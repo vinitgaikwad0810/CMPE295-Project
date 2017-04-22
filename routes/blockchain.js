@@ -1,6 +1,6 @@
 var https = require("https");
 
-var chainCodeName = '02c911a97e94abeb71d2475c3e4563ed959e25307c81166fa7e1b9e504cc3d6cccf2c3f67f01f434be684a62a5f1ed1980646d4cdc5743c3c37ca263a30216f6';
+var chainCodeName ='deef481fb41ef34ad3fd9c97b70992795d734a20c65b7ec9083677ad7ebc12648736b381e065b1143b2ad1deeb1f892c53d8847ed2d0523402ea325cda149308';
 
 function getProductQueryApiSchema(productId, userId){
 	
@@ -114,7 +114,17 @@ exports.queryProduct = function(productId, user, peer, callback){
 		res.setEncoding('utf8');
 		res.on('data', function (body) {
 			if(body){
-				body = JSON.parse(body);
+				console.log(body);
+				try{
+                    body = JSON.parse(body);
+				} catch (err) {
+					console.log('error parsing response body');
+                    callback({
+                        status: "error",
+                        err: "Error on calling blockchain API"
+                    });
+				}
+
 				if(body.result && body.result.status === "OK"){
 					callback({
 						status: "success",

@@ -72,6 +72,5 @@ exports.query = function (req, res) {
 
 
 exports.track = function (req, res) {
-    console.log(req.params);
     query(req, res);
 };

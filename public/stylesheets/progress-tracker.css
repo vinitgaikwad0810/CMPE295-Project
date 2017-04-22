@@ -268,7 +268,7 @@
 
 .progress-tracker--vertical .progress-step::after {
   right: auto;
-  top: 14px;
+  top: 54px;
   left: 12px;
   width: 4px;
   height: 100%;
@@ -276,6 +276,7 @@
 
 .progress-tracker--vertical .progress-marker {
   position: absolute;
+  top: 40px;
   left: 0;
 }
 

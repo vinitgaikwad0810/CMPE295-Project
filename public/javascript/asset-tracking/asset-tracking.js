@@ -1,237 +1,90 @@
 //var app = angular.module('blockchainApp', ['ngRoute']);
 //AIzaSyAdF4y0AjJujQ248MSKd8KC41wm9fIvpgc
-app.controller('assetTrackingController', ['$scope', '$http', 'NgMap', function($scope, $http, NgMap, AssetTrackingService) {
+app.controller('assetTrackingController', ['$scope', '$http', 'NgMap', function ($scope, $http, NgMap, AssetTrackingService) {
     var vm = $scope;
     $scope.product = {};
-    console.log('loaded');
+    $scope.states = [];
 
     $scope.googleMapsUrl = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAdF4y0AjJujQ248MSKd8KC41wm9fIvpgc";
 
-
-    $scope.searchButtonClick = function() {
-
-
-        console.log($scope.searchTerm);
-
+    $scope.searchButtonClick = function () {
         //  AssetTrackingService.getAssetDetails($scope.searchTerm);
-          // Test it with Qr Code 3fdsf-324-234-fdsf
-        $http.get('/track/' + $scope.searchTerm).then(function(response) {
-
-           console.log("Track");
+        // Test it with Qr Code 3fdsf-324-234-fdsf
+        var url = '/track/' + $scope.searchTerm;
+        niceURI = url.replace(/[^a-zA-Z0-9-_]/g, '');
+        $http.get(url).then(function (response) {
             console.log(response.data);
-
-
+            if (response.data.status === "success") {
+                $scope.product = response.data.product;
+                $scope.states = $scope.product.states;
+                $scope.setMap();
+            }
         });
     }
 
+    $scope.setMap = function () {
 
-    NgMap.getMap().then(function(map) {
-        console.log(map.getCenter());
-        console.log('markers', map.markers);
-        console.log('shapes', map.shapes);
+        NgMap.getMap().then(function (map) {
 
-        var flightPlanCoordinates = [];
-        var markers = [];
-        var infoWindows = [];
+            var flightPlanCoordinates = [];
+            var markers = [];
+            var infoWindows = [];
 
-        for (var i = 0; i < vm.states.length; i++) {
+            for (var i = 0; i < vm.states.length; i++) {
 
-            var func = function(index) {
-                var myLatlng = new google.maps.LatLng(vm.states[i].lat, vm.states[i].lang);
+                var func = function (index) {
+                    var myLatlng = new google.maps.LatLng(vm.states[index].lat, vm.states[index].lang);
 
-                flightPlanCoordinates[flightPlanCoordinates.length] = myLatlng;
-                console.log(vm.states[i].lat);
-                console.log(vm.states[i].lang);
-                // var myLatLng = {
-                //     lat: vm.states[i].lat,
-                //     lng: vm.states[i].lang
-                // };
+                    flightPlanCoordinates[flightPlanCoordinates.length] = myLatlng;
 
-                markers[markers.length] = new google.maps.Marker({
-                    position: myLatlng,
-                    map: map,
-                    title: 'Hello World!'
-                });
+                    markers[markers.length] = new google.maps.Marker({
+                        position: myLatlng,
+                        map: map,
+                        title: 'Hello World!'
+                    });
 
+                    var infoWindow = new google.maps.InfoWindow();
+                    var marker = markers[markers.length - 1];
+                    var test = vm.states[i].tests;
 
+                    var testsLen = test.length;
+                    var testContent = '<ul class="featureList">';
 
-                // infoWindows[infoWindows.length] = new google.maps.InfoWindow({
-                //     content: "<strong>STEP " + i + "</strong><br>" + JSON.stringify(vm.states[i].tests)
-                // });
-
-                var infoWindow = new google.maps.InfoWindow();
-                var marker = markers[markers.length - 1];
-                var test = vm.states[i].tests;
-
-                var testsLen = test.length;
-                var testContent = '<ul class="featureList">';
-
-                for(var x=0; x<testsLen; x++){
-                    testContent+='<li class="'+(test[x].expectedResult===test[x].actualResult?'tick':'cross')+'">';
-                    testContent+='&nbsp;&nbsp;'+test[x].objective;
-                    testContent+='</li>';
-                }
-                testContent+='</ul>';
-
-                console.log(testContent);
-
-                var content = "<strong>STEP " + i + "</strong><br>" + testContent;
-                google.maps.event.addListener(marker, 'click', (function(marker, content, infoWindow) {
-                    return function() {
-                        infoWindow.setContent(content);
-                        infoWindow.open(map, marker);
+                    for (var x = 0; x < testsLen; x++) {
+                        testContent += '<li class="' + (test[x].expectedResult === test[x].actualResult ? 'tick' : 'cross') + '">';
+                        testContent += '&nbsp;&nbsp;' + test[x].objective;
+                        testContent += '</li>';
                     }
-                })(marker, content, infoWindow));
-                //
-                // marker.addListener('click', function() {
-                // 		infoWindows[i].open(map, markers[i]);
-                // });
+                    testContent += '</ul>';
 
+                    var content = "<strong>STEP " + (index + 1) + "</strong><br>" + testContent;
+                    google.maps.event.addListener(marker, 'click', (function (marker, content, infoWindow) {
+                        return function () {
+                            infoWindow.setContent(content);
+                            infoWindow.open(map, marker);
+                        }
+                    })(marker, content, infoWindow));
 
-                // markers[markers.length - 1].addListener('click', function() {
-                // 				infoWindows[markers.length-1].open(map, markers[markers.length - 1]);
-                //
-                // });
+                };
 
-            };
+                func(i);
+            }
+            var flightPath = new google.maps.Polyline({
+                path: flightPlanCoordinates,
+                geodesic: true,
+                strokeColor: '#FF0000',
+                strokeOpacity: 1.0,
+                strokeWeight: 2
+            });
 
-            func(i);
-        }
+            flightPath.setMap(map);
 
-        console.log("infoWindows");
-        console.log(infoWindows);
-
-        // for (var i = 0; i < markers.length; i++) {
-        //
-        //     //  infowindow.open(map, marker);
-        //
-        //     // markers[i].addListener('click', function() {
-        //     // 		infoWindows[i].open(map, markers[i]);
-        //     // });
-        //
-        //     var infoWindow = new google.maps.InfoWindow();
-        //     var marker = markers[i];
-        //     var test = JSON.stringify(vm.states[i].tests);
-        //     marker.content = "<strong>STEP " + i + "</strong><br>" + test;
-        //     google.maps.event.addListener(marker, 'click', function() {
-        //         // where I have added .html to the marker object.
-        //         //  infoWindows[i].setContent("<strong>STEP " + i + "</strong><br>" + JSON.stringify(vm.states[i].tests));
-        //         // var infoWindow = new google.maps.InfoWindow({
-        //         //     content: "<strong>STEP " + i + "</strong><br>" + test
-        //         // });
-        //         infoWindow.setContent(this.content);
-        //         infoWindows.open(map, this);
-        //     });
-        // }
-
-
-
-        console.log(markers);
-        var flightPath = new google.maps.Polyline({
-            path: flightPlanCoordinates,
-            geodesic: true,
-            strokeColor: '#FF0000',
-            strokeOpacity: 1.0,
-            strokeWeight: 2
+            var bounds = new google.maps.LatLngBounds();
+            $.each(markers, function (index, marker) {
+                bounds.extend(marker.position);
+            });
+            map.fitBounds(bounds);
         });
 
-        flightPath.setMap(map);
-
-        var bounds = new google.maps.LatLngBounds();
-        //  Go through each...
-        $.each(markers, function(index, marker) {
-            bounds.extend(marker.position);
-        });
-        //  Fit these bounds to the map
-        map.fitBounds(bounds);
-    });
-
-
-
-    $scope.states = [];
-
-
-
-    $scope.states[$scope.states.length] = {
-        text: "sdffsfsf",
-        lat: "37.335719",
-        lang: "-121.886708",
-        address: "101 E San Fernando St #103, San Jose, CA, 95112",
-        tests: [{
-                objective: "Check if the packing is intact",
-
-                expectedResult: "It is intact",
-                actualResult: "It isn't",
-                status: "VERIFIED"
-            },
-            {
-                objective: "Check if the product is intact",
-
-                expectedResult: "It is intact",
-                actualResult: "It isn't",
-                status: "VERIFIED"
-            }
-
-        ]
-
-
-    }
-
-    $scope.states[$scope.states.length] = {
-        text: "sdffsfsf",
-        lat: "12.862807",
-        lang: "30.217636",
-        address: "101 E San Fernando St #103, San Jose, CA, 95112",
-        tests: [{
-                objective: "Check if the packing is intact",
-
-                expectedResult: "It is intact",
-                actualResult: "It isn't",
-                status: "VERIFIED"
-            },
-            {
-                objective: "Check if the product is intact",
-
-                expectedResult: "It is intact",
-                actualResult: "It is intact",
-                status: "VERIFIED"
-            }
-
-
-
-        ]
-
-
-    }
-
-    $scope.states[$scope.states.length] = {
-        text: "sdffsfsf",
-        lat: "44.314844",
-        lang: "-85.602364",
-        address: "101 E San Fernando St #103, San Jose, CA, 95112",
-        tests: [{
-            objective: "Check if the packing is intact",
-
-            expectedResult: "It is intact",
-            actualResult: "It is intact",
-            status: "VERIFIED"
-        }]
-
-
-    }
-    // $scope.register = function(){
-    // 	console.log($scope.product);
-    // 	console.log('sending product register post');
-    // 	var data = {
-    // 			productName: $scope.product.name,
-    // 			description: $scope.product.description,
-    // 			category: $scope.product.category,
-    // 			qrCode: $scope.product.id
-    //           };
-    //
-    //       $http.post("/register-product", data).then(function(data, status) {
-    //          console.log(data);
-    //       });
-    //
-    // };
+    };
 }]);
