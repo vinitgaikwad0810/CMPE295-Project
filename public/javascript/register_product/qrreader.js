@@ -87,12 +87,12 @@ function captureToCanvas() {
             }
             catch(e){
                 console.log(e);
-                setTimeout(captureToCanvas, 1000);
+                setTimeout(captureToCanvas, 5000);
             };
         }
         catch(e){
             console.log(e);
-            setTimeout(captureToCanvas, 1000);
+            setTimeout(captureToCanvas, 5000);
         };
     }
 }
@@ -132,13 +132,11 @@ function read(a)
     }
 }
 
-function parseValues(val){
-}
-
 function isCanvasSupported(){
     var elem = document.createElement('canvas');
     return !!(elem.getContext && elem.getContext('2d'));
 }
+
 function success(stream) {
     if(webkit)
         v.src = window.URL.createObjectURL(stream);
@@ -151,7 +149,7 @@ function success(stream) {
     else
         v.src = stream;
     gUM=true;
-    setTimeout(captureToCanvas, 1000);
+    setTimeout(captureToCanvas, 5000);
 }
 
 function error(error) {
@@ -210,7 +208,7 @@ function setwebcam2(options)
     console.log(options);
     if(stype==1)
     {
-        setTimeout(captureToCanvas, 1000);
+        setTimeout(captureToCanvas, 5000);
         return;
     }
     var n=navigator;
@@ -237,5 +235,5 @@ function setwebcam2(options)
     }
 
     stype=1;
-    setTimeout(captureToCanvas, 1000);
+    setTimeout(captureToCanvas, 5000);
 }
