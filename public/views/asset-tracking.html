@@ -2,12 +2,14 @@
     <div class="col-lg-12">
         <div class="row">
             <div class="col-lg-9">
-                <input style="margin-bottom:5px;" class="form-control" type="text" ng-model="searchTerm" placeholder="Product id to search">
-
+                <input style="margin-bottom:5px;" id="searchTerm" class="form-control" type="text" ng-model="searchTerm" placeholder="Product id to search">
             </div>
 
             <div class="col-lg-3">
-                <button type="button" class="btn btn-md btn-primary btn-block" ng-click="searchButtonClick()">Search</button>
+                <button type="button" class="btn btn-md btn-primary" ng-click="searchButtonClick()">Search</button>
+                <button type="button" class="btn btn-md btn-primary" data-toggle="modal" data-target="#myModal">
+                    Scan QR
+                </button>
             </div>
         </div>
     </div>
@@ -88,4 +90,49 @@ Summary text explaining this step to the user
             </div>
         </div>
     </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="outdiv">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Modal -->
+    <canvas id="qr-canvas" width="800" height="600" style="display:none; visibility:hidden"></canvas>
+    <script type="text/javascript">
+        function read(a)
+        {
+            var val = a;
+            var splitPipes = val.split('|');
+            console.log(splitPipes);
+            var len = splitPipes.length;
+
+            for(var i=0; i<len; i++){
+                var splitEquals = splitPipes[i].split("=");
+                var lhs = splitEquals[0].trim();
+                var rhs =  splitEquals[1].trim();
+
+                if(lhs === "productId")
+                    document.getElementById("searchTerm").value = rhs;
+            }
+
+            $('#myModal').modal("hide");
+        }
+        load();
+    </script>
+
 </div>
