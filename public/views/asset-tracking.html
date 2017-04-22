@@ -16,8 +16,7 @@
                 <button type="button" class="btn btn-md btn-block-custom btn-primary" ng-click="searchButtonClick()">
                     Search
                 </button>
-                <button type="button" class="btn btn-md btn-block-custom btn-primary" data-toggle="modal"
-                        data-target="#myModal">
+                <button type="button" class="btn btn-md btn-block-custom btn-primary" onclick="showQRScannerTracking()">
                     Scan QR
                 </button>
             </div>
@@ -132,24 +131,31 @@
     <!-- End Modal -->
     <canvas id="qr-canvas" width="800" height="600" style="display:none; visibility:hidden"></canvas>
     <script type="text/javascript">
-        function read(a) {
-            var val = a;
-            var splitPipes = val.split('|');
-            console.log(splitPipes);
-            var len = splitPipes.length;
 
-            for (var i = 0; i < len; i++) {
-                var splitEquals = splitPipes[i].split("=");
-                var lhs = splitEquals[0].trim();
-                var rhs = splitEquals[1].trim();
 
-                if (lhs === "productId")
-                    document.getElementById("searchTerm").value = rhs;
-            }
+        function showQRScannerTracking(){
 
-            $('#myModal').modal("hide");
+            var rd = function(a) {
+                var val = a;
+                var splitPipes = val.split('|');
+                console.log(splitPipes);
+                var len = splitPipes.length;
+
+                for (var i = 0; i < len; i++) {
+                    var splitEquals = splitPipes[i].split("=");
+                    var lhs = splitEquals[0].trim();
+                    var rhs = splitEquals[1].trim();
+
+                    if (lhs === "productId")
+                        document.getElementById("searchTerm").value = rhs;
+                }
+
+                $('#myModal').modal("hide");
+            };
+            load(rd);
+
+            $('#myModal').modal("show");
         }
-        load();
     </script>
 
 </div>
