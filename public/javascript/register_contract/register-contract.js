@@ -37,6 +37,14 @@ app.controller('registerContractController',['$scope', '$http', function($scope,
            $scope.contract.value3 = "";
            $scope.contract.value4 = "";
            $scope.contract.value5 = "";
+           $
+          angular.forEach($scope.questionelemnt, function(order) {
+            order.key = "";
+            order.value = "";
+          });
+          $scope.questionelemnt.length = 0;
+          counter = 0;
+          $scope.contract.category = "";
         });
 		
 	};
