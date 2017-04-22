@@ -2570,3 +2570,12 @@ body.error .logo h1 {
   content: "\2717";
   color: crimson;
 }
+
+@media all and (max-width:480px) {
+  .btn-block-custom { margin:0 auto; width: 100%; display:block; }
+  .btn-block-custom + .btn-block-custom { margin-top : 5px; }
+}
+
+@media all and (min-width:500px) {
+  .btn-block-custom { margin:0 auto; width: 40%; }
+}
