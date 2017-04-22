@@ -13,7 +13,7 @@
             </div>
 
             <div class="col-lg-3">
-                <button type="button" class="btn btn-md btn-block-custom btn-primary" ng-click="searchButtonClick()">
+                <button id="btnSearch" type="button" class="btn btn-md btn-block-custom btn-primary" ng-click="searchButtonClick()">
                     Search
                 </button>
                 <button type="button" class="btn btn-md btn-block-custom btn-primary" onclick="showQRScannerTracking()">
@@ -114,16 +114,16 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    <button type="button" class="close" onclick="closeQRScanner()" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">Scan a QR Code</h4>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body modal-body-override">
                     <div id="outdiv">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" onclick="closeQRScanner()">Close</button>
                 </div>
             </div>
         </div>
@@ -138,7 +138,6 @@
             var rd = function(a) {
                 var val = a;
                 var splitPipes = val.split('|');
-                console.log(splitPipes);
                 var len = splitPipes.length;
 
                 for (var i = 0; i < len; i++) {
@@ -146,11 +145,20 @@
                     var lhs = splitEquals[0].trim();
                     var rhs = splitEquals[1].trim();
 
-                    if (lhs === "productId")
-                        document.getElementById("searchTerm").value = rhs;
+                    if (lhs === "productId"){
+                      document.getElementById("searchTerm").value = rhs;
+                      var requiredElemScope = angular.element(document.getElementById('searchTerm')).scope();
+                      requiredElemScope.searchTerm = rhs;
+                    }
                 }
 
+                for(var x=0; x<timeOutArray.length; x++){
+                  clearTimeout(timeOutArray[x]);
+                }
+
+                strm.getVideoTracks()[0].stop();
                 $('#myModal').modal("hide");
+                $('#btnSearch').click();
             };
             load(rd);
 

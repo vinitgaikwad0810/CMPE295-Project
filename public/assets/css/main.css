@@ -2547,6 +2547,7 @@ body.error .logo h1 {
 }
 
 #v{
+    margin:0 auto;
     width: 320px;
     height: 240px;
 }
@@ -2585,4 +2586,8 @@ body.error .logo h1 {
   -moz-transition: 2s ease-in-out;
   -o-transition: 2s ease-in-out;
   transition: 2s ease-in-out;
+}
+
+.modal-body-override{
+  max-width:100%;
 }

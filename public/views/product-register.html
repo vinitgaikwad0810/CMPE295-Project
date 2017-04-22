@@ -92,15 +92,15 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<button type="button" class="close" onclick="closeQRScanner()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					<h4 class="modal-title" id="myModalLabel">Scan a QR Code</h4>
 				</div>
-				<div class="modal-body">
+				<div class="modal-body modal-body-override">
 					<div id="outdiv">
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-default" onclick="closeQRScanner()">Close</button>
 				</div>
 			</div>
 		</div>
@@ -110,11 +110,9 @@
 	<script type="text/javascript">
 
         function showQRScannerRegister() {
-
             var rdRegister = function(a){
                 var val = a;
                 var splitPipes = val.split('|');
-                console.log(splitPipes);
                 var len = splitPipes.length;
 
                 for(var i=0; i<len; i++){
@@ -131,6 +129,12 @@
                     else if(lhs === "productCategory")
                         document.getElementById("selectCategory").value = rhs;
                 }
+
+								for(var x=0; x<timeOutArray.length; x++){
+                  clearTimeout(timeOutArray[x]);
+                }
+
+                strm.getVideoTracks()[0].stop();
 
                 $('#myModal').modal("hide");
             };

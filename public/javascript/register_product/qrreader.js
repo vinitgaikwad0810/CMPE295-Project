@@ -9,6 +9,7 @@ var gUM=false;
 var webkit=false;
 var moz=false;
 var v=null;
+var strm;
 
 var imghtml='<div id="qrfile"><canvas id="out-canvas" width="320" height="240"></canvas>'+
     '<div id="imghelp">drag and drop a QRCode here'+
@@ -18,6 +19,9 @@ var imghtml='<div id="qrfile"><canvas id="out-canvas" width="320" height="240"><
     '</div>';
 
 var vidhtml = '<video id="v" autoplay></video>';
+
+var timeOutArray = [];
+
 
 function dragenter(e) {
     e.stopPropagation();
@@ -86,13 +90,11 @@ function captureToCanvas() {
                 qrcode.decode();
             }
             catch(e){
-                console.log(e);
-                setTimeout(captureToCanvas, 2000);
+                timeOutArray.push(setTimeout(captureToCanvas, 2000));
             };
         }
         catch(e){
-            console.log(e);
-            setTimeout(captureToCanvas, 2000);
+            timeOutArray.push(setTimeout(captureToCanvas, 2000));
         };
     }
 }
@@ -107,6 +109,7 @@ function isCanvasSupported(){
 }
 
 function success(stream) {
+    strm = stream;
     if(webkit)
         v.src = window.URL.createObjectURL(stream);
     else
@@ -118,7 +121,7 @@ function success(stream) {
     else
         v.src = stream;
     gUM=true;
-    setTimeout(captureToCanvas, 2000);
+    timeOutArray.push(setTimeout(captureToCanvas, 2000));
 }
 
 function error(error) {
@@ -153,17 +156,16 @@ function setwebcam()
                 .then(function(devices) {
                     devices.forEach(function(device) {
                         if (device.kind === 'videoinput') {
+                          console.log(device);
                             if(device.label.toLowerCase().search("back") >-1)
                                 options={'deviceId': {'exact':device.deviceId}, 'facingMode':'environment'} ;
                         }
-                        console.log(device.kind + ": " + device.label +" id = " + device.deviceId);
                     });
                     setwebcam2(options);
                 });
         }
         catch(e)
         {
-            console.log(e);
         }
     }
     else{
@@ -175,12 +177,11 @@ function setwebcam()
 
 function setwebcam2(options)
 {
-    console.log(options);
-    if(stype==1)
-    {
-        setTimeout(captureToCanvas, 2000);
-        return;
-    }
+    // if(stype==1)
+    // {
+    //     timeOutArray.push(setTimeout(captureToCanvas, 2000));
+    //     return;
+    // }
     var n=navigator;
     document.getElementById("outdiv").innerHTML = vidhtml;
     v=document.getElementById("v");
@@ -205,5 +206,15 @@ function setwebcam2(options)
     }
 
     stype=1;
-    setTimeout(captureToCanvas, 2000);
+    timeOutArray.push(setTimeout(captureToCanvas, 2000));
+}
+
+function closeQRScanner(){
+  for(var x=0; x<timeOutArray.length; x++){
+    clearTimeout(timeOutArray[x]);
+  }
+
+  strm.getVideoTracks()[0].stop();
+
+  $('#myModal').modal("hide");
 }

@@ -17,13 +17,19 @@ app.controller('assetTrackingController', ['$scope', '$http', 'NgMap', function 
             console.log(response.data);
             if (response.data.status === "success") {
                 $scope.searchErr = "";
-                $scope.showMap = true;
                 $scope.product = response.data.product;
                 $scope.states = $scope.product.states;
-                $scope.setMap();
+                if($scope.states.length > 0){
+                  $scope.showMap = true;
+                  $scope.setMap();
+                } else {
+                  $scope.showMap = false;
+                  $scope.searchErr = "Product QRCode has never been scanned after being added to the system";
+                }
+
             } else {
-                $scope.searchErr = response.data;
                 $scope.showMap = false;
+                $scope.searchErr = response.data;
             }
         });
     }
