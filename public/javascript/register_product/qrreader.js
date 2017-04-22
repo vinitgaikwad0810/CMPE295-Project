@@ -122,6 +122,8 @@ function read(a)
         else if(lhs === "productCategory")
             document.getElementById("selectCategory").value = rhs;
     }
+
+    $('#myModal').modal("hide");
 }
 
 function isCanvasSupported(){
