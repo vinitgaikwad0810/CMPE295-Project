@@ -3,9 +3,7 @@ var https = require("https");
 
 var chainCodeName = 'f9d4aaf6c78d583c13ce5c411b6658bcb52c68b09f7e9d7ed8fb8f3f8ccec69e3e0df981aeed7eabcf3f7e7ec971c445fba6dff1a4d3f19ced58e6e056f3be7e';
 
-
-
-function getProductQueryApiSchema(productId, userId) {
+function getProductQueryApiSchema(productId, userId){
 
     var queryApiSchema = {
         jsonrpc: "2.0",
@@ -18,7 +16,7 @@ function getProductQueryApiSchema(productId, userId) {
             ctorMsg: {
                 function: "read",
                 args: [
-                    "" + productId
+                    ""+productId
                 ]
             },
             secureContext: userId
@@ -31,7 +29,7 @@ function getProductQueryApiSchema(productId, userId) {
 }
 
 
-function getProductRequestApiSchema(product, user) {
+function getProductRequestApiSchema(product, user){
 
     var productApiRequestSchema = {
         jsonrpc: "2.0",
@@ -44,7 +42,7 @@ function getProductRequestApiSchema(product, user) {
             ctorMsg: {
                 function: "register",
                 args: [
-                    "" + product.productId,
+                    ""+product.productId,
                     JSON.stringify(product)
                 ]
             },
@@ -56,13 +54,13 @@ function getProductRequestApiSchema(product, user) {
     return JSON.stringify(productApiRequestSchema);
 }
 
-exports.registerProduct = function(product, user, peer, callback) {
+exports.registerProduct = function(product, user, peer, callback){
 
     var target = peer.split(":");
     var data = getProductRequestApiSchema(product, user);
 
     var options = {
-        hostname: target[1].replace("//", ""),
+        hostname: target[1].replace("//",""),
         port: target[2],
         path: '/chaincode',
         method: 'POST',
@@ -71,12 +69,17 @@ exports.registerProduct = function(product, user, peer, callback) {
         }
     };
 
+    var chnk = '';
+
     var req = https.request(options, function(res) {
         res.setEncoding('utf8');
-        res.on('data', function(body) {
-            if (body) {
-                body = JSON.parse(body);
-                if (body.result && body.result.status === "OK") {
+        res.on('data', function (body) {
+            chnk+=body;
+        });
+        res.on('end', function(){
+            if(chnk){
+                chnk = JSON.parse(chnk);
+                if(chnk.result && chnk.result.status === "OK"){
                     callback({
                         status: "success"
                     });
@@ -86,12 +89,14 @@ exports.registerProduct = function(product, user, peer, callback) {
                     status: "Error on calling blockchain API"
                 });
             }
-
         });
     });
 
     req.on('error', function(e) {
         console.log('problem with request: ' + e.message);
+        callback({
+            status: "Error on calling blockchain API"
+        });
     });
 
     req.write(data);
@@ -99,12 +104,12 @@ exports.registerProduct = function(product, user, peer, callback) {
 
 };
 
-exports.queryProduct = function(productId, user, peer, callback) {
+exports.queryProduct = function(productId, user, peer, callback){
     var target = peer.split(":");
     var data = getProductQueryApiSchema(productId, user);
 
     var options = {
-        hostname: target[1].replace("//", ""),
+        hostname: target[1].replace("//",""),
         port: target[2],
         path: '/chaincode',
         method: 'POST',
@@ -112,14 +117,20 @@ exports.queryProduct = function(productId, user, peer, callback) {
             'Content-Type': 'application/json',
         }
     };
-
+    var chnk = '';
     var req = https.request(options, function(res) {
         res.setEncoding('utf8');
-        res.on('data', function(body) {
-            if (body) {
-                console.log(body);
-                try {
-                    body = JSON.parse(body);
+
+        res.on('data', function (body) {
+            chnk += body;
+        });
+
+        res.on('end', function(){
+
+            if(chnk){
+                console.log(chnk);
+                try{
+                    chnk = JSON.parse(chnk);
                 } catch (err) {
                     console.log('error parsing response body');
                     callback({
@@ -128,10 +139,10 @@ exports.queryProduct = function(productId, user, peer, callback) {
                     });
                 }
 
-                if (body.result && body.result.status === "OK") {
+                if(chnk.result && chnk.result.status === "OK"){
                     callback({
                         status: "success",
-                        product: JSON.parse(body.result.message)
+                        product: JSON.parse(chnk.result.message)
                     });
                 }
             } else {
@@ -140,7 +151,6 @@ exports.queryProduct = function(productId, user, peer, callback) {
                     err: "Error on calling blockchain API"
                 });
             }
-
         });
     });
 
