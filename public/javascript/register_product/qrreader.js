@@ -87,12 +87,12 @@ function captureToCanvas() {
             }
             catch(e){
                 console.log(e);
-                setTimeout(captureToCanvas, 500);
+                setTimeout(captureToCanvas, 1000);
             };
         }
         catch(e){
             console.log(e);
-            setTimeout(captureToCanvas, 500);
+            setTimeout(captureToCanvas, 1000);
         };
     }
 }
@@ -109,12 +109,11 @@ function read(a)
     // html+="<b>"+htmlEntities(a)+"</b><br><br>";
     // document.getElementById("result").innerHTML=html;
     var val = a;
-
-    var splitPipes = val.split("|");
     $("#myModal").modal("hide");
-
+    var splitPipes = val.split('|');
     var len = splitPipes.length();
     alert('len = '+len);
+
     for(var i=0; i<len; i++){
         var splitEquals = splitPipes[i].split("=");
 
@@ -152,7 +151,7 @@ function success(stream) {
     else
         v.src = stream;
     gUM=true;
-    setTimeout(captureToCanvas, 500);
+    setTimeout(captureToCanvas, 1000);
 }
 
 function error(error) {
@@ -211,7 +210,7 @@ function setwebcam2(options)
     console.log(options);
     if(stype==1)
     {
-        setTimeout(captureToCanvas, 500);
+        setTimeout(captureToCanvas, 1000);
         return;
     }
     var n=navigator;
@@ -238,5 +237,5 @@ function setwebcam2(options)
     }
 
     stype=1;
-    setTimeout(captureToCanvas, 500);
+    setTimeout(captureToCanvas, 1000);
 }
