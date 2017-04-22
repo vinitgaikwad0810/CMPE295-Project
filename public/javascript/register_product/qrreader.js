@@ -174,7 +174,6 @@ function load()
     {
         initCanvas(800, 600);
         qrcode.callback = read;
-        document.getElementById("mainbody").style.display="inline";
         setwebcam();
     }
 }
@@ -240,9 +239,6 @@ function setwebcam2(options)
         moz=true;
         n.mozGetUserMedia({video: options, audio: false}, success, error);
     }
-
-    document.getElementById("qrimg").style.opacity=0.2;
-    document.getElementById("webcamimg").style.opacity=1.0;
 
     stype=1;
     setTimeout(captureToCanvas, 500);
