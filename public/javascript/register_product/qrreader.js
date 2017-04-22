@@ -109,7 +109,6 @@ function read(a)
     // html+="<b>"+htmlEntities(a)+"</b><br><br>";
     // document.getElementById("result").innerHTML=html;
     var val = a;
-    $("#myModal").modal("hide");
     var splitPipes = val.split('|');
     var len = splitPipes.length();
     alert('len = '+len);
