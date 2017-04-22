@@ -46,10 +46,12 @@ app.post('/initcontract', contract.init);
 app.post('/registercontract', contract.registercontract);
 app.post('/getcontract', contract.getcontract);
 app.post('/events', contract.validate);
-app.get('/register-product', product.register);
 app.get('/track/:qrCode', product.query);
 
-
+app.get('/logout', function (req, res) {
+    req.session.reset();
+    res.redirect('/login');
+});
 
 http.createServer(app).listen(app.get('port'), function() {
 	console.log('Express server listening on port ' + app.get('port'));

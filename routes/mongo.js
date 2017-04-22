@@ -203,7 +203,7 @@ exports.addProduct = function(product, callback){
                         db.close();
                         callback({
                             status: 'error',
-                            err: 'Product already exists'
+                            err: 'Product already registered'
                         });
                     }
                 }

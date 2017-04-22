@@ -2577,5 +2577,12 @@ body.error .logo h1 {
 }
 
 @media all and (min-width:500px) {
-  .btn-block-custom { margin:0 auto; width: 40%; }
+  .btn-block-custom { margin:0 auto; width: 49%; }
+}
+
+.moving-row{
+  -webkit-transition: 2s ease-in-out;
+  -moz-transition: 2s ease-in-out;
+  -o-transition: 2s ease-in-out;
+  transition: 2s ease-in-out;
 }

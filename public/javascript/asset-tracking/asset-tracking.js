@@ -4,20 +4,26 @@ app.controller('assetTrackingController', ['$scope', '$http', 'NgMap', function 
     var vm = $scope;
     $scope.product = {};
     $scope.states = [];
-
+    $scope.showMap = false;
     $scope.googleMapsUrl = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAdF4y0AjJujQ248MSKd8KC41wm9fIvpgc";
+    $scope.searchErr = "";
+
 
     $scope.searchButtonClick = function () {
         //  AssetTrackingService.getAssetDetails($scope.searchTerm);
         // Test it with Qr Code 3fdsf-324-234-fdsf
         var url = '/track/' + $scope.searchTerm;
-        niceURI = url.replace(/[^a-zA-Z0-9-_]/g, '');
         $http.get(url).then(function (response) {
             console.log(response.data);
             if (response.data.status === "success") {
+                $scope.searchErr = "";
+                $scope.showMap = true;
                 $scope.product = response.data.product;
                 $scope.states = $scope.product.states;
                 $scope.setMap();
+            } else {
+                $scope.searchErr = response.data;
+                $scope.showMap = false;
             }
         });
     }

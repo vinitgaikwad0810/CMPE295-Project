@@ -10,10 +10,6 @@
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 <title>Login Page</title>
 
-<meta name="description"
-	content="Free Admin Template Based On Twitter Bootstrap 3.x">
-<meta name="author" content="">
-
 <meta name="msapplication-TileColor" content="#5bc0de" />
 <meta name="msapplication-TileImage" content="assets/img/metis-tile.png" />
 
@@ -67,7 +63,7 @@
 
 <body class="login" ng-app="blockchainLogin"
 	ng-controller="loginController">
-	<div class="form-signin">
+	<div class="form-signin" style="box-shadow: 10px 10px 5px #888888;">
 		<div class="text-center">
 			<img src="assets/img/logo.png" alt="Metis Logo">
 		</div>
@@ -77,18 +73,20 @@
 					<p class="text-muted text-center">Enter your username and
 						password</p>
 					<input type="text" placeholder="Username" class="form-control top"
-						ng-model="login.user"> <input type="password"
+						ng-model="login.user" required> <input type="password"
 						placeholder="Password" class="form-control bottom"
-						ng-model="login.pass">
-					<button class="btn btn-lg btn-primary btn-block" ng-click="login()">Sign
+						ng-model="login.pass" required>
+					<button class="btn btn-lg btn-primary btn-block" ng-click="login(login.user,login.pass)">Sign
 						in</button>
+					<div id="login-err" ng-bind="loginErr" style="margin: 10px auto; color:red; text-align:center;"></div>
 			</div>
 			<div id="signup" class="tab-pane">
-					<input type="email" placeholder="Username - mail@domain.com"
-						class="form-control top" ng-model="signup.user"> 
+					<input type="text" placeholder="Username"
+						class="form-control top" ng-model="signup.user" required>
 					<input type="Password"
-						placeholder="password" class="form-control bottom" ng-model="signup.pass"> 
-					<button class="btn btn-lg btn-success btn-block" ng-click="register()">Register</button>
+						placeholder="password" class="form-control bottom" ng-model="signup.pass" required>
+					<button class="btn btn-lg btn-success btn-block" ng-click="register(signup.user, signup.pass)">Register</button>
+					<div id="signup-err" ng-bind="signupErr" style="margin: 10px auto; color:red; text-align:center;"></div>
 			</div>
 		</div>
 		<hr>
