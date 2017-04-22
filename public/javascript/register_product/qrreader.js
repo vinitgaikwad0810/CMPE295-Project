@@ -103,17 +103,14 @@ function htmlEntities(str) {
 
 function read(a)
 {
-    alert(a);
     var val = a;
     var splitPipes = val.split('|');
-    var len = splitPipes.length();
-    alert('len = '+len);
+    console.log(splitPipes);
+    var len = splitPipes.length;
 
     for(var i=0; i<len; i++){
         var splitEquals = splitPipes[i].split("=");
-
         var lhs = splitEquals[0].trim();
-        alert(lhs);
         var rhs =  splitEquals[1].trim();
 
         if(lhs === "productId")
