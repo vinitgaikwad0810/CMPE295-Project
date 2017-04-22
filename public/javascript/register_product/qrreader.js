@@ -108,13 +108,10 @@ function read(a)
     //     html+="<a target='_blank' href='"+a+"'>"+a+"</a><br>";
     // html+="<b>"+htmlEntities(a)+"</b><br><br>";
     // document.getElementById("result").innerHTML=html;
-    alert(a);
-    parseValues(a);
-    $("#myModal").modal("hide");
-}
+    var val = a;
 
-function parseValues(val){
     var splitPipes = val.split("|");
+    $("#myModal").modal("hide");
 
     var len = splitPipes.length();
     alert('len = '+len);
@@ -134,6 +131,9 @@ function parseValues(val){
         else if(lhs === "productCategory")
             document.getElementById("selectCategory").value = rhs;
     }
+}
+
+function parseValues(val){
 }
 
 function isCanvasSupported(){
