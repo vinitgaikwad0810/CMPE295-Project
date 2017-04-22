@@ -2546,3 +2546,7 @@ body.error .logo h1 {
   margin:0 auto;
 }
 
+#v{
+    width: 320px;
+    height: 240px;
+}
