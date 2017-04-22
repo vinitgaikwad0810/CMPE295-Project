@@ -1,6 +1,10 @@
 {
   "name": "SCM_Blockchain",
   "version": "0.0.1",
+  "engines": {
+    "node": "4.2.6",
+    "npm": "3.5.2"
+  },
   "private": true,
   "scripts": {
     "start": "node app.js",
