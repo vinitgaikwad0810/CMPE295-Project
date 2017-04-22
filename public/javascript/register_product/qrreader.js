@@ -103,6 +103,7 @@ function htmlEntities(str) {
 
 function read(a)
 {
+    alert(a);
     // var html="<br>";
     // if(a.indexOf("http://") === 0 || a.indexOf("https://") === 0)
     //     html+="<a target='_blank' href='"+a+"'>"+a+"</a><br>";
