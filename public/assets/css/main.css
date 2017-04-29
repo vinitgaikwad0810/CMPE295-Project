@@ -2573,11 +2573,15 @@ body.error .logo h1 {
 }
 
 @media all and (max-width:480px) {
-  .btn-block-custom { margin:0 auto; width: 100%; display:block; }
+  .btn-block-custom { margin:0 auto; width: 100%;}
   .btn-block-custom + .btn-block-custom { margin-top : 5px; }
+
+  .input-block-custom { width:49%; float:left; margin-top:8px; }
+  .input-block-custom + .input-block-custom { margin-left : 3px; width:50%; float:left; margin-top:8px; }
 }
 
 @media all and (min-width:500px) {
+  .input-block-custom { margin-bottom:10px; }
   .btn-block-custom { margin:0 auto; width: 49%; }
 }
 
@@ -2591,3 +2595,9 @@ body.error .logo h1 {
 .modal-body-override{
   max-width:100%;
 }
+
+
+
+/*@media all and (min-width:500px) {*/
+  /*.input-block-custom { margin:0 auto; width: 49%; }*/
+/*}*/
