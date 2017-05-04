@@ -20,6 +20,8 @@ app.controller('registerContractController', ['$scope', '$http', function ($scop
             contractid: $scope.contract.id,
             product_type: $scope.contract.category
         };
+
+        console.log(data);
         $http.post("/registercontract", data).then(function (data, status) {
             console.log(data);
             alert("Contract Created");

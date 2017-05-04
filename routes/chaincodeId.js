@@ -1,0 +1,1 @@
+exports.chaincodeName = 'f9d4aaf6c78d583c13ce5c411b6658bcb52c68b09f7e9d7ed8fb8f3f8ccec69e3e0df981aeed7eabcf3f7e7ec971c445fba6dff1a4d3f19ced58e6e056f3be7e'
