@@ -1,7 +1,9 @@
 var https = require("https");
 var mongodb = require("./mongo");
+var chaincodeId = require("./chaincodeId");
 var gitpath = "https://github.com/jagrutipatil/Blockchain_SmartContractEditor";
-var chaincodeName = "f9d4aaf6c78d583c13ce5c411b6658bcb52c68b09f7e9d7ed8fb8f3f8ccec69e3e0df981aeed7eabcf3f7e7ec971c445fba6dff1a4d3f19ced58e6e056f3be7e";
+//var chaincodeName = "f9d4aaf6c78d583c13ce5c411b6658bcb52c68b09f7e9d7ed8fb8f3f8ccec69e3e0df981aeed7eabcf3f7e7ec971c445fba6dff1a4d3f19ced58e6e056f3be7e";
+var chaincodeName = chaincodeId.chaincodeName;
 
 var options = {
     hostname: 'e57848b76d894377a7f176f544757add-vp0.us.blockchain.ibm.com',
@@ -69,7 +71,7 @@ exports.validate = function(request, response) {
                     };
 
                     var data = constructValidateJSON('invoke', chaincodeName, 'validate', params, productid, chain_user);
-										console.log(data);
+                    console.log(data);
                     var req = https.request(eventOptions, function(res) {
                         res.setEncoding('utf8');
                         res.on('data', function(body) {
@@ -130,9 +132,9 @@ exports.init = function() {
 
 function constructValidateJSON(methodname, nameparam, functionName, paramsjson, productid, userId) {
 
-   var obj = JSON.stringify(paramsjson);
-	 var userId = "user_type2_0";
-	 console.log("obj" + obj)
+    var obj = JSON.stringify(paramsjson);
+    var userId = "user_type2_0";
+    console.log("obj" + obj)
     var queryApiSchema = {
         jsonrpc: "2.0",
         method: methodname,
@@ -156,7 +158,7 @@ function constructValidateJSON(methodname, nameparam, functionName, paramsjson, 
 
 }
 
-function constructJSON(methodname, nameparam, functionName, var1, product_type, var2, userId) {
+function constructPutContractJSON(methodname, nameparam, functionName, var1, product_type, var2, userId) {
 
     var queryApiSchema = {
         jsonrpc: "2.0",
@@ -206,15 +208,32 @@ function constructGetJSON(methodname, nameparam, functionName, var1, userId) {
 
 }
 
+function ContractJson(contractid, product_type, params) {
+    this.contractId = contractid;
+    this.productType = product_type;
+    this.params = params;
+}
+
+
 function registercontract(request, response) {
     if (chaincodeName && chaincodeName != undefined) {
-        var contractid = request.body.contractid;
-        var product_type = request.body.product_type;
-        var contractjson = request.body.params;
 
-        console.log("Registering the contract for Product Type:" + product_type);
+
+
+        var contractId = request.body.contractid;
+        var productType = request.body.product_type;
+
+
+        var params = JSON.parse(request.body.params);
+        console.log(params);
+        var contractjson = new ContractJson(contractId, productType, params);
+
+        console.log(contractjson);
+        console.log(JSON.stringify(contractjson));
+
+        console.log("Registering the contract for Product Type:" + contractjson.productType);
         console.log("Parameters: " + contractjson);
-        var data = constructJSON('invoke', chaincodeName, 'putcontract', contractid, product_type, contractjson, "user_type2_0");
+        var data = constructPutContractJSON('invoke', chaincodeName, 'putcontract', contractjson.contractId, contractjson.productType, JSON.stringify(contractjson), "user_type2_0");
         var req = https.request(options, function(res) {
             res.setEncoding('utf8');
             res.on('data', function(body) {
