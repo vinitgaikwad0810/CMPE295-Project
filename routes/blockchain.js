@@ -142,10 +142,15 @@ exports.queryProduct = function(productId, user, peer, callback){
                     });
                 }
 
-                if(chnk.result && chnk.result.status === "OK"){
+                if(chnk.result && chnk.result.status === "OK" && chnk.result.message){
                     callback({
                         status: "success",
                         product: JSON.parse(chnk.result.message)
+                    });
+                } else {
+                    callback({
+                        status: "error",
+                        err: "Product not found!"
                     });
                 }
             } else {

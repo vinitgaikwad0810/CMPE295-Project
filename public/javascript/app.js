@@ -1,4 +1,4 @@
-var app = angular.module('blockchainApp', ['ngRoute', 'ngMap']);
+var app = angular.module('blockchainApp', ['ngRoute', 'ngMap', 'smart-table', 'ngMaterial']);
 
 app.config(function($routeProvider) {
     $routeProvider
@@ -21,6 +21,10 @@ app.config(function($routeProvider) {
         .when('/register-contract', {
             templateUrl: 'views/contract-register.html',
             controller: 'registerContractController'
+        })
+        .when('/product-history', {
+            templateUrl: 'views/product-history.html',
+            controller: 'userProfileController'
         })
         .otherwise({
             redirectTo: '/register-product'

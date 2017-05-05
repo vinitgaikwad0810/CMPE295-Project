@@ -1,0 +1,48 @@
+<div class="row">
+    <div class="col-lg-4 col-lg-offset-4">
+        <div ng-show="userProducts.length!=0">
+            <h2 style="text-align:center">Product History</h2>
+            <table style="box-shadow: 10px 10px 15px #888888;" st-table="displayedCollection" st-safe-src="userProducts"
+                   class="table table-striped">
+                <thead>
+                <tr>
+                    <th colspan="5"><input st-search="" class="form-control" placeholder="Search..." type="text"/></th>
+                </tr>
+                <tr>
+                    <th st-sort="qrCode">Id</th>
+                    <th st-sort="productName">Name</th>
+                    <th st-sort="description">Description</th>
+                    <th st-sort="category">Category</th>
+                </tr>
+
+                </thead>
+                <tbody>
+                <tr ng-repeat="row in displayedCollection">
+                    <td>{{row.qrCode}}</td>
+                    <td>{{row.productName}}</td>
+                    <td>{{row.description}}</td>
+                    <td>{{row.category}}</td>
+                    <td>
+                        <button type="button" ng-click="trackProduct(row)" class="btn btn-sm btn-danger">
+                            <b>Track Product</b>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+        <div ng-hide="userProducts.length!=0" style="margin-top:35px;">
+
+                <md-content style="min-height:250px; background:none; overflow: hidden;">
+                    <div style="width:200px; height:200px; position: relative; margin:0 auto;">
+                    <md-progress-circular ng-disabled="userProducts.length!=0" md-diameter="200">
+                    </md-progress-circular>
+                        <h6 id="loadMsg" style="max-width:200px; text-align:center">Getting product history from the server...</h6>
+                    </div>
+                </md-content>
+
+        </div>
+    </div>
+</div>

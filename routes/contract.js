@@ -47,7 +47,7 @@ exports.validate = function(request, response) {
         if (status != 'error') {
             var productid = id;
             //get peer id from mongodb
-            mongodb.getpeerid(username, function(status, chain_user, peerid) {
+            mongodb.getPeerPutProductId(username, qrCode, function(status, chain_user, peerid) {
                 if (status != "error") {
 
                     var params = {

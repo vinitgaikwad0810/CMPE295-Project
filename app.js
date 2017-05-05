@@ -47,6 +47,7 @@ app.post('/registercontract', contract.registercontract);
 app.post('/getcontract', contract.getcontract);
 app.post('/events', contract.validate);
 app.get('/track/:qrCode', product.query);
+app.get('/user-products-list', user.getProductIdsForUser);
 
 app.get('/logout', function (req, res) {
     req.session.reset();

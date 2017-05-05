@@ -58,7 +58,7 @@ exports.createUser = function(username, pass, peer, chain_user, callback) {
     });
 };
 
-exports.getpeerid = function(username, callback) {
+exports.getPeerPutProductId = function(username, qrCode, callback) {
 	MongoClient.connect(url, function(err, db) {
 		if (err) {
 			console.log(err);
@@ -86,6 +86,16 @@ exports.getpeerid = function(username, callback) {
 						});
 					}
 					else if (docs.length === 1) {
+
+					    if(!docs[0].trackedProducts)
+					        docs[0].trackedProducts = [];
+
+					    docs[0].trackedProducts.push(qrCode);
+					    db.collection('users').update({email: username}, docs[0], function(err, record){
+					        if(err)
+					            console.log(err);
+                        });
+
 						var chain_user = docs[0].chain_user;
 						var peer = docs[0].peer;
 						db.close();
@@ -259,3 +269,49 @@ exports.queryProduct = function(qrCode, callback){
     });
 };
 
+
+exports.getProductIdsForUser = function(userId, callback){
+    MongoClient.connect(url, function(err, db) {
+        if (err) {
+            console.log(err);
+            callback({
+                status : 'error',
+                err : 'Internal server error: '+err
+            });
+        } else {
+            db.collection('users').find({
+                email : userId
+            }).toArray(function(err, docs) {
+                if (err) {
+                    console.log(err);
+                    db.close();
+                    callback({
+                        status : 'error',
+                        err : 'Internal server error: '+err
+                    });
+                } else {
+                    if( docs.length === 0){
+                        db.close();
+                        callback({
+                            status : 'error',
+                            err: 'Invalid username'
+                        });
+                    }
+                    else if (docs.length === 1) {
+                        db.close();
+                        callback({
+                            status : 'success',
+                            trackedProducts: docs[0].trackedProducts
+                        });
+                    } else {
+                        db.close();
+                        callback({
+                            status : 'error',
+                            err: 'Multiple users exist with same username'
+                        });
+                    }
+                }
+            });
+        }
+    });
+};

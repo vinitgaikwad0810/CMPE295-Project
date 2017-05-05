@@ -60,3 +60,19 @@ exports.login = function(req, res) {
 		res.end();
 	});
 };
+
+exports.getProductIdsForUser = function(req,res){
+    mongo.getProductIdsForUser(req.session.user, function(result) {
+        if (result.status === 'success') {
+			res.send({
+				status:'success',
+                trackedProducts: result.trackedProducts
+			});
+        } else {
+            console.log(result.err);
+            res.send(result.err);
+        }
+        res.end();
+    });
+};
+
