@@ -41,13 +41,21 @@ function generateInitJSON(functionName, var1, userId) {
 }
 
 exports.validate = function(request, response) {
-    var qrCode = request.body.qrcode;
-    var username = request.body.username;
-    mongodb.queryProduct(qrCode, function(status, id) {
-        if (status != 'error') {
-            var productid = id;
+
+    var validateJson = {};
+    console.log(request.body);
+    validateJson = request.body;
+
+
+
+    mongodb.queryProduct(validateJson.qrcode, function(result) {
+        if (result.status != 'error') {
+            var productid = result.productId;
+            //console.log(id);
             //get peer id from mongodb
+
             mongodb.getPeerPutProductId(username, qrCode, function(status, chain_user, peerid) {
+
                 if (status != "error") {
 
                     var params = {
@@ -70,7 +78,7 @@ exports.validate = function(request, response) {
                         }
                     };
 
-                    var data = constructValidateJSON('invoke', chaincodeName, 'validate', params, productid, chain_user);
+                    var data = constructValidateJSON('invoke', chaincodeName, 'validate', validateJson, productid, chain_user);
                     console.log(data);
                     var req = https.request(eventOptions, function(res) {
                         res.setEncoding('utf8');
@@ -79,12 +87,18 @@ exports.validate = function(request, response) {
                                 console.log(body);
                                 body = JSON.parse(body);
                                 if (body.result.status == "OK") {
-                                    response.send("status : success");
+                                    response.send({
+                                        "status": "success"
+                                    });
                                 } else {
-                                    response.send("status : error");
+                                    response.send({
+                                        "status": "error"
+                                    });
                                 }
                             } else {
-                                response.send("status : Error on calling blockchain API");
+                                response.send({
+                                    "status": "Error on calling blockchain API"
+                                });
                             }
                         });
                     });
@@ -96,12 +110,16 @@ exports.validate = function(request, response) {
                     req.write(data);
                     req.end();
                 } else {
-                    response.send("status : error");
+                    response.send({
+                        "status": "error"
+                    });
                 }
             });
 
         } else {
-            response.send("status : error");
+            response.send({
+                "status": "error"
+            });
         }
     });
 };
