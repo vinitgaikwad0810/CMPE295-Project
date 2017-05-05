@@ -27,7 +27,7 @@ app.config(function($routeProvider) {
             controller: 'userProfileController'
         })
         .otherwise({
-            redirectTo: '/register-product'
+            redirectTo: '/product-history'
         });
 });
 
