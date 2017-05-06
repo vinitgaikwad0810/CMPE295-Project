@@ -1,6 +1,7 @@
 var https = require("https");
 var mongodb = require("./mongo");
 var chaincodeId = require("./chaincodeId");
+var paymentProcessing = require("./paymentprocessing");
 var gitpath = "https://github.com/jagrutipatil/Blockchain_SmartContractEditor";
 //var chaincodeName = "f9d4aaf6c78d583c13ce5c411b6658bcb52c68b09f7e9d7ed8fb8f3f8ccec69e3e0df981aeed7eabcf3f7e7ec971c445fba6dff1a4d3f19ced58e6e056f3be7e";
 var chaincodeName = chaincodeId.chaincodeName;
@@ -55,7 +56,11 @@ exports.validate = function(request, response) {
             //console.log(id);
             //get peer id from mongodb
 
-            mongodb.getPeerPutProductId(validateJson.username, validateJson.qrcode, function(status, chain_user, peerid) {
+            mongodb.getPeerPutProductId(validateJson.username, validateJson.qrcode, function(responseObj) {
+
+                var peerid = responseObj.peer;
+                var chain_user = responseObj.chain_user;
+                var status = responseObj.status;
 
                 if (status != "error") {
 
@@ -88,6 +93,7 @@ exports.validate = function(request, response) {
                                 console.log(body);
                                 body = JSON.parse(body);
                                 if (body.result.status == "OK") {
+                                    paymentProcessing.automatedPaymentProcessing(productid, validateJson.username, validateJson.charge)
                                     response.send({
                                         "status": "success"
                                     });

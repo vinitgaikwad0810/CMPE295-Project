@@ -23,3 +23,23 @@ exports.register = function(request, response) {
 
 
 }
+
+
+exports.automatedPaymentProcessing = function (productId, username, amount){
+
+      console.log("Payment Processing Module");
+      console.log(productId)
+      console.log(username)
+      console.log(amount)
+
+      var fromParty = username;
+
+    //  var productSchema = retrieveProductSchema(productId);
+
+
+        //
+        // deductTheAmount()        //Call to stakeholder schema
+        // payThePreviousParty(amount);
+        //
+
+}
