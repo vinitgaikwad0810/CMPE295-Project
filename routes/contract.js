@@ -93,7 +93,7 @@ exports.validate = function(request, response) {
                                 console.log(body);
                                 body = JSON.parse(body);
                                 if (body.result.status == "OK") {
-                                    paymentProcessing.automatedPaymentProcessing(productid, validateJson.username, validateJson.charge)
+                                    paymentProcessing.automatedPaymentProcessing(productid, validateJson.username, validateJson.charge, responseObj.chain_user, responseObj.peer)
                                     response.send({
                                         "status": "success"
                                     });

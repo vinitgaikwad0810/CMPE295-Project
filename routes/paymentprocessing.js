@@ -25,21 +25,54 @@ exports.register = function(request, response) {
 }
 
 
-exports.automatedPaymentProcessing = function (productId, username, amount){
+exports.automatedPaymentProcessing = function(productId, username, amount, chain_user, peer) {
 
-      console.log("Payment Processing Module");
-      console.log(productId)
-      console.log(username)
-      console.log(amount)
+    console.log("Payment Processing Module");
+    console.log(productId)
+    console.log(username)
+    console.log(amount)
+    console.log(chain_user)
+    console.log(peer)
 
-      var fromParty = username;
+    var fromParty = username;
 
-    //  var productSchema = retrieveProductSchema(productId);
+    blockchain.queryProduct(productId, chain_user, peer, function(responseObj) {
+
+        if (responseObj.status === "success") {
+            console.log("responseObj0");
+            console.log(responseObj.product)
+
+            var productSchema = responseObj.product
+            var n = productSchema.states.length
+            if (n == 1) {
+                console.log("There is no party to make payment to")
+                return
+            }
+            var toParty = productSchema.states[n - 2].address;
+            deductFromFromParty(fromParty, amount, creditToToParty);
+            console.log("Money is being transferred to " + toParty + "from " + fromParty)
+        }
 
 
-        //
-        // deductTheAmount()        //Call to stakeholder schema
-        // payThePreviousParty(amount);
-        //
+    });
+
+
+
+
+
+    //
+    // deductTheAmount()        //Call to stakeholder schema
+    // payThePreviousParty(amount);
+    //
+
+}
+
+function creditToToParty(toParty, amount) {
+    console.log("creditToToParty")
+
+}
+
+function deductFromFromParty(fromParty, amount, callback) {
+    console.log("deductFromFromParty")
 
 }
