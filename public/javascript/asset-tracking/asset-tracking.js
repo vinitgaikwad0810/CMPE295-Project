@@ -104,7 +104,7 @@ app.controller('assetTrackingController', ['$scope', '$http', 'NgMap', 'AssetTra
     $scope.setMap = function() {
 
         NgMap.getMap().then(function(map) {
-            clearMarkers();
+            deleteMarkers();
             removePolylines();
             //removeLine();
 
