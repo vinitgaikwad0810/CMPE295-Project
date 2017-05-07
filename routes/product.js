@@ -85,8 +85,8 @@ exports.query = function(req, res) {
 
     mongo.queryProduct(qrCode, function(result) {
         if (result && result.status && result.status === "success") {
-            //  blockchain.queryProduct(result.productId, req.session.chain_user, req.session.peer, function (blockchain_result) {
-            blockchain.queryProduct(result.productId, "user_type2_1", "https://e57848b76d894377a7f176f544757add-vp1.us.blockchain.ibm.com:5001", function(blockchain_result) {
+            blockchain.queryProduct(result.productId, req.session.chain_user, req.session.peer, function(blockchain_result) {
+                //    blockchain.queryProduct(result.productId, "user_type2_1", "https://e57848b76d894377a7f176f544757add-vp1.us.blockchain.ibm.com:5001", function(blockchain_result) {
                 if (blockchain_result.status === "success") {
                     res.send({
                         status: "success",

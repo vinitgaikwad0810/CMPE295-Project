@@ -45,7 +45,7 @@ exports.automatedPaymentProcessing = function(productId, username, amount, chain
 
             var productSchema = responseObj.product
             var n = productSchema.states.length
-            if (n == 1) {
+            if (n <= 1) {
                 console.log("There is no party to make payment to")
                 return
             }

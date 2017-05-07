@@ -92,15 +92,15 @@ exports.write = function(key, value, peer, user, callback) {
 
     if (peer === undefined) {
 
-        peer = 'https://e57848b76d894377a7f176f544757add-vp2.us.blockchain.ibm.com:5001'
+        //peer = 'https://e57848b76d894377a7f176f544757add-vp2.us.blockchain.ibm.com:5001'
+        console.log("PEER IS UNDEFINED")
     }
 
     if (user === undefined) {
-        user = 'user_type2_2'
+        //user = 'user_type2_2'
+        console.log("USER IS UNDEFINED")
     }
 
-    peer = 'https://e57848b76d894377a7f176f544757add-vp2.us.blockchain.ibm.com:5001'
-    user = 'user_type2_2'
     var target = peer.split(":");
     console.log(peer + " " + user)
 
