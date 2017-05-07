@@ -8,19 +8,19 @@ exports.createUser = function(username, pass, peer, chain_user, callback) {
         if (err) {
             console.log(err);
             callback({
-                status : 'error',
-                err : 'Internal server error: '+err
+                status: 'error',
+                err: 'Internal server error: ' + err
             });
         } else {
             db.collection('users').find({
-                email : username
+                email: username
             }).toArray(function(err, docs) {
                 if (err) {
                     console.log(err);
                     db.close();
                     callback({
-                        status : 'error',
-                        err : 'Internal server error: '+err
+                        status: 'error',
+                        err: 'Internal server error: ' + err
                     });
                 } else {
                     if (docs.length === 0) {
@@ -34,8 +34,8 @@ exports.createUser = function(username, pass, peer, chain_user, callback) {
                                 console.log(err);
                                 db.close();
                                 callback({
-                                    status : 'error',
-                                    err : 'Internal server error: '+err
+                                    status: 'error',
+                                    err: 'Internal server error: ' + err
                                 });
                             } else {
                                 db.close();
@@ -48,8 +48,8 @@ exports.createUser = function(username, pass, peer, chain_user, callback) {
                     } else {
                         db.close();
                         callback({
-                            status : 'error',
-                            err : 'User already exists'
+                            status: 'error',
+                            err: 'User already exists'
                         });
                     }
                 }
@@ -58,97 +58,57 @@ exports.createUser = function(username, pass, peer, chain_user, callback) {
     });
 };
 
-exports.getpeerid = function(username, callback) {
-	MongoClient.connect(url, function(err, db) {
-		if (err) {
-			console.log(err);
-			callback({
-				status : 'error',
-				err : 'Internal server error: ' + err
-			});
-		} else {
-			db.collection('users').find({
-				email : username
-			}).toArray(function(err, docs) {
-				if (err) {
-					console.log(err);
-					db.close();
-					callback({
-						status : 'error',
-						err : 'Internal server error: '+err
-					});
-				} else {
-					if( docs.length === 0){
-						db.close();
-						callback({
-							status : 'error',
-							err: 'Invalid username/password'
-						});
-					}
-					else if (docs.length === 1) {
-						var chain_user = docs[0].chain_user;
-						var peer = docs[0].peer;
-						db.close();
-						callback({
-							status : 'success',
-							chain_user: chain_user,
-							peer: peer
-						});
-					} else {
-						db.close();
-						callback({
-							status : 'error',
-							err: 'Multiple users exist with same credentials'
-						});
-					}
-				}
-			});
-		}
-	});
-};
-
-
-exports.checkCredentials = function(username, pass, callback) {
+exports.getPeerPutProductId = function(username, qrCode, callback) {
     MongoClient.connect(url, function(err, db) {
         if (err) {
             console.log(err);
             callback({
-                status : 'error',
-                err : 'Internal server error: '+err
+                status: 'error',
+                err: 'Internal server error: ' + err
             });
         } else {
             db.collection('users').find({
-                email : username,
-                pass : pass
+                email: username
             }).toArray(function(err, docs) {
                 if (err) {
                     console.log(err);
                     db.close();
                     callback({
-                        status : 'error',
-                        err : 'Internal server error: '+err
+                        status: 'error',
+                        err: 'Internal server error: ' + err
                     });
                 } else {
-                    if( docs.length === 0){
+                    if (docs.length === 0) {
                         db.close();
                         callback({
-                            status : 'error',
+                            status: 'error',
                             err: 'Invalid username/password'
                         });
-                    }
-                    else if (docs.length === 1) {
+                    } else if (docs.length === 1) {
+
+                        if (!docs[0].trackedProducts)
+                            docs[0].trackedProducts = [];
+
+                        docs[0].trackedProducts.push(qrCode);
+                        db.collection('users').update({
+                            email: username
+                        }, docs[0], function(err, record) {
+                            if (err)
+                                console.log(err);
+                        });
+
                         var chain_user = docs[0].chain_user;
                         var peer = docs[0].peer;
                         db.close();
                         callback({
-                            status : 'success',
+                            status: 'success',
                             chain_user: chain_user,
                             peer: peer
                         });
                     } else {
                         db.close();
                         callback({
-                            status : 'error',
+                            status: 'error',
                             err: 'Multiple users exist with same credentials'
                         });
                     }
@@ -159,17 +119,67 @@ exports.checkCredentials = function(username, pass, callback) {
 };
 
 
-exports.addProduct = function(product, callback){
+exports.checkCredentials = function(username, pass, callback) {
     MongoClient.connect(url, function(err, db) {
-        if(err) {
+        if (err) {
             console.log(err);
             callback({
-                status : 'error',
-                err: 'Internal server error: '+err
+                status: 'error',
+                err: 'Internal server error: ' + err
+            });
+        } else {
+            db.collection('users').find({
+                email: username,
+                pass: pass
+            }).toArray(function(err, docs) {
+                if (err) {
+                    console.log(err);
+                    db.close();
+                    callback({
+                        status: 'error',
+                        err: 'Internal server error: ' + err
+                    });
+                } else {
+                    if (docs.length === 0) {
+                        db.close();
+                        callback({
+                            status: 'error',
+                            err: 'Invalid username/password'
+                        });
+                    } else if (docs.length === 1) {
+                        var chain_user = docs[0].chain_user;
+                        var peer = docs[0].peer;
+                        db.close();
+                        callback({
+                            status: 'success',
+                            chain_user: chain_user,
+                            peer: peer
+                        });
+                    } else {
+                        db.close();
+                        callback({
+                            status: 'error',
+                            err: 'Multiple users exist with same credentials'
+                        });
+                    }
+                }
+            });
+        }
+    });
+};
+
+
+exports.addProduct = function(product, callback) {
+    MongoClient.connect(url, function(err, db) {
+        if (err) {
+            console.log(err);
+            callback({
+                status: 'error',
+                err: 'Internal server error: ' + err
             });
         } else {
             db.collection('products').find({
-                qrCode : product.qrCode
+                qrCode: product.qrCode
             }).toArray(function(err, docs) {
                 if (err) {
                     console.log(err);
@@ -183,7 +193,7 @@ exports.addProduct = function(product, callback){
                         db.collection('products').insertOne({
                             qrCode: product.qrCode,
                             productId: product.productId
-                        }, function (err, r) {
+                        }, function(err, r) {
                             if (err) {
                                 console.log(err);
                                 db.close();
@@ -212,44 +222,43 @@ exports.addProduct = function(product, callback){
     });
 };
 
-exports.queryProduct = function(qrCode, callback){
+exports.queryProduct = function(qrCode, callback) {
     MongoClient.connect(url, function(err, db) {
         if (err) {
             console.log(err);
             callback({
-                status : 'error',
-                err : 'Internal server error: '+err
+                status: 'error',
+                err: 'Internal server error: ' + err
             });
         } else {
             db.collection('products').find({
-                "qrCode" : ""+qrCode
+                "qrCode": "" + qrCode
             }).toArray(function(err, docs) {
                 if (err) {
                     console.log(err);
                     db.close();
                     callback({
-                        status : 'error',
-                        err : 'Internal server error: '+err
+                        status: 'error',
+                        err: 'Internal server error: ' + err
                     });
                 } else {
-                    if(docs.length === 0){
+                    if (docs.length === 0) {
                         db.close();
                         callback({
-                            status : 'error',
+                            status: 'error',
                             err: 'No products found with QR code: ' + qrCode
                         });
-                    }
-                    else if (docs.length === 1) {
+                    } else if (docs.length === 1) {
                         var productId = docs[0].productId;
                         db.close();
                         callback({
-                            status : 'success',
+                            status: 'success',
                             productId: productId
                         });
                     } else {
                         db.close();
                         callback({
-                            status : 'error',
+                            status: 'error',
                             err: 'Multiple products exist in the database with the same qrCode'
                         });
                     }
@@ -259,3 +268,48 @@ exports.queryProduct = function(qrCode, callback){
     });
 };
 
+
+exports.getProductIdsForUser = function(userId, callback) {
+    MongoClient.connect(url, function(err, db) {
+        if (err) {
+            console.log(err);
+            callback({
+                status: 'error',
+                err: 'Internal server error: ' + err
+            });
+        } else {
+            db.collection('users').find({
+                email: userId
+            }).toArray(function(err, docs) {
+                if (err) {
+                    console.log(err);
+                    db.close();
+                    callback({
+                        status: 'error',
+                        err: 'Internal server error: ' + err
+                    });
+                } else {
+                    if (docs.length === 0) {
+                        db.close();
+                        callback({
+                            status: 'error',
+                            err: 'Invalid username'
+                        });
+                    } else if (docs.length === 1) {
+                        db.close();
+                        callback({
+                            status: 'success',
+                            trackedProducts: docs[0].trackedProducts
+                        });
+                    } else {
+                        db.close();
+                        callback({
+                            status: 'error',
+                            err: 'Multiple users exist with same username'
+                        });
+                    }
+                }
+            });
+        }
+    });
+};

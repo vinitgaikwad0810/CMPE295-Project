@@ -1,12 +1,16 @@
 var https = require("https");
 var mongodb = require("./mongo");
 var chaincodeId = require("./chaincodeId");
+var users = require("./user");
+var paymentProcessing = require("./paymentprocessing");
 var gitpath = "https://github.com/jagrutipatil/Blockchain_SmartContractEditor";
 //var chaincodeName = "f9d4aaf6c78d583c13ce5c411b6658bcb52c68b09f7e9d7ed8fb8f3f8ccec69e3e0df981aeed7eabcf3f7e7ec971c445fba6dff1a4d3f19ced58e6e056f3be7e";
 var chaincodeName = chaincodeId.chaincodeName;
 
+//https://c560f79422f7449b88b373e130ae3b7c-vp0.us.blockchain.ibm.com:5002
+
 var options = {
-    hostname: 'e57848b76d894377a7f176f544757add-vp0.us.blockchain.ibm.com',
+    hostname: 'c560f79422f7449b88b373e130ae3b7c-vp0.us.blockchain.ibm.com',
     port: 5001,
     path: '/chaincode',
     method: 'POST',
@@ -41,13 +45,26 @@ function generateInitJSON(functionName, var1, userId) {
 }
 
 exports.validate = function(request, response) {
-    var qrCode = request.body.qrcode;
-    var username = request.body.username;
-    mongodb.queryProduct(qrCode, function(status, id) {
-        if (status != 'error') {
-            var productid = id;
+
+    var validateJson = {};
+    console.log(request.body);
+    validateJson = request.body;
+
+
+
+    mongodb.queryProduct(validateJson.qrcode, function(result) {
+        if (result.status != 'error') {
+            var productid = result.productId;
+
+            //console.log(id);
             //get peer id from mongodb
-            mongodb.getpeerid(username, function(status, chain_user, peerid) {
+
+            mongodb.getPeerPutProductId(validateJson.username, validateJson.qrcode, function(responseObj) {
+
+                var peerid = responseObj.peer;
+                var chain_user = responseObj.chain_user;
+                var status = responseObj.status;
+
                 if (status != "error") {
 
                     var params = {
@@ -58,11 +75,22 @@ exports.validate = function(request, response) {
                         params: request.body.params
                     };
 
-                    console.log(peerid);
+                    console.log(chain_user);
+                    var target = peerid.split(":");
+                    // var eventOptions = {
+                    //     //hostname: 'demo2367382.mockable.io',         //PASS PEERID LATER and add port number
+                    //     hostname: "e57848b76d894377a7f176f544757add-vp0.us.blockchain.ibm.com",
+                    //     port: 5001,
+                    //     path: '/chaincode',
+                    //     method: 'POST',
+                    //     headers: {
+                    //         'Content-Type': 'application/json',
+                    //     }
+                    // };
+
                     var eventOptions = {
-                        //hostname: 'demo2367382.mockable.io',         //PASS PEERID LATER and add port number
-                        hostname: "e57848b76d894377a7f176f544757add-vp0.us.blockchain.ibm.com",
-                        port: 5001,
+                        hostname: target[1].replace("//", ""),
+                        port: target[2],
                         path: '/chaincode',
                         method: 'POST',
                         headers: {
@@ -70,7 +98,7 @@ exports.validate = function(request, response) {
                         }
                     };
 
-                    var data = constructValidateJSON('invoke', chaincodeName, 'validate', params, productid, chain_user);
+                    var data = constructValidateJSON('invoke', chaincodeName, 'validate', validateJson, productid, chain_user);
                     console.log(data);
                     var req = https.request(eventOptions, function(res) {
                         res.setEncoding('utf8');
@@ -79,12 +107,21 @@ exports.validate = function(request, response) {
                                 console.log(body);
                                 body = JSON.parse(body);
                                 if (body.result.status == "OK") {
-                                    response.send("status : success");
+
+                                    setTimeout(paymentProcessing.automatedPaymentProcessing(productid, validateJson.username, validateJson.charge, responseObj.chain_user, responseObj.peer), 6000);
+
+                                    response.send({
+                                        "status": "success"
+                                    });
                                 } else {
-                                    response.send("status : error");
+                                    response.send({
+                                        "status": "error"
+                                    });
                                 }
                             } else {
-                                response.send("status : Error on calling blockchain API");
+                                response.send({
+                                    "status": "Error on calling blockchain API"
+                                });
                             }
                         });
                     });
@@ -96,12 +133,16 @@ exports.validate = function(request, response) {
                     req.write(data);
                     req.end();
                 } else {
-                    response.send("status : error");
+                    response.send({
+                        "status": "error"
+                    });
                 }
             });
 
         } else {
-            response.send("status : error");
+            response.send({
+                "status": "error"
+            });
         }
     });
 };
@@ -133,7 +174,7 @@ exports.init = function() {
 function constructValidateJSON(methodname, nameparam, functionName, paramsjson, productid, userId) {
 
     var obj = JSON.stringify(paramsjson);
-    var userId = "user_type2_0";
+    //  var userId = "user_type2_0";
     console.log("obj" + obj)
     var queryApiSchema = {
         jsonrpc: "2.0",

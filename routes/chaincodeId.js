@@ -1,1 +1,5 @@
-exports.chaincodeName = 'f9d4aaf6c78d583c13ce5c411b6658bcb52c68b09f7e9d7ed8fb8f3f8ccec69e3e0df981aeed7eabcf3f7e7ec971c445fba6dff1a4d3f19ced58e6e056f3be7e'
+exports.chaincodeName = 'ab370a8c6eb7f570747f2c2b6fc01768c215dff770f7ead209292f10927be8dde8a3ef2fab755b5688c724d4df37de88e189c632b348544b7fd4b39650363287'
+
+
+//0ce658d0-27a1-11e7-bc6d-19696ed62153 - 2345
+//fdsfsd-asasa-asasas-asasa - 4232

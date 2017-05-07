@@ -2596,7 +2596,16 @@ body.error .logo h1 {
   max-width:100%;
 }
 
+#loadMsg {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%)
+}
 
+md-progress-circular svg path { stroke: #C0C0C0; }
 
 /*@media all and (min-width:500px) {*/
   /*.input-block-custom { margin:0 auto; width: 49%; }*/

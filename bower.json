@@ -18,6 +18,7 @@
   "dependencies": {
     "ngmap": "^1.18.4",
     "jquery": "^3.2.1",
-    "bootstrap": "^3.3.7"
+    "bootstrap": "^3.3.7",
+    "angular-smart-table": "^2.1.8"
   }
 }

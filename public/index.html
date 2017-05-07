@@ -11,11 +11,11 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>SCM Blockchain</title>
 
-    <meta name="description" content="Free Admin Template Based On Twitter Bootstrap 3.x">
-    <meta name="author" content="">
-
     <meta name="msapplication-TileColor" content="#5bc0de"/>
     <meta name="msapplication-TileImage" content="assets/img/metis-tile.png"/>
+
+    <!-- NgMaterial -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.4/angular-material.min.css">
 
     <!-- Bootstrap -->
     <!-- <link rel="stylesheet" href="assets/lib/bootstrap/css/bootstrap.css"> -->
@@ -113,6 +113,7 @@
 
                     <!-- .nav -->
                     <ul class="nav navbar-nav">
+                        <li><a href="index.html#!/product-history">Product History</a></li>
                         <li><a href="index.html#!/register-product">Register Product</a></li>
                         <li><a href="index.html#!/asset-tracking">Asset Tracking</a>
                         <li><a href="index.html#!/register-contract">Register Contract</a>
@@ -208,6 +209,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-route.min.js"></script>
 
+<!-- Angular Material Required Libraries -->
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.4/angular-material.min.js"></script>-->
+<script src="assets/js/angular-material-custom.min.js"></script>
+<!-- Angular Material Required Libraries -->
+
 <script src="javascript/app.js"></script>
 
 <!--Bootstrap -->
@@ -222,11 +231,9 @@
 <script src="bower_components/ngmap/build/scripts/ng-map.min.js"></script>
 <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdF4y0AjJujQ248MSKd8KC41wm9fIvpgc"> </script>-->
 
-
-<!--Asset Tracking Service-->
-<script src="javascript/asset-tracking/asset-tracking-service.js"></script>
 <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdF4y0AjJujQ248MSKd8KC41wm9fIvpgc"> </script>-->
 
+<script src="bower_components/angular-smart-table/dist/smart-table.min.js"></script>
 
 <!-- MetisMenu -->
 <script src="assets/lib/metismenu/metisMenu.js"></script>
@@ -251,9 +258,16 @@
 <script src="javascript/register_product/register.js"></script>
 <script src="javascript/asset-tracking/asset-tracking.js"></script>
 <script src="javascript/register_contract/register-contract.js"></script>
+<script src="javascript/user-profile/user-profile.js"></script>
 
-
+<!--Asset Tracking Service-->
+<script src="javascript/asset-tracking/asset-tracking-service.js"></script>
 <!-- Angular controllers -->
+
+<!--Payment Processing Service-->
+<script src="javascript/paymentProcessing/payment-processing-service.js"></script>
+
+
 </body>
 
 </html>

@@ -17,3 +17,16 @@ Peer 3 -> https://e57848b76d894377a7f176f544757add-vp3.us.blockchain.ibm.com:500
 
 
 
+Starter Network ID -> c560f79422f7449b88b373e130ae3b7c  //Blockchain-g7
+
+Peer 0 -> https://c560f79422f7449b88b373e130ae3b7c-vp0.us.blockchain.ibm.com:5002 -->   user_type2_0
+
+
+Peer 1 -> https://c560f79422f7449b88b373e130ae3b7c-vp1.us.blockchain.ibm.com:5002--> 	user_type2_1
+
+Peer 2 -> https://c560f79422f7449b88b373e130ae3b7c-vp2.us.blockchain.ibm.com:5002 -->   user_type2_2
+
+Peer 3 -> https://c560f79422f7449b88b373e130ae3b7c-vp3.us.blockchain.ibm.com:5002 -->   user_type1_3
+
+
+68087970-32fd-11e7-ae15-e33073d70d03 --> 9876

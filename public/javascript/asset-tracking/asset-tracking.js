@@ -1,13 +1,12 @@
 //var app = angular.module('blockchainApp', ['ngRoute']);
 //AIzaSyAdF4y0AjJujQ248MSKd8KC41wm9fIvpgc
-app.controller('assetTrackingController', ['$scope', '$http', 'NgMap', function($scope, $http, NgMap, AssetTrackingService) {
+app.controller('assetTrackingController', ['$scope', '$http', 'NgMap', 'AssetTrackingService', function($scope, $http, NgMap, AssetTrackingService) {
     var vm = $scope;
     $scope.product = {};
     $scope.states = [];
     $scope.showMap = false;
     $scope.googleMapsUrl = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAdF4y0AjJujQ248MSKd8KC41wm9fIvpgc";
     $scope.searchErr = "";
-
 
     $scope.searchButtonClick = function() {
         //  AssetTrackingService.getAssetDetails($scope.searchTerm);
@@ -17,22 +16,34 @@ app.controller('assetTrackingController', ['$scope', '$http', 'NgMap', function(
             console.log(response.data);
             if (response.data.status === "success") {
                 $scope.searchErr = "";
-                $scope.product = response.data.product;
-                $scope.states = $scope.product.states;
-                if ($scope.states.length > 0) {
-                    $scope.showMap = true;
-                    $scope.setMap();
-                } else {
-                    $scope.showMap = false;
-                    $scope.searchErr = "Product QRCode has never been scanned after being added to the system";
-                }
+
+                // $scope.product = response.data.product;
+                // $scope.states = $scope.product.states;
+
+                $scope.setProductDetails(response.data.product, response.data.product.states);
 
             } else {
                 $scope.showMap = false;
-                $scope.searchErr = response.data;
+                $scope.searchErr = (response.data.err?response.data.err:response.data);
             }
         });
     }
+
+    $scope.setProductDetails = function(product, states){
+        $scope.product = product;
+        $scope.states = states;
+
+        if(AssetTrackingService.assetData.product)
+            AssetTrackingService.assetData = {};
+
+        if ($scope.states.length > 0) {
+            $scope.setMap();
+            $scope.showMap = true;
+        } else {
+            $scope.showMap = false;
+            $scope.searchErr = "Product QRCode has never been scanned after being added to the system";
+        }
+    };
 
 
     var markers = [];
@@ -93,7 +104,7 @@ app.controller('assetTrackingController', ['$scope', '$http', 'NgMap', function(
     $scope.setMap = function() {
 
         NgMap.getMap().then(function(map) {
-            clearMarkers();
+            deleteMarkers();
             removePolylines();
             //removeLine();
 
@@ -158,4 +169,7 @@ app.controller('assetTrackingController', ['$scope', '$http', 'NgMap', function(
         });
 
     };
+
+    if(AssetTrackingService.assetData.product)
+        $scope.setProductDetails(AssetTrackingService.assetData.product, AssetTrackingService.assetData.product.states);
 }]);
