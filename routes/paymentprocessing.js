@@ -4,9 +4,10 @@ var mongo = require('./mongo');
 
 exports.register = function(request, response) {
 
-
-    blockchain.write(request.body.stakeHolder, {
-        balance: "10"
+    var transactions = []
+    blockchain.write(request.body.stakeHolder + ":stakeholder", {
+        balance: 10,
+        transactions: transactions
     }, request.session.peer, request.session.chain_user, function(result) {
         // blockchain.registerProduct(product, "user_type2_0", "https://e57848b76d894377a7f176f544757add-vp0.us.blockchain.ibm.com:5001", function(result){
         console.log(result);
@@ -49,7 +50,7 @@ exports.automatedPaymentProcessing = function(productId, username, amount, chain
                 return
             }
             var toParty = productSchema.states[n - 2].address;
-            deductFromFromParty(fromParty, amount, creditToToParty);
+            deductFromFromParty(fromParty, amount, chain_user, peer, productId, toParty, creditToToParty);
             console.log("Money is being transferred to " + toParty + "from " + fromParty)
         }
 
@@ -67,12 +68,66 @@ exports.automatedPaymentProcessing = function(productId, username, amount, chain
 
 }
 
-function creditToToParty(toParty, amount) {
+function creditToToParty(fromParty, amount, chain_user, peer, productId, toParty, callback) {
     console.log("creditToToParty")
+
+    var toStakeHolderKey = toParty + ":stakeholder"
+    blockchain.queryProduct(toStakeHolderKey, chain_user, peer, function(responseObj) {
+        var stakeHolderData = responseObj.product;
+
+        stakeHolderData.balance = stakeHolderData.balance + amount;
+        // var toAppend = {};
+        // toAppend.productId = productId;
+        // toAppend.amount = amount;
+        // toAppend.paidTo = toParty;
+        // stakeHolderData.transactions[stakeHolderData.transactions.length] = toAppend;
+
+        blockchain.write(toStakeHolderKey, stakeHolderData, peer, chain_user, function(status) {
+
+            if (status.status === "success") {
+
+                console.log("Successfully Credited to " + fromParty)
+                //callback(fromParty, amount, chain_user, peer, productId, toParty, callback);
+            }
+
+        });
+
+
+
+    });
+
+
 
 }
 
-function deductFromFromParty(fromParty, amount, callback) {
-    console.log("deductFromFromParty")
+function deductFromFromParty(fromParty, amount, chain_user, peer, productId, toParty, callback) {
+    console.log("deductFromFromParty"),
+        console.log(chain_user)
+    var fromStakeHolderKey = fromParty + ":stakeholder"
+
+    blockchain.queryProduct(fromStakeHolderKey, chain_user, peer, function(responseObj) {
+        var stakeHolderData = responseObj.product;
+
+        stakeHolderData.balance = stakeHolderData.balance - amount;
+        var toAppend = {};
+        toAppend.productId = productId;
+        toAppend.amount = amount;
+        toAppend.paidTo = toParty;
+        stakeHolderData.transactions[stakeHolderData.transactions.length] = toAppend;
+
+        blockchain.write(fromStakeHolderKey, stakeHolderData, peer, chain_user, function(status) {
+
+            if (status.status === "success") {
+
+                console.log("Successfully deducted from " + fromParty)
+                callback(fromParty, amount, chain_user, peer, productId, toParty, callback);
+            }
+
+        });
+
+
+
+    });
+
 
 }

@@ -86,19 +86,23 @@ function getWriteAPISchema(key, value, user) {
 
 exports.write = function(key, value, peer, user, callback) {
 
-    key = key + ":" + "stakeholder";
+    //  key = key + ":" + "stakeholder";
+
+
 
     if (peer === undefined) {
 
-        peer = 'https://e57848b76d894377a7f176f544757add-vp0.us.blockchain.ibm.com:5001'
+        peer = 'https://e57848b76d894377a7f176f544757add-vp2.us.blockchain.ibm.com:5001'
     }
 
     if (user === undefined) {
-        user = 'user_type2_0'
+        user = 'user_type2_2'
     }
 
+    peer = 'https://e57848b76d894377a7f176f544757add-vp2.us.blockchain.ibm.com:5001'
+    user = 'user_type2_2'
     var target = peer.split(":");
-    console.log(user)
+    console.log(peer + " " + user)
 
     var data = getWriteAPISchema(key, value, user);
 
@@ -124,6 +128,8 @@ exports.write = function(key, value, peer, user, callback) {
         res.on('end', function() {
             if (chnk) {
                 chnk = JSON.parse(chnk);
+                console.log("response from blockchain write")
+                console.log(chnk)
                 if (chnk.result && chnk.result.status === "OK") {
                     callback({
                         status: "success"
