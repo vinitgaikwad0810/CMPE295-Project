@@ -49,9 +49,16 @@ exports.automatedPaymentProcessing = function(productId, username, amount, chain
                 console.log("There is no party to make payment to")
                 return
             }
-            var toParty = productSchema.states[n - 2].address;
+            var toParty = productSchema.states[n - 1].address;
+
+            if(fromParty === toParty)
+            {
+              console.log("Same party. There is no payment.")
+              return
+            }
+
             deductFromFromParty(fromParty, amount, chain_user, peer, productId, toParty, creditToToParty);
-            console.log("Money is being transferred to " + toParty + "from " + fromParty)
+            console.log("Money is being transferred to " + toParty + "from " +  fromParty)
         }
 
 
@@ -86,7 +93,7 @@ function creditToToParty(fromParty, amount, chain_user, peer, productId, toParty
 
             if (status.status === "success") {
 
-                console.log("Successfully Credited to " + fromParty)
+                console.log("Successfully Credited to " + toParty)
                 //callback(fromParty, amount, chain_user, peer, productId, toParty, callback);
             }
 
