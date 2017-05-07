@@ -1,14 +1,14 @@
-app.controller('userProfileController',['$scope', '$http', '$location', 'AssetTrackingService', function($scope, $http, $location, AssetTrackingService) {
+app.controller('userProfileController', ['$scope', '$http', '$location', 'AssetTrackingService', function($scope, $http, $location, AssetTrackingService) {
     $scope.userProducts = [];
 
-    $scope.getUserProfile = function(){
+    $scope.getUserProfile = function() {
 
         $http.get("/user-products-list").then(function(data, status) {
             console.log(data);
-            if(data.data.status === "success"){
+            if (data.data.status === "success") {
                 var trackedProducts = data.data.trackedProducts;
                 console.log(trackedProducts);
-                for(productId in trackedProducts){
+                for (productId in trackedProducts) {
                     $scope.getProductDetails(trackedProducts[productId]);
                 }
             } else {
@@ -24,18 +24,32 @@ app.controller('userProfileController',['$scope', '$http', '$location', 'AssetTr
         var url = '/track/' + productId;
         $http.get(url).then(function(response) {
             console.log(response.data);
-            if (response.data.status === "success") {
+            if (response.data.status === "success" && $scope.userProducts.contains(response.data.product)) {
                 $scope.userProducts.push(response.data.product)
             } else {
-                console.log(response.data.err?response.data.err:response.data);
+                console.log(response.data.err ? response.data.err : response.data);
             }
         });
     }
 
-    $scope.trackProduct = function(product){
+    $scope.trackProduct = function(product) {
         AssetTrackingService.assetData.product = product;
-        $location.path( "/asset-tracking" );
+        $location.path("/asset-tracking");
     }
 
     $scope.getUserProfile();
 }]);
+
+
+Array.prototype.contains = function(obj) {
+
+    var i = this.length;
+    if (i == 0)
+        return true;
+    while (i--) {
+        if (this[i].productId === obj.productId) {
+            return false;
+        }
+    }
+    return true;
+}
